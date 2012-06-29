@@ -46,7 +46,6 @@ class DisciplineRecord(models.Model):
 class Shift(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-    num_owners = models.IntegerField("number of people working")
     location_name = models.ForeignKey(Location)
     worker = models.ForeignKey(User, null=True)
 

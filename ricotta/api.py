@@ -31,29 +31,36 @@ class LocationResource(ModelResource):
         ]
 
 class ShiftResource(ModelResource):
-    location_name = fields.ForeignKey(LocationResource, 'location_name', 
-                                      full=True)
+    location_name = fields.ForeignKey(LocationResource, 'location_name')
     worker = fields.ForeignKey(UserResource, 'worker')
     class Meta:
         queryset = Shift.objects.all()
         resource_name = 'shift'
         authorization = Authorization()
-        fields = ['start_time', 'end_time', 'location_name', 'num_owners', 
-                  'worker']
-        allowed_methods = ['get', 'post', 'patch', 'delete']
+        fields = ['start_time', 'end_time', 'location_name', 'worker', 
+                  'resource_uri']
+        allowed_methods = ['get', 'post', 'patch', 'delete', 'put']
 
     def dehydrate(self, bundle):
+        # see if there's a better way to rename fields than creating and 
+        # deleting
+        ### these four are required for fullCalendar.js
         bundle.data['start'] = bundle.data['start_time']
         bundle.data['end'] = bundle.data['end_time']
         bundle.data['allDay'] = False
         bundle.data['title'] = bundle.obj.worker
+        bundle.data['id'] = bundle.data['resource_uri']
+        ###
+        bundle.data['location_name'] = bundle.obj.location_name
 
         bundle.data.__delitem__('start_time')
         bundle.data.__delitem__('end_time')
+        bundle.data.__delitem__('worker')
         return bundle
 
     def hydrate(self, bundle):
         bundle.data['start_time'] = bundle.data['start']
         bundle.data['end_time'] = bundle.data['end']
-        bundle.data['location_name'] = "/api/v1/location/" + bundle.data['location_name'] + "/"
+        bundle.data['location_name'] = "/api/v1/location/Tech/"
+        bundle.data['worker'] = "/api/v1/user/" + bundle.data['title'] + "/"
         return bundle       
