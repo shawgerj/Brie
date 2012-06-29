@@ -1,0 +1,35 @@
+<!doctype html>
+<head>
+  <title>Calendar</title>
+  
+  <link rel='stylesheet' type='text/css' href="{{ STATIC_URL }}css/fullcalendar.css"/>
+  <link rel='stylesheet' type='text/css' href="{{ STATIC_URL }}css/jquery-ui-1.8.21.custom.css"/>
+  <link rel='stylesheet' type='text/css' href="{{ STATIC_URL }}css/application.css"/>
+  
+  <script src="{{ STATIC_URL }}js/jquery-1.7.2.min.js"></script>
+  <script src="{{ STATIC_URL }}js/jquery-ui-1.8.21.custom.min.js"></script>
+  <script src="{{ STATIC_URL }}js/underscore-min.js"></script>
+  <script src="{{ STATIC_URL }}js/backbone-min.js"></script>
+  <script src="{{ STATIC_URL }}js/fullcalendar.min.js"></script>
+  <script src="{{ STATIC_URL }}js/backbone-tastypie.js"></script>
+  
+  <script>
+    SHIFTS_API = "{% url api_dispatch_list api_name="v1" resource_name="shift" %}";
+    USERS_API = "{% url api_dispatch_list api_name="v1" resource_name="user" %}";
+  </script>
+  <script src="{{ STATIC_URL }}js/application.js"></script>
+  
+</head>
+<body>
+  <div id='calendar'></div>
+  
+  <div id='eventDialog' class='dialog ui-helper-hidden'>
+    <form>
+      <div> 
+        <label>Consultant:</label>
+        <select id='conWorking' class="field"></select>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

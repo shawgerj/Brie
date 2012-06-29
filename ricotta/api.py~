@@ -1,0 +1,47 @@
+from django.contrib.auth.models import User
+from tastypie import fields
+from tastypie.authorization import Authorization
+from tastypie.resources import ModelResource
+from ricotta.models import Location, Shift, WorkedBy, UserProfile
+
+class UserResource(ModelResource):
+    class Meta:
+        queryset = User.objects.all()
+        resource_name = 'user'
+        fields = ['username', 'email', 'first_name', 'last_name']
+        allowed_methods = ['get']
+
+class LocationResource(ModelResource):
+    class Meta:
+        queryset = Location.objects.all()
+        resource_name = 'location'
+        fields = ['location_name', 'ip_address', 'enable_schedule']
+        allowed_methods = ['get']
+
+class ShiftResource(ModelResource):
+    location_name = fields.ForeignKey(LocationResource, 'location_name', 
+                                      full=True)
+    workers = fields.ToManyField('ricotta.api.WorkedByResource', 'workers')
+    class Meta:
+        queryset = Shift.objects.all()
+        resource_name = 'shift'
+        fields = ['start_time', 'end_time', 'location_name', 'num_owners', 
+                  'workers']
+        allowed_methods = ['get', 'post']
+
+    def dehydrate(self, bundle):
+        bundle.data['start'] = bundle.data['start_time']
+        bundle.data['end'] = bundle.data['end_time']
+        bundle.data['title'] = "my event"
+        bundle.data.__delitem__('start_time')
+        bundle.data.__delitem__('end_time')
+        return bundle
+
+class WorkedByResource(ModelResource):
+    username = fields.ToOneField(UserResource, 'username', full=True)
+    shift = fields.ForeignKey(ShiftResource, 'shift', full=True)
+    class Meta:
+        queryset = WorkedBy.objects.all()
+        resource_name = 'worked_by'
+        allowed_methods = ['get', 'post']
+    

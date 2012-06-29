@@ -1,0 +1,9 @@
+{% if location_list %}
+  <ul>
+    {% for location in location_list %}
+      <li>{{ location.location_name }}</li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No locations are available</p>
+{% endif %}

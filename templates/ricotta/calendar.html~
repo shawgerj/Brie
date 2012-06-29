@@ -1,0 +1,19 @@
+<!doctype html>
+<head>
+  <title>Calendar</title>
+  
+  <link rel='stylesheet' type='text/css' href="{{ STATIC_URL }}css/fullcalendar.css"/>
+  <link rel='stylesheet' type='text/css' href="{{ STATIC_URL }}css/application.css"/>
+  
+  <script src="{{ STATIC_URL }}js/jquery-1.7.1.min.js"></script>
+  <script src="{{ STATIC_URL }}js/jquery-ui-1.8.17.custom.min.js"></script>
+  <script src="{{ STATIC_URL }}js/underscore-min.js"></script>
+  <script src="{{ STATIC_URL }}js/backbone-min.js"></script>
+  <script src="{{ STATIC_URL }}js/fullcalendar.min.js"></script>
+  <script src="{{ STATIC_URL }}js/application.js"></script>
+  
+</head>
+<body>
+  <div id='calendar'></div>
+</body>
+</html>

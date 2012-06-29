@@ -1,0 +1,48 @@
+- model: ricotta.location   
+  pk: 1
+  fields:
+    location_name: IC-Main
+    address: 1970 Campus Drive
+    phone_number: 847-491-7658
+    ip_address: 129.105.29.34
+    enable_schedule: true
+- model: ricotta.location
+  pk: 2
+  fields:
+    location_name: IC-Media
+    address: 1970 Campus Drive
+    phone_number: 847-467-4565
+    ip_address: 129.105.104.239
+    enable_schedule: true
+- model: ricotta.location
+  pk: 3
+  fields:
+    location_name: PC-MAC
+    address: 1970 Campus Drive
+    phone_number: 847-467-4565
+    ip_address: 129.105.35.40
+    enable_schedule: true
+- model: ricotta.location
+  pk: 4
+  fields:
+    location_name: SCV Library
+    address: 1970 Campus Drive
+    phone_number: 847-467-7666
+    ip_address: 129.105.110.111
+    enable_schedule: true
+- model: ricotta.location
+  pk: 5
+  fields:
+    location_name: SCV Tech
+    address: 2145 Sheridan Road
+    phone_number: 847-467-7666
+    ip_address: 129.105.91.82
+    enable_schedule: true
+- model: ricotta.location
+  pk: 6
+  fields:
+    location_name: Tech
+    address: 2145 Sheridan Road
+    phone_number: 847-467-2356
+    ip_address: 129.105.10.56
+    enable_schedule: true

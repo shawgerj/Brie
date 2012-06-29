@@ -1,0 +1,32 @@
+- model: ricotta.location   
+  pk: 1
+  fields:
+    location_name: IC-Main
+    address: 1970 Campus Drive
+    phone_number:
+    ip_address:
+    enable_schedule:
+- model: ricotta.location
+  pk: 1
+  fields:
+    location_name: IC-Media
+    address: 1970 Campus Drive
+    phone_number:
+    ip_address:
+    enable_schedule:
+- model: ricotta.location
+  pk: 1
+  fields:
+    location_name: PC-MAC
+    address: 1970 Campus Drive
+    phone_number:
+    ip_address:
+    enable_schedule:
+- model: ricotta.location
+  pk: 1
+  fields:
+    location_name: SCV Library
+    address: 1970 Campus Drive
+    phone_number:
+    ip_address:
+    enable_schedule:
