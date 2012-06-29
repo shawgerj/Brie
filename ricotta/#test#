@@ -1,5 +1,1 @@
 curl --dump-header - -H "Content-Type: application/json" -X POST --data '{"start": "2012-06-29T15:00:00", "end": "2012-06-29T17:00:00", "location_name": "Tech", "num_owners": 1, "workers": ""}' http://localhost:8000/api/v1/shift/
-
-curl --dump-header - -H "Content-Type: application/json" -X POST --data '{"worker": "jms511", "shift": "/api/v1/shift/2/", "forTrade": false, "beenTraded": 0}' http://localhost:8000/api/v1/worked_by/
-
-curl --dump-header - -H "Content-Type: application/json" -X PATCH --data '{"workers": ["/api/v1/worked_by/3/"]}' http://localhost:8000/api/v1/shift/2/

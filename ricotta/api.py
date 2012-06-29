@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from tastypie.authorization import Authorization
 from tastypie import fields
 from tastypie.resources import ModelResource
-from ricotta.models import Location, Shift, WorkedBy, UserProfile
+from ricotta.models import Location, Shift, UserProfile
 import urllib
 
 class UserResource(ModelResource):
@@ -33,26 +33,20 @@ class LocationResource(ModelResource):
 class ShiftResource(ModelResource):
     location_name = fields.ForeignKey(LocationResource, 'location_name', 
                                       full=True)
-    workers = fields.ToManyField('ricotta.api.WorkedByResource', 'workers')
+    worker = fields.ForeignKey(UserResource, 'worker')
     class Meta:
         queryset = Shift.objects.all()
         resource_name = 'shift'
         authorization = Authorization()
         fields = ['start_time', 'end_time', 'location_name', 'num_owners', 
-                  'workers']
-        allowed_methods = ['get', 'post', 'patch']
+                  'worker']
+        allowed_methods = ['get', 'post', 'patch', 'delete']
 
     def dehydrate(self, bundle):
         bundle.data['start'] = bundle.data['start_time']
         bundle.data['end'] = bundle.data['end_time']
         bundle.data['allDay'] = False
-        # sloppy... I suck at python. Fix this later.
-        title = ''
-        for w in bundle.obj.workers.all():
-            title = title + w.username + ' '
-
-        bundle.data['title'] = title
-        bundle.data['workers'] = list(bundle.obj.workers.all())
+        bundle.data['title'] = bundle.obj.worker
 
         bundle.data.__delitem__('start_time')
         bundle.data.__delitem__('end_time')
@@ -63,17 +57,3 @@ class ShiftResource(ModelResource):
         bundle.data['end_time'] = bundle.data['end']
         bundle.data['location_name'] = "/api/v1/location/" + bundle.data['location_name'] + "/"
         return bundle       
-
-class WorkedByResource(ModelResource):
-    worker = fields.ToOneField(UserResource, 'worker')
-    shift = fields.ToOneField(ShiftResource, 'shift')
-                                          
-    class Meta:
-        queryset = WorkedBy.objects.all()
-        resource_name = 'worked_by'
-        authorization = Authorization()
-        allowed_methods = ['get', 'post']
-
-    def hydrate(self, bundle):
-        bundle.data['worker'] = "/api/v1/user/" + bundle.data['worker'] + "/"
-        return bundle
