@@ -78,8 +78,10 @@ $(function(){
             this.eventView.render();
         },
         change: function(event) {
-            var fcEvent = this.el.fullCalendar('clientEvents', event.get('id'));
+            var fcEvent = this.el.fullCalendar('clientEvents', event.get('id'))[0];
             fcEvent.title = event.get('title');
+            fcEvent.for_trade = event.get('for_trade');
+            fcEvent.color = event.get('color');
             this.el.fullCalendar('updateEvent', fcEvent);
         },
         eventDropOrResize: function(fcEvent) {
@@ -100,7 +102,8 @@ $(function(){
             if (this.model.isNew()) {
                 _.extend(buttons, {'Save': this.save});
             } else {
-                _.extend(buttons, {'Mark for Trade': this.save, 
+                _.extend(buttons, {'Save': this.save,
+                                   'Mark for Trade': this.toggle_trade, 
                                    'Delete': this.destroy});
             }
 //            _.extend(buttons, {'Cancel': this.close});
@@ -109,7 +112,7 @@ $(function(){
                 modal: true,
                 title: (this.model.isNew() ? 'New' : 'Edit') + ' Shift',
                 buttons: buttons,
-                open: this.open
+                open: this.open,
             });
 
             return this;
@@ -126,6 +129,14 @@ $(function(){
             } else {
                 this.model.save({}, {success: this.close});
             }
+        },
+        // it would be nice to not have this as a separate function, but
+        // this is the easy way for now
+        toggle_trade: function() {
+            this.model.get("for_trade") ?
+                this.model.set({'for_trade': false, 'color': 'Blue'}) :
+                this.model.set({'for_trade': true, 'color': 'Red'});
+            this.model.save({}, {success: this.close});
         },
         close: function() {
             this.el.dialog('close');

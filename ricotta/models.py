@@ -48,6 +48,8 @@ class Shift(models.Model):
     end_time = models.DateTimeField()
     location_name = models.ForeignKey(Location)
     worker = models.ForeignKey(User, null=True)
+    for_trade = models.BooleanField()
+    been_traded = models.BooleanField()
 
     def __unicode__(self):
         return self.location_name.location_name + ' ' + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + ' ' + self.worker.username

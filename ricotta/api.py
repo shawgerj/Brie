@@ -41,7 +41,7 @@ class ShiftResource(ModelResource):
         resource_name = 'shift'
         authorization = Authorization()
         fields = ['start_time', 'end_time', 'location_name', 'worker', 
-                  'resource_uri']
+                  'resource_uri', 'for_trade', 'been_traded']
         allowed_methods = ['get', 'post', 'patch', 'delete', 'put']
         filtering = {
             'location_name': ALL_WITH_RELATIONS,
@@ -58,6 +58,7 @@ class ShiftResource(ModelResource):
         ### and this next one is useful...
         bundle.data['id'] = bundle.data['resource_uri']
         bundle.data['location_name'] = bundle.obj.location_name
+        bundle.data['color'] = 'blue' if bundle.data['for_trade'] == False else 'red'
 
         bundle.data.__delitem__('start_time')
         bundle.data.__delitem__('end_time')
