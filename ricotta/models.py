@@ -46,21 +46,11 @@ class DisciplineRecord(models.Model):
 class Shift(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-    num_owners = models.IntegerField("number of people working")
     location_name = models.ForeignKey(Location)
-    workers = models.ManyToManyField(User, through='WorkedBy')
+    worker = models.ForeignKey(User, null=True)
 
     def __unicode__(self):
-        return self.location_name.location_name + ' ' + self.start_time.strftime("%Y-%m-%d %H:%M:%S")
-    
-class WorkedBy(models.Model):
-    worker = models.ForeignKey(User)
-    shift = models.ForeignKey(Shift)
-    forTrade = models.NullBooleanField(blank=True)
-    beenTraded = models.IntegerField(null=True, blank=True)
-
-    def __unicode__(self):
-        return self.worker.username
+        return self.location_name.location_name + ' ' + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + ' ' + self.worker.username
 
 class TimeclockRecord(models.Model):
     start_time = models.DateTimeField()

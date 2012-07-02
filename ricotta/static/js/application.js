@@ -62,11 +62,11 @@ $(function(){
             });
         },
         addAll: function(){
-            var test = this.collection.toJSON();
+//            var test = this.collection.toJSON();
             this.el.fullCalendar('addEventSource', this.collection.toJSON());
         },
         addOne: function(event) {
-            this.el.fullCalendar('renderEvent', event.toJSON());
+            this.el.fullCalendar('renderEvent', event.toJSON(), true);
         },
         select: function(start, end, allDay) {
             this.eventView.collection = this.collection;
@@ -78,16 +78,15 @@ $(function(){
             this.eventView.render();
         },
         change: function(event) {
-            var fcEvent = this.el.fullCalendar('clientEvents', event.get('id'))[0];
+            var fcEvent = this.el.fullCalendar('clientEvents', event.get('id'));
             fcEvent.title = event.get('title');
-            fcEvent.color = event.get('color');
             this.el.fullCalendar('updateEvent', fcEvent);
         },
         eventDropOrResize: function(fcEvent) {
             this.collection.get(fcEvent.resource_uri).save({start: fcEvent.start, end: fcEvent.end});
         },
         destroy: function(event) {
-            this.el.fullCalendar('removeEvents', event.id);
+            this.el.fullCalendar('removeEvents', event.get('id'));
         }
     });
 
@@ -120,7 +119,7 @@ $(function(){
             
         },
         save: function() {
-            this.model.set({'title': this.$("#title").val(), 'color': this.$("#color").val()});
+            this.model.set({'title': this.$("#conWorking").val()});
             
             if (this.model.isNew()) {
                 this.collection.create(this.model, {success: this.close});
@@ -144,9 +143,12 @@ $(function(){
     // on success, populate the #conWorking dropdown list with users
     users.fetch({success: function(model, response) {
         model.each(function (u) {
-            $("#conWorking").append($('<option></option>')
-                                    .val(u.get('username'))
-                                    .html(u.get('first_name') + ' ' +  u.get('last_name')));
+            $("#conWorking")
+                .append($('<option></option>')
+                        .val(u.get('username'))
+                        .html(u.get('first_name') + 
+                              ' ' +  
+                              u.get('last_name')));
         });
     }});
         

@@ -14,7 +14,7 @@
   <script src="{{ STATIC_URL }}js/backbone-tastypie.js"></script>
   
   <script>
-    SHIFTS_API = "{% url api_dispatch_list api_name="v1" resource_name="shift" %}";
+    SHIFTS_API = "{% url api_dispatch_list api_name="v1" resource_name="shift" %}?location_name__location_name={{ location_name }}";
     USERS_API = "{% url api_dispatch_list api_name="v1" resource_name="user" %}";
   </script>
   <script src="{{ STATIC_URL }}js/application.js"></script>
