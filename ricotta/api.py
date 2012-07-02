@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.contrib.auth.models import User
 from tastypie.authorization import Authorization
 from tastypie import fields
-from tastypie.resources import ModelResource
+from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 from ricotta.models import Location, Shift, UserProfile
 import urllib
 
@@ -24,6 +24,9 @@ class LocationResource(ModelResource):
         resource_name = 'location'
         fields = ['location_name', 'ip_address', 'enable_schedule']
         allowed_methods = ['get']
+        filtering = {
+            'location_name': ALL,
+        }
 
     def prepend_urls(self):
         return [
@@ -40,6 +43,9 @@ class ShiftResource(ModelResource):
         fields = ['start_time', 'end_time', 'location_name', 'worker', 
                   'resource_uri']
         allowed_methods = ['get', 'post', 'patch', 'delete', 'put']
+        filtering = {
+            'location_name': ALL_WITH_RELATIONS,
+        }
 
     def dehydrate(self, bundle):
         # see if there's a better way to rename fields than creating and 
@@ -49,8 +55,8 @@ class ShiftResource(ModelResource):
         bundle.data['end'] = bundle.data['end_time']
         bundle.data['allDay'] = False
         bundle.data['title'] = bundle.obj.worker
+        ### and this next one is useful...
         bundle.data['id'] = bundle.data['resource_uri']
-        ###
         bundle.data['location_name'] = bundle.obj.location_name
 
         bundle.data.__delitem__('start_time')
@@ -63,4 +69,4 @@ class ShiftResource(ModelResource):
         bundle.data['end_time'] = bundle.data['end']
         bundle.data['location_name'] = "/api/v1/location/Tech/"
         bundle.data['worker'] = "/api/v1/user/" + bundle.data['title'] + "/"
-        return bundle       
+        return bundle
