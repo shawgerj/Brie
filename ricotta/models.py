@@ -54,6 +54,21 @@ class Shift(models.Model):
     def __unicode__(self):
         return self.location_name.location_name + ' ' + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + ' ' + self.worker.username
 
+class PlannerBlock(models.Model):
+    PLANNER_CHOICES = (
+        ('pf', 'Preferred'),
+        ('ic', 'In Class'),
+        ('un', 'Unavailable'),
+    )
+
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    worker = models.ForeignKey(User, null=True)
+    block_type = models.CharField(max_length=2, choices = PLANNER_CHOICES)
+
+    def __unicode__(self):
+        return self.worker.username + ' ' + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + ' ' + self.get_block_type_display()
+
 class TimeclockRecord(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()

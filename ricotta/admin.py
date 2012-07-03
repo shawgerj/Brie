@@ -4,10 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from models import UserProfile
 
-from ricotta.models import Listserv
-from ricotta.models import Location
-from ricotta.models import Shift
-from ricotta.models import DisciplineRecord
+from ricotta.models import Listserv, Location, Shift, DisciplineRecord, PlannerBlock
 
 class ProfileInline(admin.StackedInline):
     model = UserProfile
@@ -37,4 +34,4 @@ admin.site.register(Listserv)
 admin.site.register(Location)
 admin.site.register(DisciplineRecord)
 admin.site.register(Shift)
-
+admin.site.register(PlannerBlock)
