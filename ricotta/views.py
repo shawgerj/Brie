@@ -48,8 +48,16 @@ def planner(request, username):
         return HttpResponse(t.render(c))
 
 def planner_lab(request, location_name):
-    t = loader.get_template('ricotta/planner_lab.html')
-    c = RequestContext(request, {
-            'lab': location_name,
-    })
-    return HttpResponse(t.render(c))
+    try:
+        Location.objects.get(pk=location_name)
+    except:
+        raise Http404
+    else:
+        workers = UserProfile.objects.filter(lab=location_name)
+        
+        t = loader.get_template('ricotta/planner_lab.html')
+        c = RequestContext(request, {
+                'workers': workers,
+                'location_name': location_name
+            })
+        return HttpResponse(t.render(c))

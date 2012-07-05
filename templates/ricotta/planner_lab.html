@@ -1,0 +1,13 @@
+{% extends "ricotta/calendar_base.html" %}
+
+{% block title %}Compiled Planners for {{ location_name }} {% endblock %}
+  
+{% block resource_apis %}
+  PLANNER_API = "{% url api_dispatch_list api_name="v1" resource_name="planner_block" %}?worker__username__in={{ workers|join:"," }}";
+{% endblock %}
+{% block calendar_js %}
+  <script src="{{ STATIC_URL }}js/planner_cal_app.js"></script>
+{% endblock %}
+
+{% block dialog %}
+{% endblock %}
