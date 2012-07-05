@@ -1,0 +1,101 @@
+# let's just define one lab
+- model: ricotta.location
+  pk: 6
+  fields:
+    location_name: Tech
+    address: 2145 Sheridan Road
+    phone_number: 847-467-2356
+    ip_address: 129.105.10.56
+    enable_schedule: true
+
+# admin user
+- model: auth.user
+  pk: 1
+  fields:
+    username: admusr
+    first_name: Test
+    last_name: Admin
+    email: testadmin@test.org
+    password: sha1$e66d8$c994203a282b2ebff8330a690378908b71c8c1c2
+    is_staff: 1
+    is_active: 1
+    is_superuser: 1
+    last_login: 2012-07-05T10:43:00-05:00
+    date_joined: 2012-07-05T10:43:00-05:00
+
+# user profile for admin user
+- model: ricotta.UserProfile
+  pk: 1
+  fields:
+    user: 1
+    phone_number: 123-456-7890
+    lab: Tech
+
+# normal user
+- model: auth.user
+  pk: 2
+  fields:
+    username: nmlusr
+    first_name: Test
+    last_name: User
+    email: testuser@test.org
+    password: sha1$e66d8$c994203a282b2ebff8330a690378908b71c8c1c2
+    is_staff: 0
+    is_active: 1
+    is_superuser: 0
+    last_login: 2012-07-05T10:43:00-05:00
+    date_joined: 2012-07-05T10:43:00-05:00
+
+# user profile for normal user
+- model: ricotta.UserProfile
+  pk: 2
+  fields:
+    user: 2
+    phone_number: 098-765-4321
+    lab: Tech
+
+# planner blocks for the admin user 
+- model: ricotta.PlannerBlock
+  pk: 1
+  fields:
+    start_time: 2012-07-04T12:00:00-05:00
+    end_time: 2012-07-04T13:00:00-05:00
+    worker: 1
+    block_type: pf
+- model: ricotta.PlannerBlock
+  pk: 2
+  fields:
+    start_time: 2012-07-04T10:00:00-05:00
+    end_time: 2012-07-04T12:00:00-05:00
+    worker: 1
+    block_type: ic
+- model: ricotta.PlannerBlock
+  pk: 3
+  fields:
+    start_time: 2012-07-04T15:00:00-05:00
+    end_time: 2012-07-04T17:00:00-05:00
+    worker: 1
+    block_type: un
+
+# planner blocks for the normal user
+- model: ricotta.PlannerBlock
+  pk: 4
+  fields:
+    start_time: 2012-07-05T12:00:00-05:00
+    end_time: 2012-07-05T13:00:00-05:00
+    worker: 2
+    block_type: pf
+- model: ricotta.PlannerBlock
+  pk: 5
+  fields:
+    start_time: 2012-07-05T10:00:00-05:00
+    end_time: 2012-07-05T12:00:00-05:00
+    worker: 2
+    block_type: ic
+- model: ricotta.PlannerBlock
+  pk: 6
+  fields:
+    start_time: 2012-07-05T15:00:00-05:00
+    end_time: 2012-07-05T17:00:00-05:00
+    worker: 2
+    block_type: un

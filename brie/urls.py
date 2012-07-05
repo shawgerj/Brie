@@ -21,4 +21,5 @@ urlpatterns = patterns('',
 
     url(r'^calendar/(?P<location_name>.*)/$', 'ricotta.views.calendar'),
     url(r'^planner/(?P<username>\w+)/$', 'ricotta.views.planner'),
+    url(r'^planner/lab/(?P<location_name>\w+)/$', 'ricotta.views.planner_lab'),
 )

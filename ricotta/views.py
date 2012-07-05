@@ -1,6 +1,7 @@
 from django.template import RequestContext, Context, loader
 from ricotta.models import Shift, Location, UserProfile, PlannerBlock
-from django.http import HttpResponse
+from django.contrib.auth.models import User
+from django.http import HttpResponse, Http404
 from django.db.models import Count
 
 def shifts_by_user(request, username):
@@ -22,16 +23,33 @@ def locations(request):
     return HttpResponse(t.render(c))
 
 def calendar(request, location_name):
-    t = loader.get_template('ricotta/calendar.html')
-    c = RequestContext(request, {
-        'location_name': location_name,
-    })
-    return HttpResponse(t.render(c))
+    try:
+        l = Location.objects.get(pk=location_name)
+    except:
+        raise Http404
+    else:
+        t = loader.get_template('ricotta/calendar.html')
+        c = RequestContext(request, {
+                'location_name': location_name,
+            })
+        return HttpResponse(t.render(c))
 
 def planner(request, username):
-    t = loader.get_template('ricotta/planner.html')
+    try:
+        User.objects.get(username=username)
+    except:
+        raise Http404
+    else:
+        t = loader.get_template('ricotta/planner.html')
+        c = RequestContext(request, {
+                'worker': username,
+                'preferences': PlannerBlock.PLANNER_CHOICES,
+            })
+        return HttpResponse(t.render(c))
+
+def planner_lab(request, location_name):
+    t = loader.get_template('ricotta/planner_lab.html')
     c = RequestContext(request, {
-            'user': username,
-            'preferences': PlannerBlock.PLANNER_CHOICES,
+            'lab': location_name,
     })
     return HttpResponse(t.render(c))

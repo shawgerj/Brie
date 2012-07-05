@@ -1,27 +1,15 @@
-<!doctype html>
-<head>
-  <title>Planner</title>
+{% extends "ricotta/calendar_base.html" %}
+
+{% block title %}Planner{% endblock %}
   
-  <link rel='stylesheet' type='text/css' href="{{ STATIC_URL }}css/fullcalendar.css"/>
-  <link rel='stylesheet' type='text/css' href="{{ STATIC_URL }}css/jquery-ui-1.8.21.custom.css"/>
-  <link rel='stylesheet' type='text/css' href="{{ STATIC_URL }}css/application.css"/>
-  
-  <script src="{{ STATIC_URL }}js/jquery-1.7.2.min.js"></script>
-  <script src="{{ STATIC_URL }}js/jquery-ui-1.8.21.custom.min.js"></script>
-  <script src="{{ STATIC_URL }}js/underscore-min.js"></script>
-  <script src="{{ STATIC_URL }}js/backbone-min.js"></script>
-  <script src="{{ STATIC_URL }}js/fullcalendar.min.js"></script>
-  <script src="{{ STATIC_URL }}js/backbone-tastypie.js"></script>
-  
-  <script>
-    PLANNER_API = "{% url api_dispatch_list api_name="v1" resource_name="planner_block" %}?worker__username={{ user }}";
-  </script>
+{% block resource_apis %}
+  PLANNER_API = "{% url api_dispatch_list api_name="v1" resource_name="planner_block" %}?worker__username={{ worker }}";
+{% endblock %}
+{% block calendar_js %}
   <script src="{{ STATIC_URL }}js/planner_cal_app.js"></script>
-  
-</head>
-<body>
-  <div id='calendar''></div>
-  
+{% endblock %}
+
+{% block dialog %}
   <div id='prefDialog' class='dialog ui-helper-hidden'>
     <form>
       <div> 
@@ -31,9 +19,8 @@
             <option value={{p}}>{{pref}}</option>
           {% endfor %}
         </select>
-        <input id='user' type='hidden' value='/api/v1/user/{{ user }}/'></input>
+        <input id='user' type='hidden' value='/api/v1/user/{{ worker }}/'></input>
       </div>
     </form>
   </div>
-</body>
-</html>
+{% endblock %}
