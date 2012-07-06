@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from tastypie.authorization import Authorization
 from tastypie import fields
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
@@ -21,9 +22,15 @@ class UserResource(ModelResource):
             url(r"^(?P<resource_name>%s)/(?P<username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_detail'), name="api_dispatch_detail"),
         ]
 
-    def get_resource_uri(self, bundle_or_obj):
-        return '/api/v1/%s/%s/' % (self._meta.resource_name, 
-                                   bundle_or_obj.obj.username)            
+    def get_resource_uri(self, bundle = None):
+        kwargs = {
+            'resource_name': self._meta.resource_name, 
+            'api_name': self._meta.api_name,
+        } 
+        if (bundle != None):
+            kwargs['pk'] = bundle.data['username']
+
+        return reverse('api_dispatch_list', kwargs = kwargs)
 
 class LocationResource(ModelResource):
     class Meta:
