@@ -28,9 +28,10 @@ class UserResource(ModelResource):
             'api_name': self._meta.api_name,
         } 
         if (bundle != None):
-            kwargs['pk'] = bundle.data['username']
-
-        return reverse('api_dispatch_list', kwargs = kwargs)
+            kwargs['pk'] = bundle.obj.username
+            return reverse('api_dispatch_detail', kwargs = kwargs)
+        else:
+            return reverse('api_dispatch_list', kwargs=kwargs)
 
 class LocationResource(ModelResource):
     class Meta:
