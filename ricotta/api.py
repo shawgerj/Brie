@@ -39,6 +39,7 @@ class LocationResource(ModelResource):
         resource_name = 'location'
         fields = ['location_name', 'ip_address', 'enable_schedule']
         allowed_methods = ['get']
+        include_resource_uri = False
         filtering = {
             'location_name': ALL,
         }
