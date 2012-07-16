@@ -43,6 +43,11 @@ class DisciplineRecord(models.Model):
     def __unicode__(self):
         return self.employee.username + ' ' + self.date_of_record.strftime("%y-%m-%d")
 
+    class Meta:
+        permissions = (
+            ("view_dr", "View discipline record"),
+        )
+
 class Shift(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
@@ -53,6 +58,13 @@ class Shift(models.Model):
 
     def __unicode__(self):
         return self.location_name.location_name + ' ' + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + ' ' + self.worker.username
+
+    class Meta:
+        permissions = (
+            ("trade_shift", "Put own shift up for trade"),
+            ("take_shift", "Take a shift that is up for trade"),
+        )
+            
 
 class PlannerBlock(models.Model):
     PLANNER_CHOICES = (
@@ -69,6 +81,14 @@ class PlannerBlock(models.Model):
     def __unicode__(self):
         return self.worker.username + ' ' + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + ' ' + self.get_block_type_display()
 
+    class Meta:
+        permissions = (
+            ("change_pb", "Change own planner block"),
+            ("delete_pb", "Delete own planner block"),
+            ("view_pb", "View own planner block"),
+            ("view_pb_gl", "View any planner block"),
+        )
+
 class TimeclockRecord(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
@@ -76,8 +96,8 @@ class TimeclockRecord(models.Model):
     outIP = models.IPAddressField()
     employee = models.ForeignKey(User)
 
-# def create_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         UserProfile.objects.create(user=instance)
-
-# post_save.connect(create_user_profile, sender=User)
+    class Meta:
+        permissions = (
+            ("view_tr", "View own timeclock record"),
+            ("view_tr_gl", "View any timeblock record"),
+        )
