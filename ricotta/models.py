@@ -3,6 +3,7 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from datetime import datetime
 from django.utils import timezone
+from tastypie.models import create_api_key
 
 class Listserv(models.Model):
     email = models.CharField(max_length=50, primary_key=True)
@@ -83,3 +84,6 @@ class TimeclockRecord(models.Model):
     inIP = models.IPAddressField()
     outIP = models.IPAddressField()
     employee = models.ForeignKey(User)
+
+# this is to generate the tastypie API keys for each user
+models.signals.post_save.connect(create_api_key, sender=User)
