@@ -24,7 +24,7 @@ class DisciplineRecordTestCase(TestCase):
         self.assertEquals(self.d1.changed_by.username, 'admusr')
 
 class ShiftTestCase(TestCase):
-    fixtures = ['ricotta_testusers.yaml']
+    fixtures = ['ricotta_testusers.yaml', 'ricotta_testgroups.yaml']
     def test_shift(self):
         time = datetime.datetime.now()
         self.s1 = Shift.objects.create(start_time=time, end_time=time + datetime.timedelta(hours=1), location_name = Location.objects.get(pk='Tech'), worker = User.objects.get(pk=1), for_trade = False, been_traded = False)
@@ -36,7 +36,7 @@ class ShiftTestCase(TestCase):
         self.assertEquals(self.s2.worker.username, 'nmlusr')
 
 class PlannerBlockTestCase(TestCase):
-    fixtures = ['ricotta_testusers.yaml']
+    fixtures = ['ricotta_testusers.yaml', 'ricotta_testgroups.yaml']
     def test_plannerblock(self):
         time = datetime.datetime.now()
         self.pb1 = PlannerBlock.objects.create(start_time=time, end_time=time + datetime.timedelta(hours=1), worker = User.objects.get(pk=1), block_type = 'pf')
@@ -46,7 +46,7 @@ class PlannerBlockTestCase(TestCase):
         self.assertEquals(self.pb1.get_block_type_display(), "Preferred")
 
 class TimeclockRecordTestCase(TestCase):
-    fixtures = ['ricotta_testusers.yaml']
+    fixtures = ['ricotta_testusers.yaml', 'ricotta_testgroups.yaml']
     def test_timeclockrecord(self):
         time = datetime.datetime.now()
         loc = Location.objects.get(pk='Tech')
@@ -74,7 +74,7 @@ class LocationModelTestCase(TestCase):
 ###
 
 class LocationResourceTest(ResourceTestCase):
-    fixtures = ['ricotta_testusers.yaml']
+    fixtures = ['ricotta_testusers.yaml', 'ricotta_testgroups.yaml']
     def setUp(self):
         super(LocationResourceTest, self).setUp()
 
@@ -124,7 +124,7 @@ class LocationResourceTest(ResourceTestCase):
         
 
 class ShiftResourceTest(ResourceTestCase):
-    fixtures = ['ricotta_testusers.yaml', 'ricotta_testshifts.yaml']
+    fixtures = ['ricotta_testusers.yaml', 'ricotta_testshifts.yaml', 'ricotta_testgroups.yaml']
 
     # note: eventually to make all the permissions right....
     # unauthenticated users should not be able to see any shifts.
@@ -177,9 +177,7 @@ class ShiftResourceTest(ResourceTestCase):
         self.assertValidJSONResponse(resp)
 
 
-        self.assertEqual(len(self.deserialize(resp)['objects']), 1)
-        # test the content of the shift we put in the fixture
-#        self.assertEqual(self.deserialize(resp)['objects'][0], {
+        self.assertEqual(len(self.deserialize(resp)['objects']), 2)
         
     def test_get_detail_unauthorized(self):
         self.assertHttpUnauthorized(self.api_client.get(self.detail_url, format='json'))
@@ -198,9 +196,14 @@ class ShiftResourceTest(ResourceTestCase):
         self.assertHttpUnauthorized(self.api_client.post('/api/v1/shift/', format='json', data=self.post_data_nml))
 
     def test_post_list(self):
-        self.assertEqual(Shift.objects.count(), 1)
-        self.assertHttpCreated(self.api_client.post('/api/v1/shift/', format='json', data=self.post_data_nml, authentication=self.get_normal_credentials()))
         self.assertEqual(Shift.objects.count(), 2)
+        # normal users cannot POST a shift (even if it belongs to them)
+        self.assertHttpUnauthorized(self.api_client.post('/api/v1/shift/', format='json', data=self.post_data_nml, authentication=self.get_normal_credentials()))
+        # but admin users can. Here we create a shift for nml and adm users
+        self.assertHttpCreated(self.api_client.post('/api/v1/shift/', format='json', data=self.post_data_nml, authentication=self.get_admin_credentials()))
+        self.assertHttpCreated(self.api_client.post('/api/v1/shift/', format='json', data=self.post_data_adm, authentication=self.get_admin_credentials()))
+
+        self.assertEqual(Shift.objects.count(), 4)
 
     def test_delete_detail_unauthenticated(self):
         self.assertHttpUnauthorized(self.api_client.delete(self.detail_url, format='json'))
@@ -224,7 +227,7 @@ class CalendarViewsTestCase(TestCase):
         self.assertEqual(resp.status_code, 404)
 
 class PlannerViewsTestCase(TestCase):
-    fixtures = ['ricotta_testusers', 'ricotta_planners_testdata.yaml']
+    fixtures = ['ricotta_testusers', 'ricotta_planners_testdata.yaml', 'ricotta_testgroups.yaml']
 
     def test_planner_detail(self):
         # check to make sure both of these planners exist

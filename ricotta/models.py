@@ -1,6 +1,8 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
+from datetime import datetime
+from django.utils import timezone
 
 class Listserv(models.Model):
     email = models.CharField(max_length=50, primary_key=True)
@@ -57,7 +59,7 @@ class Shift(models.Model):
     been_traded = models.BooleanField()
 
     def __unicode__(self):
-        return self.location_name.location_name + ' ' + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + ' ' + self.worker.username
+        return self.location_name.location_name + ' ' + self.start_time.astimezone(timezone.get_default_timezone()).strftime("%Y-%m-%d %H:%M:%S") + ' ' + self.worker.username
 
     class Meta:
         permissions = (
@@ -79,7 +81,7 @@ class PlannerBlock(models.Model):
     block_type = models.CharField(max_length=2, choices = PLANNER_CHOICES)
 
     def __unicode__(self):
-        return self.worker.username + ' ' + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + ' ' + self.get_block_type_display()
+        return self.worker.username + ' ' + self.start_time.astimezone(timezone.get_default_timezone()).strftime("%Y-%m-%d %H:%M:%S") + ' ' + self.get_block_type_display()
 
     class Meta:
         permissions = (

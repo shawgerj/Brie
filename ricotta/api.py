@@ -1,7 +1,8 @@
 from django.conf.urls import url
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from tastypie.authorization import Authorization
+from tastypie.authorization import Authorization, DjangoAuthorization
+from tastypie.authentication import BasicAuthentication
 from tastypie import fields
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 from ricotta.models import Location, Shift, UserProfile, PlannerBlock
@@ -56,6 +57,7 @@ class ShiftResource(ModelResource):
         queryset = Shift.objects.all()
         resource_name = 'shift'
         authorization = Authorization()
+        authentication = BasicAuthentication()
         fields = ['start_time', 'end_time', 'location_name', 'worker', 
                   'resource_uri', 'for_trade', 'been_traded']
         allowed_methods = ['get', 'post', 'patch', 'delete', 'put']
@@ -116,4 +118,3 @@ class PlannerBlockResource(ModelResource):
         bundle.data['start_time'] = bundle.data['start']
         bundle.data['end_time'] = bundle.data['end']
         return bundle
-
