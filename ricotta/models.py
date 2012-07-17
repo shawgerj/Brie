@@ -60,14 +60,7 @@ class Shift(models.Model):
 
     def __unicode__(self):
         return self.location_name.location_name + ' ' + self.start_time.astimezone(timezone.get_default_timezone()).strftime("%Y-%m-%d %H:%M:%S") + ' ' + self.worker.username
-
-    class Meta:
-        permissions = (
-            ("trade_shift", "Put own shift up for trade"),
-            ("take_shift", "Take a shift that is up for trade"),
-        )
             
-
 class PlannerBlock(models.Model):
     PLANNER_CHOICES = (
         ('pf', 'Preferred'),
@@ -83,13 +76,6 @@ class PlannerBlock(models.Model):
     def __unicode__(self):
         return self.worker.username + ' ' + self.start_time.astimezone(timezone.get_default_timezone()).strftime("%Y-%m-%d %H:%M:%S") + ' ' + self.get_block_type_display()
 
-    class Meta:
-        permissions = (
-            ("change_pb", "Change own planner block"),
-            ("delete_pb", "Delete own planner block"),
-            ("view_pb", "View own planner block"),
-            ("view_pb_gl", "View any planner block"),
-        )
 
 class TimeclockRecord(models.Model):
     start_time = models.DateTimeField()
@@ -97,9 +83,3 @@ class TimeclockRecord(models.Model):
     inIP = models.IPAddressField()
     outIP = models.IPAddressField()
     employee = models.ForeignKey(User)
-
-    class Meta:
-        permissions = (
-            ("view_tr", "View own timeclock record"),
-            ("view_tr_gl", "View any timeblock record"),
-        )

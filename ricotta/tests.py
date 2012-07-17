@@ -1,4 +1,5 @@
 import datetime
+from django.utils.timezone import utc
 from django.test import TestCase
 from tastypie.test import ResourceTestCase
 from ricotta.models import Listserv, Location, DisciplineRecord, Shift, PlannerBlock, TimeclockRecord
@@ -16,43 +17,43 @@ class ListservModelTestCase(TestCase):
         self.assertEquals(self.l1.email, 'tech@listserv.it.northwestern.edu')
 
 class DisciplineRecordTestCase(TestCase):
-    fixtures = ['ricotta_testusers.yaml']
+    fixtures = ['ricotta_test_data.json']
     def test_disciplinerecord(self):
-        self.d1 = DisciplineRecord.objects.create(date_of_record=datetime.datetime.now(), employee = User.objects.get(pk=2), changed_by = User.objects.get(pk=1), status_name = 'nd', comment = 'this is a comment')
+        self.d1 = DisciplineRecord.objects.create(date_of_record=datetime.datetime.utcnow().replace(tzinfo=utc), employee = User.objects.get(pk=2), changed_by = User.objects.get(pk=3), status_name = 'nd', comment = 'this is a comment')
         
-        self.assertEquals(self.d1.employee.username, 'nmlusr')
-        self.assertEquals(self.d1.changed_by.username, 'admusr')
+        self.assertEquals(self.d1.employee.username, 'testcon')
+        self.assertEquals(self.d1.changed_by.username, 'testcl')
 
 class ShiftTestCase(TestCase):
-    fixtures = ['ricotta_testusers.yaml', 'ricotta_testgroups.yaml']
+    fixtures = ['ricotta_test_data.json']
     def test_shift(self):
-        time = datetime.datetime.now()
-        self.s1 = Shift.objects.create(start_time=time, end_time=time + datetime.timedelta(hours=1), location_name = Location.objects.get(pk='Tech'), worker = User.objects.get(pk=1), for_trade = False, been_traded = False)
+        time = datetime.datetime.utcnow().replace(tzinfo=utc)
+        self.s1 = Shift.objects.create(start_time=time, end_time=time + datetime.timedelta(hours=1), location_name = Location.objects.get(pk='Tech'), worker = User.objects.get(pk=3), for_trade = False, been_traded = False)
         self.s2 = Shift.objects.create(start_time=time, end_time=time + datetime.timedelta(hours=1), location_name = Location.objects.get(pk='Tech'), worker = User.objects.get(pk=2), for_trade = True, been_traded = True)
 
         self.assertEquals(self.s1.for_trade, False)
         self.assertEquals(self.s2.for_trade, True)
-        self.assertEquals(self.s1.worker.username, 'admusr')
-        self.assertEquals(self.s2.worker.username, 'nmlusr')
+        self.assertEquals(self.s1.worker.username, 'testcl')
+        self.assertEquals(self.s2.worker.username, 'testcon')
 
 class PlannerBlockTestCase(TestCase):
-    fixtures = ['ricotta_testusers.yaml', 'ricotta_testgroups.yaml']
+    fixtures = ['ricotta_test_data.json']
     def test_plannerblock(self):
-        time = datetime.datetime.now()
-        self.pb1 = PlannerBlock.objects.create(start_time=time, end_time=time + datetime.timedelta(hours=1), worker = User.objects.get(pk=1), block_type = 'pf')
+        time = datetime.datetime.utcnow().replace(tzinfo=utc)
+        self.pb1 = PlannerBlock.objects.create(start_time=time, end_time=time + datetime.timedelta(hours=1), worker = User.objects.get(pk=3), block_type = 'pf')
         
-        self.assertEquals(self.pb1.worker.username, 'admusr')
+        self.assertEquals(self.pb1.worker.username, 'testcl')
         self.assertEquals(self.pb1.end_time - self.pb1.start_time, datetime.timedelta(hours=1))
         self.assertEquals(self.pb1.get_block_type_display(), "Preferred")
 
 class TimeclockRecordTestCase(TestCase):
-    fixtures = ['ricotta_testusers.yaml', 'ricotta_testgroups.yaml']
+    fixtures = ['ricotta_test_data.json']
     def test_timeclockrecord(self):
-        time = datetime.datetime.now()
+        time = datetime.datetime.utcnow().replace(tzinfo=utc)
         loc = Location.objects.get(pk='Tech')
-        self.tr1 = TimeclockRecord.objects.create(start_time=time, end_time=time + datetime.timedelta(hours=1), inIP = loc.ip_address, outIP = loc.ip_address, employee = User.objects.get(pk=1))
+        self.tr1 = TimeclockRecord.objects.create(start_time=time, end_time=time + datetime.timedelta(hours=1), inIP = loc.ip_address, outIP = loc.ip_address, employee = User.objects.get(pk=3))
 
-        self.assertEquals(self.tr1.employee.username, 'admusr')
+        self.assertEquals(self.tr1.employee.username, 'testcl')
         self.assertEquals(self.tr1.end_time - self.tr1.start_time, datetime.timedelta(hours=1))
         self.assertEquals(self.tr1.inIP, self.tr1.outIP)
 
@@ -74,12 +75,12 @@ class LocationModelTestCase(TestCase):
 ###
 
 class LocationResourceTest(ResourceTestCase):
-    fixtures = ['ricotta_testusers.yaml', 'ricotta_testgroups.yaml']
+    fixtures = ['ricotta_test_data.json']
     def setUp(self):
         super(LocationResourceTest, self).setUp()
 
-        self.admusr = User.objects.get(pk=1)
-        self.nmlusr = User.objects.get(pk=2)
+        self.testcl = User.objects.get(pk=1)
+        self.testcon = User.objects.get(pk=2)
         
         self.post_data_loc = {
             'location_name': 'NewLoc',
@@ -90,11 +91,11 @@ class LocationResourceTest(ResourceTestCase):
         }
 
     def get_normal_credentials(self):
-        return self.create_basic(username=self.nmlusr.username, 
-                                 password=self.nmlusr.password)
+        return self.create_basic(username=self.testcon.username, 
+                                 password=self.testcon.password)
     def get_admin_credentials(self):
-        return self.create_basic(username=self.admusr.username,
-                                 password=self.admusr.password)
+        return self.create_basic(username=self.testcl.username,
+                                 password=self.testcl.password)
         
     def test_get_list_json(self):
         resp = self.api_client.get('/api/v1/location/', format='json')
@@ -124,19 +125,19 @@ class LocationResourceTest(ResourceTestCase):
         
 
 class ShiftResourceTest(ResourceTestCase):
-    fixtures = ['ricotta_testusers.yaml', 'ricotta_testshifts.yaml', 'ricotta_testgroups.yaml']
+    fixtures = ['ricotta_test_data.json']
 
     # note: eventually to make all the permissions right....
     # unauthenticated users should not be able to see any shifts.
-    # nmlusr and admusr should each be able to see each other's shifts
-    # nmlusr should be able to put his shift up for trade, but not admusr's
-    # nmlusr should not be able to delete his shift or change ownership
-    # admusr should be able to make any changes to his or nmlusr's shifts
+    # testcon and testcl should each be able to see each other's shifts
+    # testcon should be able to put his shift up for trade, but not testcl's
+    # testcon should not be able to delete his shift or change ownership
+    # testcl should be able to make any changes to his or testcon's shifts
     def setUp(self):
         super(ShiftResourceTest, self).setUp()
 
-        self.admusr = User.objects.get(pk=1)
-        self.nmlusr = User.objects.get(pk=2)
+        self.testcl = User.objects.get(pk=3)
+        self.testcon = User.objects.get(pk=2)
 
         self.shift_1 = Shift.objects.get(pk=1)
         self.detail_url = '/api/v1/shift/{0}/' .format(self.shift_1.pk)
@@ -145,7 +146,7 @@ class ShiftResourceTest(ResourceTestCase):
         self.post_data_adm = {
             'start': '2012-07-10T10:00:00',
             'end': '2012-07-10T12:00:00',
-            'title': 'admusr',
+            'title': 'testcl',
             'location_name': 'Tech',
             'allDay': False,
             'color': 'Blue',
@@ -153,7 +154,7 @@ class ShiftResourceTest(ResourceTestCase):
         self.post_data_nml = {
             'start': '2012-07-10T12:00:00',
             'end': '2012-07-10T14:00:00',
-            'title': 'nmlusr',
+            'title': 'testcon',
             'location_name': 'Tech',
             'allDay': False,
             'color': 'Blue',
@@ -161,11 +162,11 @@ class ShiftResourceTest(ResourceTestCase):
 
     
     def get_normal_credentials(self):
-        return self.create_basic(username=self.nmlusr.username, 
-                                 password=self.nmlusr.password)
+        return self.create_basic(username=self.testcon.username, 
+                                 password=self.testcon.password)
     def get_admin_credentials(self):
-        return self.create_basic(username=self.admusr.username,
-                                 password=self.admusr.password)
+        return self.create_basic(username=self.testcl.username,
+                                 password=self.testcl.password)
 
     def test_get_list_unauthorized(self):
         self.assertHttpUnauthorized(self.api_client.get('/api/v1/shift/', format='json'))
@@ -227,14 +228,14 @@ class CalendarViewsTestCase(TestCase):
         self.assertEqual(resp.status_code, 404)
 
 class PlannerViewsTestCase(TestCase):
-    fixtures = ['ricotta_testusers', 'ricotta_planners_testdata.yaml', 'ricotta_testgroups.yaml']
+    fixtures = ['ricotta_test_data.json']
 
     def test_planner_detail(self):
         # check to make sure both of these planners exist
-        resp = self.client.get('/planner/admusr/')
+        resp = self.client.get('/planner/testcl/')
         self.assertEqual(resp.status_code, 200)
         self.assertTrue('worker' in resp.context)
-        resp = self.client.get('/planner/nmlusr/')
+        resp = self.client.get('/planner/testcon/')
         self.assertEqual(resp.status_code, 200)
         self.assertTrue('worker' in resp.context)
 
