@@ -114,11 +114,11 @@ class LocationResourceTest(ResourceTestCase):
         self.assertValidJSONResponse(resp)
         self.assertKeys(self.deserialize(resp), 
                         ['location_name', 'ip_address', 'enable_schedule'])
+
         resp = self.api_client.get('/api/v1/location/Tech/', format='json', authentication=self.get_normal_credentials())
         self.assertValidJSONResponse(resp)
         resp = self.api_client.get('/api/v1/location/Tech/', format='json', authentication=self.get_admin_credentials())
         self.assertValidJSONResponse(resp)
-        
 
 
     # POST should be illegal here
@@ -151,7 +151,9 @@ class ShiftResourceTest(ResourceTestCase):
         self.testcon = User.objects.get(pk=2)
 
         self.shift_1 = Shift.objects.get(pk=1)
-        self.detail_url = '/api/v1/shift/{0}/' .format(self.shift_1.pk)
+        self.shift_2 = Shift.objects.get(pk=2)
+        self.detail_url_1 = '/api/v1/shift/{0}/' .format(self.shift_1.pk) 
+        self.detail_url_2 = '/api/v1/shift/{0}/' .format(self.shift_2.pk) 
 
         # create a shift
         self.post_data_adm = {
@@ -185,19 +187,18 @@ class ShiftResourceTest(ResourceTestCase):
     def test_get_list_json(self):
         resp = self.api_client.get('/api/v1/shift/', format='json', authentication=self.get_normal_credentials())
         self.assertValidJSONResponse(resp)
+        self.assertEqual(len(self.deserialize(resp)['objects']), 2)
         resp = self.api_client.get('/api/v1/shift/', format='json', authentication=self.get_admin_credentials())
         self.assertValidJSONResponse(resp)
-
-
         self.assertEqual(len(self.deserialize(resp)['objects']), 2)
-        
+
     def test_get_detail_unauthorized(self):
-        self.assertHttpUnauthorized(self.api_client.get(self.detail_url, format='json'))
+        self.assertHttpUnauthorized(self.api_client.get(self.detail_url_1, format='json'))
 
     def test_get_detail_json(self):
-        resp = self.api_client.get(self.detail_url, format='json', authentication=self.get_normal_credentials())
+        resp = self.api_client.get(self.detail_url_1, format='json', authentication=self.get_normal_credentials())
         self.assertValidJSONResponse(resp)
-        resp = self.api_client.get(self.detail_url, format='json', authentication=self.get_admin_credentials())
+        resp = self.api_client.get(self.detail_url_1, format='json', authentication=self.get_admin_credentials())
         self.assertValidJSONResponse(resp)
 
         # TODO: I think this should be cleaned up. Do we really need id and resource_uri?
@@ -218,8 +219,73 @@ class ShiftResourceTest(ResourceTestCase):
         self.assertEqual(Shift.objects.count(), 4)
 
     def test_delete_detail_unauthenticated(self):
-        self.assertHttpUnauthorized(self.api_client.delete(self.detail_url, format='json'))
+        self.assertHttpUnauthorized(self.api_client.delete(self.detail_url_1, format='json'))
+
+    def test_delete_detail_normal(self):
+        self.assertHttpUnauthorized(self.api_client.delete(self.detail_url_1, fmat='json', authentication=self.get_normal_credentials()))
+
+    def test_delete_detail_admin(self):
+        self.assertEqual(Shift.objects.count(), 2)
+        self.assertHttpAccepted(self.api_client.delete(self.detail_url_1, fmat='json', authentication=self.get_admin_credentials()))
+        self.assertEqual(Shift.objects.count(), 1)
+
+    def test_testcon_trade(self):
+        self.assertEqual(Shift.objects.get(pk=1).for_trade, False)
+        original_data = self.deserialize(self.api_client.get(self.detail_url_1, format='json', authentication=self.get_normal_credentials()))
+        new_data = original_data.copy()
+        new_data['for_trade'] = True
+        new_data['been_traded'] = True
+        self.assertHttpAccepted(self.api_client.put(self.detail_url_1, format='json', data=new_data, authentication=self.get_normal_credentials()))
+        self.assertEqual(Shift.objects.get(pk=1).for_trade, True)
+        self.assertEqual(Shift.objects.get(pk=1).been_traded, True)
+
+        # should not be able to do this on somebody else's shift
+        self.assertEqual(Shift.objects.get(pk=2).for_trade, False)
+        original_data = self.deserialize(self.api_client.get(self.detail_url_2, format='json', authentication=self.get_normal_credentials()))
+        new_data = original_data.copy()
+        new_data['for_trade'] = True
+        new_data['been_traded'] = True
+        self.assertHttpAccepted(self.api_client.put(self.detail_url_2, format='json', data=new_data, authentication=self.get_normal_credentials()))        
+        self.assertEqual(Shift.objects.get(pk=2).for_trade, False)
+        self.assertEqual(Shift.objects.get(pk=2).been_traded, False)
                 
+
+    def test_shift_trade(self):
+        self.assertEqual(Shift.objects.get(pk=1).for_trade, False)
+        original_data = self.deserialize(self.api_client.get(self.detail_url_1, format='json', authentication=self.get_admin_credentials()))
+        new_data = original_data.copy()
+        new_data['for_trade'] = True
+        new_data['been_traded'] = True
+        self.assertHttpAccepted(self.api_client.put(self.detail_url_1, format='json', data=new_data, authentication=self.get_admin_credentials()))
+        self.assertEqual(Shift.objects.get(pk=1).for_trade, True)
+        self.assertEqual(Shift.objects.get(pk=1).been_traded, True)
+
+        self.assertEqual(Shift.objects.get(pk=2).for_trade, False)
+        original_data = self.deserialize(self.api_client.get(self.detail_url_2, format='json', authentication=self.get_admin_credentials()))
+        new_data = original_data.copy()
+        new_data['for_trade'] = True
+        new_data['been_traded'] = True
+        self.assertHttpAccepted(self.api_client.put(self.detail_url_2, format='json', data=new_data, authentication=self.get_admin_credentials()))        
+        self.assertEqual(Shift.objects.get(pk=2).for_trade, True)
+        self.assertEqual(Shift.objects.get(pk=2).been_traded, True)
+
+    def test_shift_pickup_trade(self):
+        original_data = self.deserialize(self.api_client.get(self.detail_url_2, format='json', authentication=self.get_admin_credentials()))
+        new_data = original_data.copy()
+        new_data['for_trade'] = True
+        new_data['been_traded'] = True
+        self.api_client.put(self.detail_url_2, format='json', data=new_data, authentication=self.get_admin_credentials())
+        self.assertEqual(Shift.objects.get(pk=2).for_trade, True)
+        self.assertEqual(Shift.objects.get(pk=2).worker, User.objects.get(username='testcl'))
+
+        # now that this shift owned by testcl is up for trade, let's try to 
+        # take it with testcon
+        new_data['title'] = 'testcon'
+        new_data['for_trade'] = False
+        self.assertHttpAccepted(self.api_client.put(self.detail_url_2, format='json', data=new_data, authentication=self.get_normal_credentials()))
+        self.assertEqual(Shift.objects.get(pk=2).for_trade, False)
+        self.assertEqual(Shift.objects.get(pk=2).worker, User.objects.get(username='testcon'))
+
 
 ###
 # Views Test Cases
