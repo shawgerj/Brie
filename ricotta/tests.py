@@ -134,7 +134,6 @@ class LocationResourceTest(ResourceTestCase):
         self.assertHttpMethodNotAllowed(self.api_client.delete('/api/v1/location/Tech/', format='json', authentication=self.get_admin_credentials()))
         
         
-
 class ShiftResourceTest(ResourceTestCase):
     fixtures = ['ricotta_test_data.json']
 
@@ -222,11 +221,11 @@ class ShiftResourceTest(ResourceTestCase):
         self.assertHttpUnauthorized(self.api_client.delete(self.detail_url_1, format='json'))
 
     def test_delete_detail_normal(self):
-        self.assertHttpUnauthorized(self.api_client.delete(self.detail_url_1, fmat='json', authentication=self.get_normal_credentials()))
+        self.assertHttpUnauthorized(self.api_client.delete(self.detail_url_1, format='json', authentication=self.get_normal_credentials()))
 
     def test_delete_detail_admin(self):
         self.assertEqual(Shift.objects.count(), 2)
-        self.assertHttpAccepted(self.api_client.delete(self.detail_url_1, fmat='json', authentication=self.get_admin_credentials()))
+        self.assertHttpAccepted(self.api_client.delete(self.detail_url_1, format='json', authentication=self.get_admin_credentials()))
         self.assertEqual(Shift.objects.count(), 1)
 
     def test_testcon_trade(self):
@@ -286,7 +285,71 @@ class ShiftResourceTest(ResourceTestCase):
         self.assertEqual(Shift.objects.get(pk=2).for_trade, False)
         self.assertEqual(Shift.objects.get(pk=2).worker, User.objects.get(username='testcon'))
 
+class PlannerBlockResourceTest(ResourceTestCase):
+    fixtures = ['ricotta_test_data.json']
 
+    def setUp(self):
+        super(PlannerBlockResourceTest, self).setUp()
+
+        self.testcl = User.objects.get(pk=3)
+        self.testcon = User.objects.get(pk=2)
+
+        self.pb_1 = PlannerBlock.objects.get(pk=1)
+        self.pb_2 = PlannerBlock.objects.get(pk=2)
+        self.detail_url_1 = '/api/v1/planner_block/{0}/' .format(self.pb_1.pk)
+        self.detail_url_2 = '/api/v1/planner_block/{0}/' .format(self.pb_2.pk)
+        
+        # some POST data for later
+        self.post_data_adm = {
+            'start': '2012-07-18T10:00:00',
+            'end': '2012-07-18T12:00:00',
+            'title': 'pf',
+            'allDay': False
+        }
+        self.post_data_nml = {
+            'start': '2012-07-18T11:00:00',
+            'end': '2012-07-18T13:00:00',
+            'title': 'pf',
+            'allDay': False
+        }
+
+    def get_normal_credentials(self):
+        return self.create_apikey(username=self.testcon.username,
+                                  api_key=self.testcon.api_key.key)
+    def get_admin_credentials(self):
+        return self.create_apikey(username=self.testcl.username,
+                                  api_key=self.testcl.api_key.key)
+
+    def test_get_list_unauthorized(self):
+        self.assertHttpUnauthorized(self.api_client.get('/api/v1/planner_block/', format='json'))
+
+    def test_get_list_json(self):
+        resp = self.api_client.get('/api/v1/planner_block/', format='json', authentication=self.get_normal_credentials())
+        self.assertValidJSONResponse(resp)
+        self.assertEqual(len(self.deserialize(resp)['objects']), 2)
+
+        resp = self.api_client.get('/api/v1/planner_block/', format='json', authentication=self.get_admin_credentials())
+        self.assertValidJSONResponse(resp)
+        self.assertEqual(len(self.deserialize(resp)['objects']), 2)
+
+    def test_get_detail_unauthenticated(self):
+        self.assertHttpUnauthorized(self.api_client.get(self.detail_url_1, format='json'))
+
+    def test_get_detail(self):
+        resp = self.api_client.get(self.detail_url_1, format='json', authentication=self.get_normal_credentials())
+        self.assertValidJSONResponse(resp)
+
+    def test_delete_detail_unauthenticated(self):
+        self.assertHttpUnauthorized(self.api_client.delete(self.detail_url_1, format='json'))
+    
+    def test_delete_detail(self):
+        # a normal user should be able to delete their own planner block
+        self.assertEqual(PlannerBlock.objects.count(), 2)
+        self.assertHttpAccepted(self.api_client.delete(self.detail_url_1, format='json', authentication=self.get_normal_credentials()))
+        self.assertEqual(PlannerBlock.objects.count(), 1)
+
+
+        
 ###
 # Views Test Cases
 ###

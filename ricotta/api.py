@@ -56,7 +56,7 @@ class ShiftResource(ModelResource):
     class Meta:
         queryset = Shift.objects.all()
         resource_name = 'shift'
-        authorization = Authorization()
+        authorization = DjangoAuthorization()
         authentication = ApiKeyAuthentication()
         fields = ['start_time', 'end_time', 'location_name', 'worker', 
                   'resource_uri', 'for_trade', 'been_traded']
@@ -95,7 +95,8 @@ class PlannerBlockResource(ModelResource):
     class Meta:
         queryset = PlannerBlock.objects.all()
         resource_name = 'planner_block'
-        authorization = Authorization()
+        authorization = DjangoAuthorization()
+        authentication = ApiKeyAuthentication()
         fields = ['start_time', 'end_time', 'block_type', 'worker', 
                   'resource_uri']
         allowed_methods = ['get', 'post', 'patch', 'delete', 'put']
