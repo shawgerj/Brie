@@ -91,24 +91,35 @@ class LocationResourceTest(ResourceTestCase):
         }
 
     def get_normal_credentials(self):
-        return self.create_basic(username=self.testcon.username, 
-                                 password=self.testcon.password)
+        return self.create_apikey(username=self.testcon.username, 
+                                  api_key=self.testcon.api_key.key)
     def get_admin_credentials(self):
-        return self.create_basic(username=self.testcl.username,
-                                 password=self.testcl.password)
+        return self.create_apikey(username=self.testcl.username,
+                                  api_key=self.testcl.api_key.key)
         
     def test_get_list_json(self):
         resp = self.api_client.get('/api/v1/location/', format='json')
         self.assertValidJSONResponse(resp)
-
         self.assertEqual(len(self.deserialize(resp)['objects']), 6)
+        
+        # might as well test if user permissions work, although we don't 
+        # actually need them
+        resp = self.api_client.get('/api/v1/location/', format='json', authentication=self.get_normal_credentials())
+        self.assertValidJSONResponse(resp)
+        resp = self.api_client.get('/api/v1/location/', format='json', authentication=self.get_admin_credentials())
+        self.assertValidJSONResponse(resp)
 
     def test_get_detail_json(self):
         resp = self.api_client.get('/api/v1/location/Tech/', format='json')
         self.assertValidJSONResponse(resp)
-
         self.assertKeys(self.deserialize(resp), 
                         ['location_name', 'ip_address', 'enable_schedule'])
+        resp = self.api_client.get('/api/v1/location/Tech/', format='json', authentication=self.get_normal_credentials())
+        self.assertValidJSONResponse(resp)
+        resp = self.api_client.get('/api/v1/location/Tech/', format='json', authentication=self.get_admin_credentials())
+        self.assertValidJSONResponse(resp)
+        
+
 
     # POST should be illegal here
     def test_post_loc(self):
@@ -162,11 +173,11 @@ class ShiftResourceTest(ResourceTestCase):
 
     
     def get_normal_credentials(self):
-        return self.create_basic(username=self.testcon.username, 
-                                 password=self.testcon.password)
+        return self.create_apikey(username=self.testcon.username, 
+                                  api_key=self.testcon.api_key.key)
     def get_admin_credentials(self):
-        return self.create_basic(username=self.testcl.username,
-                                 password=self.testcl.password)
+        return self.create_apikey(username=self.testcl.username,
+                                  api_key=self.testcl.api_key.key)
 
     def test_get_list_unauthorized(self):
         self.assertHttpUnauthorized(self.api_client.get('/api/v1/shift/', format='json'))

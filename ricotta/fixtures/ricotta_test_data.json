@@ -773,6 +773,33 @@
     },
     {
         "pk": 1,
+        "model": "tastypie.apikey",
+        "fields": {
+            "user": 1,
+            "key": "a4328fe107a1e69aee74617277080cc2afcdd5e9",
+            "created": "2012-07-18T14:23:08.604Z"
+        }
+    },
+{
+        "pk": 2,
+        "model": "tastypie.apikey",
+        "fields": {
+            "user": 2,
+            "key": "a4328fe107a1e69aee74617277080cc2afcdd5c9",
+            "created": "2012-07-18T14:24:08.604Z"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "tastypie.apikey",
+        "fields": {
+            "user": 3,
+            "key": "a4328fe107a1e69aee74617277080cc2afcdd5a9",
+            "created": "2012-07-18T14:25:08.604Z"
+        }
+    },
+    {
+        "pk": 1,
         "model": "ricotta.userprofile",
         "fields": {
             "phone_number": "414-364-4874",
