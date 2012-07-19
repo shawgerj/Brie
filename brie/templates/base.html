@@ -1,12 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="style.css" />
-    <title>My amazing blog</title>
-</head>
-
-<body>
-    <div id="content">
+{% load cms_tags sekizai_tags menu_tags %}
+<html>
+  <head>
+      <title>{% block title %}{% endblock %}</title>
+      <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/style.css" />
+      {% render_block "css" %}
+  </head>
+  <body>
+    {% cms_toolbar %}
+    <div id="main">
+      <div id="header">
+        <div id="logo">
+          <h1>A&RT Conspace</h1>
+<!--          <div class="slogan">Conspace</div> -->
+        </div>
+        <div id="menubar">
+          <ul id="menu">
+            {% show_menu %}
+          </ul>
+        </div>
+      </div>
+      <div id="site_content">
+        <div id="sidebar_container">
+          {% placeholder sidebar_content %}
+          {% block sidebar_content %}{% endblock %}
+        </div>
+        <div id="content">
+          {% placeholder base_content %}
+          {% block base_content %}{% endblock %}
+        </div>
+      </div>
+      <div id="footer">
+        {% placeholder base_footer %}
+        {% block base_footer %}{% endblock %}
+      </div>
     </div>
-</body>
+    {% render_block "js" %}
+  </body>
 </html>
