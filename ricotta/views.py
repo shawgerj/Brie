@@ -22,6 +22,14 @@ def locations(request):
     })
     return HttpResponse(t.render(c))
 
+def calendar_base(request):
+    calendars = Location.objects.all()
+    t = loader.get_template('ricotta/calendar_none.html')
+    c = RequestContext(request, {
+            'calendars': calendars,
+            })
+    return HttpResponse(t.render(c))
+
 def calendar(request, location_name):
     try:
         l = Location.objects.get(pk=location_name)
