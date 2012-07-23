@@ -1,0 +1,62 @@
+{% extends "template_1.html" %}
+{% load cms_tags %}
+
+{% block base_content %}
+<style type="text/css">
+#calendar-box {
+    background-color: #f6f6b8;
+    position: relative;
+    padding: 15px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    width: 25%;
+    float: left
+}
+
+#timeclock-box {
+    background-color: #f6f6b8;
+    position: relative;
+    padding: 15px;
+    margin-top: 10px;
+    width: 25%;
+    margin-left: 15px;
+    float: left
+}
+
+#employees-box {
+    background-color: #f6f6b8;
+    position: relative;
+    padding: 15px;
+    margin-top: 10px;
+    width: 25%;
+    margin-left: 15px;
+    float: left
+}
+</style>
+  <h2>Ricotta</h2>
+  <p>Here are the pages for scheduling, timeclock, and employee management.</p>
+  <div id="calendar-box">
+    <h4><b>Calendar</b></h4>
+    <ul>
+      {% url calendar-home as the_url %}
+      <li><a href="{{ the_url }}">Lab Schedules</a></li>
+      <li>Schedule Summary</li>
+      <li>My Shifts</li>
+      <li>Edit My Planner</li>
+    </ul>
+  </div>
+  <div id="timeclock-box">
+    <h4><b>Timeclock</b></h4>
+    <ul>
+      <li>View My Timeclock</li>
+      <li>Who's on Shift</li>
+    </ul>
+  </div>
+  <div id="employees-box">
+    <h4><b>Employees</b></h4>
+    <ul>
+      <li>Employees in my Lab</li>
+      <li>Full Employee List</li>
+    </ul>
+  </div>
+{% endblock %}

@@ -4,6 +4,11 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404
 from django.db.models import Count
 
+def home(request):
+    t = loader.get_template('ricotta/home.html')
+    c = RequestContext(request)
+    return HttpResponse(t.render(c))
+            
 def shifts_by_user(request, username):
     shift_list = Shift.objects.filter(worker__username__exact=username).order_by('start_time')
     t = loader.get_template('ricotta/shifts.html')
