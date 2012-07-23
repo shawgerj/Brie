@@ -1,5 +1,5 @@
 from django.template import RequestContext, Context, loader
-from ricotta.models import Shift, Location, UserProfile, PlannerBlock
+from ricotta.models import Shift, Location, UserProfile, PlannerBlock, TimeclockRecord
 from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404
@@ -48,6 +48,9 @@ def planner_lab(request, location_name):
                   {"workers": workers,
                    "location_name": location_name})
 
-def timeclock(request):
+def timeclock(request, username):
+    tr_data = TimeclockRecord.objects.filter(employee=request.user)
+
     return render(request, 'ricotta/timeclock.html',
-                  {"worker": request.user.username})
+                  {"worker": request.user.username,
+                   "tr_data": tr_data})

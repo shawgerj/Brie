@@ -1,6 +1,7 @@
 {% extends "template_1.html" %}
 {% load cms_tags %}
 
+{% block title %}Conspace - Ricotta{% endblock %}
 {% block base_content %}
 <style type="text/css">
 #calendar-box {
@@ -49,7 +50,8 @@
   <div id="timeclock-box">
     <h4><b>Timeclock</b></h4>
     <ul>
-      <li>View My Timeclock</li>
+      {% url view-timeclock worker as the_url %}
+      <li><a href="{{ the_url }}">View My Timeclock</a></li>
       <li>Who's on Shift</li>
     </ul>
   </div>

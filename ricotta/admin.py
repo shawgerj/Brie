@@ -7,7 +7,7 @@ from models import UserProfile
 from tastypie.admin import ApiKeyInline
 from tastypie.models import ApiAccess, ApiKey
 
-from ricotta.models import Listserv, Location, Shift, DisciplineRecord, PlannerBlock
+from ricotta.models import Listserv, Location, Shift, DisciplineRecord, PlannerBlock, TimeclockRecord
 
 class ProfileInline(admin.StackedInline):
     model = UserProfile
@@ -38,5 +38,6 @@ admin.site.register(Location)
 admin.site.register(DisciplineRecord)
 admin.site.register(Shift)
 admin.site.register(PlannerBlock)
+admin.site.register(TimeclockRecord)
 #admin.site.register(ApiKey)
 admin.site.register(ApiAccess)
