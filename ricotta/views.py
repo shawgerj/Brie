@@ -7,7 +7,8 @@ from django.db.models import Count
 
 def home(request):
     return render(request, 'ricotta/home.html', 
-                  {"worker": request.user.username})
+                  {"worker": request.user.username,
+                   "lab": request.user.profile.lab})
             
 def shifts_by_user(request, username):
     shift_list = Shift.objects.filter(worker__username__exact=username).order_by('start_time')
@@ -54,3 +55,13 @@ def timeclock(request, username):
     return render(request, 'ricotta/timeclock.html',
                   {"worker": request.user.username,
                    "tr_data": tr_data})
+
+def employees(request):
+    employees = User.objects.all()
+
+    return render(request, 'ricotta/employees.html', {"employees": employees})
+
+def employees_by_lab(request, location_name):
+    employees = User.objects.filter(userprofile__lab=location_name)
+    
+    return render(request, 'ricotta/employees.html', {"employees": employees})

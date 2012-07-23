@@ -58,8 +58,10 @@
   <div id="employees-box">
     <h4><b>Employees</b></h4>
     <ul>
-      <li>Employees in my Lab</li>
-      <li>Full Employee List</li>
+      {% url employees-by-lab lab as the_url %}
+      <li><a href="{{ the_url }}">Employees in my Lab</a></li>
+      {% url employees as the_url %}
+      <li><a href="{{ the_url }}">Full Employee List</a></li>
     </ul>
   </div>
 {% endblock %}

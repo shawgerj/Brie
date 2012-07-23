@@ -20,5 +20,9 @@ urlpatterns = patterns('',
     url(r'^calendar/(?P<location_name>.*)/$', 'ricotta.views.calendar'),
     url(r'^planner/(?P<username>\w+)/$', 'ricotta.views.planner', name='edit-own-planner'),
     url(r'^planner/lab/(?P<location_name>\w+)/$', 'ricotta.views.planner_lab'),
+
     url(r'^timeclock/(?P<username>\w+)/$', 'ricotta.views.timeclock', name='view-timeclock'),
+
+    url(r'^employees/$', 'ricotta.views.employees', name='employees'),
+    url(r'^employees/(?P<location_name>\w+)/$', 'ricotta.views.employees_by_lab', name='employees-by-lab')
 )

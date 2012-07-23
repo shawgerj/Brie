@@ -30,6 +30,8 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return self.user.username
 
+User.profile = property(lambda u: UserProfile.objects.get(user=u))
+
 class DisciplineRecord(models.Model):
     STATUS_CHOICES = (
         ('nd', 'No Discipline'),
