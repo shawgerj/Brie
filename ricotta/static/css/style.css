@@ -77,7 +77,7 @@ ul
 { margin: 2px 0 22px 17px;}
 
 ul li
-{ list-style-type: circle;
+{ list-style-type: none;
   margin: 0 0 0 0; 
   padding: 0 0 4px 5px;}
 
@@ -92,15 +92,15 @@ ol li
   margin-right: auto;}
 
 #main
-{ width: 950px;
+{ width: 1050px;
   margin: 20px auto;}
 
 #header
-{ width: 952px;
+{ width: 1052px;
   height: 145px;}
 
 #logo
-{ width: 950px;
+{ width: 1050px;
   float: left;
   height: 100px;
   background: transparent;
@@ -129,7 +129,7 @@ ol li
 
 #menubar
 { height: 46px;
-  width: 700px;
+  width: 800px;
   margin: 0px auto -1px auto;
   float: right;
   padding: 0px 0 0 0;} 
@@ -168,7 +168,7 @@ ul#menu li a:hover
 { color: #F14E23;}
 
 #site_content
-{ width: 950px;
+{ width: 1050px;
   overflow: hidden;
   margin: 0 auto 0 auto;
   padding: 0;
@@ -182,7 +182,7 @@ ul#menu li a:hover
 
 .sidebar
 { float: right;
-  width: 200px;
+  width: 220px;
   margin: 0 24px 27px 0;
   background: #FBFBFB;
   border: 1px solid #eee;
@@ -204,7 +204,7 @@ ul#menu li a:hover
 
 #content
 { text-align: left;
-  width: 630px;
+  width: 730px;
   padding: 25px 0 5px 25px;
   margin: 0;}
 
@@ -221,7 +221,7 @@ ul#menu li a:hover
 #footer
 { clear: both;
   width: 100%;
-  font: normal 150% 'yanone kaffeesatz',  arial, sans-serif;
+  font: normal 90% 'yanone kaffeesatz',  arial, sans-serif;
   height: 85px;
   padding: 20px 0 5px 0;
   text-align: center; 
@@ -323,4 +323,6 @@ table tr th, table tr td
 table tr td
 { background: #FBFBFB;
   color: #111;
-  border-top: 1px solid #FFF;}
+  border-top: 1px solid #FFF;
+  padding-right: 5px;
+  padding-left: 5px;}

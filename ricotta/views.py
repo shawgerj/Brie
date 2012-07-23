@@ -59,9 +59,13 @@ def timeclock(request, username):
 def employees(request):
     employees = User.objects.all()
 
-    return render(request, 'ricotta/employees.html', {"employees": employees})
+    return render(request, 'ricotta/employees.html', 
+                  {"employees": employees, 
+                   "title": "All Employees"})
 
 def employees_by_lab(request, location_name):
     employees = User.objects.filter(userprofile__lab=location_name)
     
-    return render(request, 'ricotta/employees.html', {"employees": employees})
+    return render(request, 'ricotta/employees.html', 
+                  {"employees": employees,
+                   "title": "Employees in " + location_name})
