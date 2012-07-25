@@ -359,7 +359,7 @@ class CalendarViewsTestCase(TestCase):
     def test_location_indices(self):
         # test all the existing locations
         for l in Location.objects.all():
-            resp = self.client.get('/calendar/' + l.location_name + '/')
+            resp = self.client.get('/ricotta/calendar/' + l.location_name + '/')
             self.assertEqual(resp.status_code, 200)
             self.assertTrue('location_name' in resp.context)
 
@@ -372,10 +372,10 @@ class PlannerViewsTestCase(TestCase):
 
     def test_planner_detail(self):
         # check to make sure both of these planners exist
-        resp = self.client.get('/planner/testcl/')
+        resp = self.client.get('/ricotta/planner/testcl/')
         self.assertEqual(resp.status_code, 200)
         self.assertTrue('worker' in resp.context)
-        resp = self.client.get('/planner/testcon/')
+        resp = self.client.get('/ricotta/planner/testcon/')
         self.assertEqual(resp.status_code, 200)
         self.assertTrue('worker' in resp.context)
 

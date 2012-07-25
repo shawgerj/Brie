@@ -10,19 +10,6 @@ def home(request):
                   {"worker": request.user.username,
                    "lab": request.user.profile.lab})
             
-def shifts_by_user(request, username):
-    shift_list = Shift.objects.filter(worker__username__exact=username).order_by('start_time')
-
-    return render(request, 'ricotta/shifts.html', 
-                  {"shift_list": shift_list,
-                   "user": username})
-
-def locations(request):
-    user_lab_count = UserProfile.objects.values('lab').annotate(Count('lab'))
-
-    return render(request, 'ricotta/locations.html',
-                  {"user_lab_count": user_lab_count})
-
 def calendar_base(request):
     calendars = Location.objects.all()
     return render(request, 'ricotta/calendar_none.html', 
@@ -32,7 +19,8 @@ def calendar(request, location_name):
     get_object_or_404(Location, pk=location_name)
 
     return render(request, 'ricotta/calendar.html', 
-                  {"location_name": location_name})
+                  {"location_name": location_name,
+                   "worker": request.user})
 
 def planner(request, username):
     get_object_or_404(User, username=username)

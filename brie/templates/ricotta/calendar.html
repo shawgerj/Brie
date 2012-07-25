@@ -14,12 +14,18 @@
 {% addtoblock "js" %}<script src="{{ STATIC_URL }}js/fullcalendar.min.js"></script>{% endaddtoblock %}
 {% addtoblock "js" %}<script src="{{ STATIC_URL }}js/backbone-tastypie.js"></script>{% endaddtoblock %}
 
-{% block resource_apis %} 
+{% addtoblock "js" %}
   <script>
     SHIFTS_API = "{% url api_dispatch_list api_name="v1" resource_name="shift" %}?location_name__location_name={{ location_name }}";
     USERS_API = "{% url api_dispatch_list api_name="v1" resource_name="user" %}";
+    
+    Backbone.Tastypie.apiKey = {
+        username: '{{ worker.username }}',
+        key: '{{ worker.api_key.key }}'
+    };
+    
   </script>
-{% endblock %}
+{% endaddtoblock %}
 
 {% addtoblock "js" %}<script src="{{ STATIC_URL }}js/application.js"></script>{% endaddtoblock %}
   
