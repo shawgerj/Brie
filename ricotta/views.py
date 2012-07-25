@@ -61,6 +61,13 @@ def timeclock(request, username):
                    "total_scheduled": round(total_scheduled.total_seconds() / 3600, 2),
                    "total_clocked": round(total_clocked.total_seconds() / 3600, 2)})
 
+def shifts(request, username):
+    shift_data = Shift.objects.filter(worker=request.user)
+
+    return render(request, 'ricotta/shift.html',
+                  {"worker": request.user.username,
+                   "shift_data": shift_data})
+
 def employees(request):
     employees = User.objects.all()
 

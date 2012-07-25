@@ -44,8 +44,9 @@
     <ul>
       {% url calendar-home as the_url %}
       <li><a href="{{ the_url }}">Lab Schedules</a></li>
-      <li>Schedule Summary</li>
-      <li>My Shifts</li>
+      <li>Shift Trade Summary</li>
+      {% url my-shifts worker as the_url %}
+      <li><a href="{{ the_url }}">My Shifts</a></li>
       {% url edit-own-planner worker as the_url %}
       <li><a href="{{ the_url }}">Edit My Planner</a></li>
     </ul>
