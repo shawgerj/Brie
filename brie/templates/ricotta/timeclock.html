@@ -10,4 +10,6 @@
           <td>{{tr.inIP}}</td><td>{{tr.outIP}}</td><td>{{tr.start_time|datetime_diff:tr.end_time}}</td></tr>
     {% endfor %}
   </table>
+  <p>Total scheduled time: {{ total_scheduled }}<br />
+  Total clocked time: {{ total_clocked }}</p>
 {% endblock %}
