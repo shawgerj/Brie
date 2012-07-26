@@ -1,0 +1,71 @@
+{% extends "template_1.html" %}
+{% load cms_tags %}
+
+{% block title %}Conspace - Ricotta{% endblock %}
+{% block base_content %}
+<style type="text/css">
+.box-header {
+    text-align: center
+}
+#calendar-box {
+    background-color: #fdfcb3;
+    position: relative;
+    padding: 15px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    width: 25%;
+    float: left
+}
+
+#timeclock-box {
+    background-color: #fdfcb3;
+    position: relative;
+    padding: 15px;
+    margin-top: 10px;
+    width: 25%;
+    margin-left: 15px;
+    float: left
+}
+
+#employees-box {
+    background-color: #fdfcb3;
+    position: relative;
+    padding: 15px;
+    margin-top: 10px;
+    width: 25%;
+    margin-left: 15px;
+    float: left
+}
+</style>
+  <h2>Ricotta</h2>
+  <p>Here are the pages for scheduling, timeclock, and employee management.</p>
+  <div id="calendar-box">
+    <h4 class="box-header"><b>Calendar</b></h4>
+    <ul>
+      {% url calendar-home as the_url %}
+      <li><a href="{{ the_url }}">Lab Schedules</a></li>
+      <li>Shift Trade Summary</li>
+      {% url my-shifts worker as the_url %}
+      <li><a href="{{ the_url }}">My Shifts</a></li>
+      {% url edit-own-planner worker as the_url %}
+      <li><a href="{{ the_url }}">Edit My Planner</a></li>
+    </ul>
+  </div>
+  <div id="timeclock-box">
+    <h4 class="box-header"><b>Timeclock</b></h4>
+    <ul>
+      {% url view-timeclock worker as the_url %}
+      <li><a href="{{ the_url }}">View My Timeclock</a></li>
+      <li>Who's on Shift</li>
+    </ul>
+  </div>
+  <div id="employees-box">
+    <h4 class="box-header"><b>Employees</b></h4>
+    <ul>
+      {% url employees-by-lab lab as the_url %}
+      <li><a href="{{ the_url }}">Employees in my Lab</a></li>
+      {% url employees as the_url %}
+      <li><a href="{{ the_url }}">Full Employee List</a></li>
+    </ul>
+  </div>
+{% endblock %}

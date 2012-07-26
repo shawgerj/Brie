@@ -99,14 +99,16 @@ $(function(){
         },
         render: function() {
             var buttons = {};
-            if (this.model.isNew()) {
-                _.extend(buttons, {'Save': this.save});
-            } else {
-                _.extend(buttons, {'Save': this.save,
-                                   'Mark for Trade': this.toggle_trade, 
-                                   'Delete': this.destroy});
+            _.extend(buttons, {'Save': this.save});
+            if (this.model.get('for_trade')) {
+                _.extend(buttons, {'Take Shift': this.take_shift});
+            } else if (this.model.get('title') == 
+                       Backbone.Tastypie.apiKey.username) {
+                _.extend(buttons, {'Trade Shift': this.trade_shift});
             }
-//            _.extend(buttons, {'Cancel': this.close});
+            if (!this.model.isNew()) {
+                _.extend(buttons, {'Delete': this.destroy});
+            }
 
             this.el.dialog({
                 modal: true,
@@ -130,12 +132,15 @@ $(function(){
                 this.model.save({}, {success: this.close});
             }
         },
+        take_shift: function() {
+            this.model.set({'for_trade': false, 'color': 'Blue',
+                            'title': Backbone.Tastypie.apiKey.username});
+            this.model.save({}, {success: this.close});
+        },
         // it would be nice to not have this as a separate function, but
         // this is the easy way for now
-        toggle_trade: function() {
-            this.model.get("for_trade") ?
-                this.model.set({'for_trade': false, 'color': 'Blue'}) :
-                this.model.set({'for_trade': true, 'color': 'Red'});
+        trade_shift: function() {
+            this.model.set({'for_trade': true, 'color': 'Red'});
             this.model.save({}, {success: this.close});
         },
         close: function() {

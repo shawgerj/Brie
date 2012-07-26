@@ -30,6 +30,8 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return self.user.username
 
+User.profile = property(lambda u: UserProfile.objects.get(user=u))
+
 class DisciplineRecord(models.Model):
     STATUS_CHOICES = (
         ('nd', 'No Discipline'),
@@ -84,6 +86,9 @@ class TimeclockRecord(models.Model):
     inIP = models.IPAddressField()
     outIP = models.IPAddressField()
     employee = models.ForeignKey(User)
+    
+    def __unicode__(self):
+        return self.employee.username + ' ' + self.start_time.astimezone(timezone.get_default_timezone()).strftime("%Y-%m-%d %H:%M:%S") + ' ' + self.inIP
 
 # this is to generate the tastypie API keys for each user
 models.signals.post_save.connect(create_api_key, sender=User)

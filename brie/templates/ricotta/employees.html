@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load sekizai_tags cms_tags %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block base_content %}
+  <h2>{{ title }}</h2>
+  <table>
+    <tr><th>NetID</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Lab</th></tr>
+    {% for e in employees %}
+      <tr><td>{{e.username}}</td><td>{{e.first_name}}</td>
+          <td>{{e.last_name}}</td><td>{{e.email}}</td><td>{{e.profile.lab}}</td></tr>
+    {% endfor %}
+  </table>
+{% endblock %}

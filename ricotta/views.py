@@ -1,63 +1,83 @@
 from django.template import RequestContext, Context, loader
-from ricotta.models import Shift, Location, UserProfile, PlannerBlock
+from ricotta.models import Shift, Location, UserProfile, PlannerBlock, TimeclockRecord
 from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404
+from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
+from datetime import datetime, timedelta
 
-def shifts_by_user(request, username):
-    shift_list = Shift.objects.filter(worker__username__exact=username).order_by('start_time')
-    t = loader.get_template('ricotta/shifts.html')
-    c = Context({
-        'shift_list': shift_list,
-        'user': username,
-    })
-    return HttpResponse(t.render(c))
-
-def locations(request):
-    user_lab_count = UserProfile.objects.values('lab').annotate(Count('lab'))
-    
-    t = loader.get_template('ricotta/locations.html')
-    c = Context({
-            'user_lab_count': user_lab_count,
-    })
-    return HttpResponse(t.render(c))
+def home(request):
+    return render(request, 'ricotta/home.html', 
+                  {"worker": request.user.username,
+                   "lab": request.user.profile.lab})
+            
+def calendar_base(request):
+    calendars = Location.objects.all()
+    return render(request, 'ricotta/calendar_none.html', 
+                  {"calendars": calendars})
 
 def calendar(request, location_name):
-    try:
-        l = Location.objects.get(pk=location_name)
-    except:
-        raise Http404
-    else:
-        t = loader.get_template('ricotta/calendar.html')
-        c = RequestContext(request, {
-                'location_name': location_name,
-            })
-        return HttpResponse(t.render(c))
+    get_object_or_404(Location, pk=location_name)
+
+    return render(request, 'ricotta/calendar.html', 
+                  {"location_name": location_name,
+                   "worker": request.user})
 
 def planner(request, username):
-    try:
-        User.objects.get(username=username)
-    except:
-        raise Http404
-    else:
-        t = loader.get_template('ricotta/planner.html')
-        c = RequestContext(request, {
-                'worker': username,
-                'preferences': PlannerBlock.PLANNER_CHOICES,
-            })
-        return HttpResponse(t.render(c))
+    get_object_or_404(User, username=username)
+
+    return render(request, 'ricotta/planner.html',
+                  {"worker": username, 
+                   "preferences": PlannerBlock.PLANNER_CHOICES})
 
 def planner_lab(request, location_name):
-    try:
-        Location.objects.get(pk=location_name)
-    except:
-        raise Http404
-    else:
-        workers = UserProfile.objects.filter(lab=location_name)
+    get_object_or_404(Location, pk=location_name)
+    workers = UserProfile.objects.filter(lab=location_name)
+    
+    return render(request, 'ricotta/planner_lab.html', 
+                  {"workers": workers,
+                   "location_name": location_name})
+
+def timeclock(request, username):
+    # this all needs to be queried on 2 week intervals eventually rather
+    # than pulling the entire result set
+    tr_data = TimeclockRecord.objects.filter(employee=request.user)
+    sh_data = Shift.objects.filter(worker=request.user)
+
+    # I bet there's a more clever way of doing this. One-liner perhaps?
+    total_clocked = timedelta(0)
+    for tr in tr_data:
+        total_clocked += (tr.end_time - tr.start_time)
         
-        t = loader.get_template('ricotta/planner_lab.html')
-        c = RequestContext(request, {
-                'workers': workers,
-                'location_name': location_name
-            })
-        return HttpResponse(t.render(c))
+    # and here too
+    total_scheduled = timedelta(0)
+    for sh in sh_data:
+        total_scheduled += (sh.end_time - sh.start_time)
+        
+
+    return render(request, 'ricotta/timeclock.html',
+                  {"worker": request.user.username,
+                   "tr_data": tr_data,
+                   "total_scheduled": round(total_scheduled.total_seconds() / 3600, 2),
+                   "total_clocked": round(total_clocked.total_seconds() / 3600, 2)})
+
+def shifts(request, username):
+    shift_data = Shift.objects.filter(worker=request.user)
+
+    return render(request, 'ricotta/shift.html',
+                  {"worker": request.user.username,
+                   "shift_data": shift_data})
+
+def employees(request):
+    employees = User.objects.all()
+
+    return render(request, 'ricotta/employees.html', 
+                  {"employees": employees, 
+                   "title": "All Employees"})
+
+def employees_by_lab(request, location_name):
+    employees = User.objects.filter(userprofile__lab=location_name)
+    
+    return render(request, 'ricotta/employees.html', 
+                  {"employees": employees,
+                   "title": "Employees in " + location_name})
