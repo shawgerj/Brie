@@ -47,8 +47,8 @@ class DisciplineRecord(models.Model):
     comment = models.TextField()
 
     def __unicode__(self):
-        return ' '.join(self.employee.username,
-                        self.date_of_record.strftime("%y-%m-%d"))
+        return ' '.join((self.employee.username,
+                         self.date_of_record.strftime("%y-%m-%d")))
 
     class Meta:
         permissions = (
@@ -64,9 +64,9 @@ class Shift(models.Model):
     been_traded = models.BooleanField()
 
     def __unicode__(self):
-        return ' '.join(self.location_name.location_name,
-                        self.start_time.astimezone(timezone.get_default_timezone()).strftime("%Y-%m-%d %H:%M:%S"),
-                        self.worker.username)
+        return ' '.join((self.location_name.location_name,
+                         self.start_time.astimezone(timezone.get_default_timezone()).strftime("%Y-%m-%d %H:%M:%S"),
+                         self.worker.username))
             
 class PlannerBlock(models.Model):
     PLANNER_CHOICES = (

@@ -1,5 +1,408 @@
 [
     {
+        "pk": 23,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "globalpagepermission",
+            "name": "Page global permission",
+            "app_label": "cms"
+        }
+    },
+    {
+        "pk": 22,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "pagemoderatorstate",
+            "name": "Page moderator state",
+            "app_label": "cms"
+        }
+    },
+    {
+        "pk": 24,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "pagepermission",
+            "name": "Page permission",
+            "app_label": "cms"
+        }
+    },
+    {
+        "pk": 21,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "pagemoderator",
+            "name": "PageModerator",
+            "app_label": "cms"
+        }
+    },
+    {
+        "pk": 37,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "snippet",
+            "name": "Snippet",
+            "app_label": "snippet"
+        }
+    },
+    {
+        "pk": 38,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "snippetptr",
+            "name": "Snippet",
+            "app_label": "snippet"
+        }
+    },
+    {
+        "pk": 25,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "pageuser",
+            "name": "User (page)",
+            "app_label": "cms"
+        }
+    },
+    {
+        "pk": 26,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "pageusergroup",
+            "name": "User group (page)",
+            "app_label": "cms"
+        }
+    },
+    {
+        "pk": 8,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "apiaccess",
+            "name": "api access",
+            "app_label": "tastypie"
+        }
+    },
+    {
+        "pk": 9,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "apikey",
+            "name": "api key",
+            "app_label": "tastypie"
+        }
+    },
+    {
+        "pk": 28,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "cachekey",
+            "name": "cache key",
+            "app_label": "menus"
+        }
+    },
+    {
+        "pk": 19,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "cmsplugin",
+            "name": "cms plugin",
+            "app_label": "cms"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "contenttype",
+            "name": "content type",
+            "app_label": "contenttypes"
+        }
+    },
+    {
+        "pk": 13,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "disciplinerecord",
+            "name": "discipline record",
+            "app_label": "ricotta"
+        }
+    },
+    {
+        "pk": 32,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "file",
+            "name": "file",
+            "app_label": "file"
+        }
+    },
+    {
+        "pk": 33,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "flash",
+            "name": "flash",
+            "app_label": "flash"
+        }
+    },
+    {
+        "pk": 34,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "googlemap",
+            "name": "google map",
+            "app_label": "googlemap"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "group",
+            "name": "group",
+            "app_label": "auth"
+        }
+    },
+    {
+        "pk": 35,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "link",
+            "name": "link",
+            "app_label": "link"
+        }
+    },
+    {
+        "pk": 10,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "listserv",
+            "name": "listserv",
+            "app_label": "ricotta"
+        }
+    },
+    {
+        "pk": 11,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "location",
+            "name": "location",
+            "app_label": "ricotta"
+        }
+    },
+    {
+        "pk": 7,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "logentry",
+            "name": "log entry",
+            "app_label": "admin"
+        }
+    },
+    {
+        "pk": 29,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "migrationhistory",
+            "name": "migration history",
+            "app_label": "south"
+        }
+    },
+    {
+        "pk": 20,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "page",
+            "name": "page",
+            "app_label": "cms"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "permission",
+            "name": "permission",
+            "app_label": "auth"
+        }
+    },
+    {
+        "pk": 36,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "picture",
+            "name": "picture",
+            "app_label": "picture"
+        }
+    },
+    {
+        "pk": 18,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "placeholder",
+            "name": "placeholder",
+            "app_label": "cms"
+        }
+    },
+    {
+        "pk": 15,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "plannerblock",
+            "name": "planner block",
+            "app_label": "ricotta"
+        }
+    },
+    {
+        "pk": 30,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "revision",
+            "name": "revision",
+            "app_label": "reversion"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "session",
+            "name": "session",
+            "app_label": "sessions"
+        }
+    },
+    {
+        "pk": 14,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "shift",
+            "name": "shift",
+            "app_label": "ricotta"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "site",
+            "name": "site",
+            "app_label": "sites"
+        }
+    },
+    {
+        "pk": 39,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "teaser",
+            "name": "teaser",
+            "app_label": "teaser"
+        }
+    },
+    {
+        "pk": 40,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "text",
+            "name": "text",
+            "app_label": "text"
+        }
+    },
+    {
+        "pk": 17,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "timeclockaction",
+            "name": "timeclock action",
+            "app_label": "ricotta"
+        }
+    },
+    {
+        "pk": 16,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "timeclockrecord",
+            "name": "timeclock record",
+            "app_label": "ricotta"
+        }
+    },
+    {
+        "pk": 27,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "title",
+            "name": "title",
+            "app_label": "cms"
+        }
+    },
+    {
+        "pk": 42,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "twitterrecententries",
+            "name": "twitter recent entries",
+            "app_label": "twitter"
+        }
+    },
+    {
+        "pk": 43,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "twittersearch",
+            "name": "twitter search",
+            "app_label": "twitter"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "user",
+            "name": "user",
+            "app_label": "auth"
+        }
+    },
+    {
+        "pk": 12,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "userprofile",
+            "name": "user profile",
+            "app_label": "ricotta"
+        }
+    },
+    {
+        "pk": 31,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "version",
+            "name": "version",
+            "app_label": "reversion"
+        }
+    },
+    {
+        "pk": 41,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "video",
+            "name": "video",
+            "app_label": "video"
+        }
+    },
+    {
+        "pk": "06389bd57fa3fd7b734e2b0f8be4d705",
+        "model": "sessions.session",
+        "fields": {
+            "expire_date": "2012-08-09T16:35:22.457Z",
+            "session_data": "NGU4OTk4YzA3ZDc1MjE3NWFmN2ExNTE5YWY0MjAwYmZkOTVkYmQ3YTqAAn1xAShVEl9hdXRoX3Vz\nZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHED\nVQ1fYXV0aF91c2VyX2lkcQRLAXUu\n"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "sites.site",
+        "fields": {
+            "domain": "example.com",
+            "name": "example.com"
+        }
+    },
+    {
         "pk": "IC-Main",
         "model": "ricotta.location",
         "fields": {
@@ -57,6 +460,897 @@
             "enable_schedule": true,
             "ip_address": "129.105.10.56",
             "address": "2145 Sheridan Road"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:54.349Z",
+            "app_name": "tastypie",
+            "migration": "0001_initial"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:54.958Z",
+            "app_name": "cms",
+            "migration": "0001_initial"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:54.978Z",
+            "app_name": "cms",
+            "migration": "0002_auto_start"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:54.998Z",
+            "app_name": "cms",
+            "migration": "0003_remove_placeholder"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.018Z",
+            "app_name": "cms",
+            "migration": "0004_textobjects"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.042Z",
+            "app_name": "cms",
+            "migration": "0005_mptt_added_to_plugins"
+        }
+    },
+    {
+        "pk": 7,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.066Z",
+            "app_name": "text",
+            "migration": "0001_initial"
+        }
+    },
+    {
+        "pk": 8,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.118Z",
+            "app_name": "text",
+            "migration": "0002_freeze"
+        }
+    },
+    {
+        "pk": 9,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.142Z",
+            "app_name": "cms",
+            "migration": "0006_apphook"
+        }
+    },
+    {
+        "pk": 10,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.174Z",
+            "app_name": "cms",
+            "migration": "0007_apphook_longer"
+        }
+    },
+    {
+        "pk": 11,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.190Z",
+            "app_name": "cms",
+            "migration": "0008_redirects"
+        }
+    },
+    {
+        "pk": 12,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.222Z",
+            "app_name": "cms",
+            "migration": "0009_added_meta_fields"
+        }
+    },
+    {
+        "pk": 13,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.242Z",
+            "app_name": "cms",
+            "migration": "0010_5char_language"
+        }
+    },
+    {
+        "pk": 14,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.270Z",
+            "app_name": "cms",
+            "migration": "0011_title_overwrites"
+        }
+    },
+    {
+        "pk": 15,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.286Z",
+            "app_name": "cms",
+            "migration": "0012_publisher"
+        }
+    },
+    {
+        "pk": 16,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.310Z",
+            "app_name": "text",
+            "migration": "0003_publisher"
+        }
+    },
+    {
+        "pk": 17,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.338Z",
+            "app_name": "snippet",
+            "migration": "0001_initial"
+        }
+    },
+    {
+        "pk": 18,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.362Z",
+            "app_name": "snippet",
+            "migration": "0002_publisher"
+        }
+    },
+    {
+        "pk": 19,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.382Z",
+            "app_name": "picture",
+            "migration": "0001_initial"
+        }
+    },
+    {
+        "pk": 20,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.426Z",
+            "app_name": "picture",
+            "migration": "0002_link_rename"
+        }
+    },
+    {
+        "pk": 21,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.454Z",
+            "app_name": "picture",
+            "migration": "0003_freeze"
+        }
+    },
+    {
+        "pk": 22,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.474Z",
+            "app_name": "picture",
+            "migration": "0004_publisher"
+        }
+    },
+    {
+        "pk": 23,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.510Z",
+            "app_name": "link",
+            "migration": "0001_initial"
+        }
+    },
+    {
+        "pk": 24,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.534Z",
+            "app_name": "link",
+            "migration": "0002_link_rename"
+        }
+    },
+    {
+        "pk": 25,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.562Z",
+            "app_name": "link",
+            "migration": "0003_page_link"
+        }
+    },
+    {
+        "pk": 26,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.586Z",
+            "app_name": "link",
+            "migration": "0004_larger_link_names"
+        }
+    },
+    {
+        "pk": 27,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.630Z",
+            "app_name": "link",
+            "migration": "0005_publisher"
+        }
+    },
+    {
+        "pk": 28,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.650Z",
+            "app_name": "googlemap",
+            "migration": "0001_initial"
+        }
+    },
+    {
+        "pk": 29,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.666Z",
+            "app_name": "flash",
+            "migration": "0001_initial"
+        }
+    },
+    {
+        "pk": 30,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.686Z",
+            "app_name": "flash",
+            "migration": "0002_freeze"
+        }
+    },
+    {
+        "pk": 31,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.706Z",
+            "app_name": "flash",
+            "migration": "0003_publisher"
+        }
+    },
+    {
+        "pk": 32,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.722Z",
+            "app_name": "file",
+            "migration": "0001_initial"
+        }
+    },
+    {
+        "pk": 33,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.774Z",
+            "app_name": "file",
+            "migration": "0002_freeze"
+        }
+    },
+    {
+        "pk": 34,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.790Z",
+            "app_name": "file",
+            "migration": "0003_publisher"
+        }
+    },
+    {
+        "pk": 35,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.802Z",
+            "app_name": "cms",
+            "migration": "0013_site_copy"
+        }
+    },
+    {
+        "pk": 36,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.858Z",
+            "app_name": "cms",
+            "migration": "0014_sites_removed"
+        }
+    },
+    {
+        "pk": 37,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.870Z",
+            "app_name": "cms",
+            "migration": "0015_modified_by_added"
+        }
+    },
+    {
+        "pk": 38,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.890Z",
+            "app_name": "cms",
+            "migration": "0016_author_copy"
+        }
+    },
+    {
+        "pk": 39,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.910Z",
+            "app_name": "cms",
+            "migration": "0017_author_removed"
+        }
+    },
+    {
+        "pk": 40,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.926Z",
+            "app_name": "cms",
+            "migration": "0018_site_permissions"
+        }
+    },
+    {
+        "pk": 41,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.954Z",
+            "app_name": "cms",
+            "migration": "0019_public_table_renames"
+        }
+    },
+    {
+        "pk": 42,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:55.974Z",
+            "app_name": "text",
+            "migration": "0004_table_rename"
+        }
+    },
+    {
+        "pk": 43,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.010Z",
+            "app_name": "text",
+            "migration": "0005_publisher2"
+        }
+    },
+    {
+        "pk": 44,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.026Z",
+            "app_name": "teaser",
+            "migration": "0001_initial"
+        }
+    },
+    {
+        "pk": 45,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.046Z",
+            "app_name": "teaser",
+            "migration": "0002_publisher2"
+        }
+    },
+    {
+        "pk": 46,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.074Z",
+            "app_name": "snippet",
+            "migration": "0003_table_rename"
+        }
+    },
+    {
+        "pk": 47,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.090Z",
+            "app_name": "snippet",
+            "migration": "0004_publisher2"
+        }
+    },
+    {
+        "pk": 48,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.106Z",
+            "app_name": "picture",
+            "migration": "0005_table_rename"
+        }
+    },
+    {
+        "pk": 49,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.118Z",
+            "app_name": "picture",
+            "migration": "0006_float_added"
+        }
+    },
+    {
+        "pk": 50,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.158Z",
+            "app_name": "picture",
+            "migration": "0007_publisher2"
+        }
+    },
+    {
+        "pk": 51,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.178Z",
+            "app_name": "link",
+            "migration": "0006_table_rename"
+        }
+    },
+    {
+        "pk": 52,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.190Z",
+            "app_name": "link",
+            "migration": "0007_publisher2"
+        }
+    },
+    {
+        "pk": 53,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.202Z",
+            "app_name": "googlemap",
+            "migration": "0002_table_rename"
+        }
+    },
+    {
+        "pk": 54,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.218Z",
+            "app_name": "googlemap",
+            "migration": "0003_address_unified"
+        }
+    },
+    {
+        "pk": 55,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.234Z",
+            "app_name": "googlemap",
+            "migration": "0004_copy_address"
+        }
+    },
+    {
+        "pk": 56,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.254Z",
+            "app_name": "googlemap",
+            "migration": "0005_delete_street"
+        }
+    },
+    {
+        "pk": 57,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.298Z",
+            "app_name": "googlemap",
+            "migration": "0006_publisher2"
+        }
+    },
+    {
+        "pk": 58,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.338Z",
+            "app_name": "flash",
+            "migration": "0004_table_rename"
+        }
+    },
+    {
+        "pk": 59,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.354Z",
+            "app_name": "flash",
+            "migration": "0005_publisher2"
+        }
+    },
+    {
+        "pk": 60,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.378Z",
+            "app_name": "file",
+            "migration": "0004_table_rename"
+        }
+    },
+    {
+        "pk": 61,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.399Z",
+            "app_name": "file",
+            "migration": "0005_publisher2"
+        }
+    },
+    {
+        "pk": 62,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.415Z",
+            "app_name": "cms",
+            "migration": "0020_advanced_permissions"
+        }
+    },
+    {
+        "pk": 63,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.431Z",
+            "app_name": "cms",
+            "migration": "0021_publisher2"
+        }
+    },
+    {
+        "pk": 64,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.451Z",
+            "app_name": "cms",
+            "migration": "0022_login_required_added"
+        }
+    },
+    {
+        "pk": 65,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.467Z",
+            "app_name": "cms",
+            "migration": "0023_plugin_table_naming_function_changed"
+        }
+    },
+    {
+        "pk": 66,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.487Z",
+            "app_name": "cms",
+            "migration": "0024_added_placeholder_model"
+        }
+    },
+    {
+        "pk": 67,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.523Z",
+            "app_name": "cms",
+            "migration": "0025_placeholder_migration"
+        }
+    },
+    {
+        "pk": 68,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.543Z",
+            "app_name": "cms",
+            "migration": "0026_finish_placeholder_migration"
+        }
+    },
+    {
+        "pk": 69,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.563Z",
+            "app_name": "cms",
+            "migration": "0027_added_width_to_placeholder"
+        }
+    },
+    {
+        "pk": 70,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.579Z",
+            "app_name": "cms",
+            "migration": "0028_limit_visibility_in_menu_step1of3"
+        }
+    },
+    {
+        "pk": 71,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.619Z",
+            "app_name": "cms",
+            "migration": "0029_limit_visibility_in_menu_step2of3_data"
+        }
+    },
+    {
+        "pk": 72,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.639Z",
+            "app_name": "cms",
+            "migration": "0030_limit_visibility_in_menu_step3of3"
+        }
+    },
+    {
+        "pk": 73,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.667Z",
+            "app_name": "cms",
+            "migration": "0031_improved_language_code_support"
+        }
+    },
+    {
+        "pk": 74,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.691Z",
+            "app_name": "cms",
+            "migration": "0032_auto__del_field_cmsplugin_publisher_public__del_field_cmsplugin_publis"
+        }
+    },
+    {
+        "pk": 75,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.707Z",
+            "app_name": "cms",
+            "migration": "0033_auto__del_field_title_publisher_is_draft__del_field_title_publisher_st"
+        }
+    },
+    {
+        "pk": 76,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.739Z",
+            "app_name": "cms",
+            "migration": "0034_auto__chg_field_title_language__chg_field_cmsplugin_language__add_fiel"
+        }
+    },
+    {
+        "pk": 77,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.755Z",
+            "app_name": "cms",
+            "migration": "0035_auto__add_field_globalpagepermission_can_view__add_field_pagepermissio"
+        }
+    },
+    {
+        "pk": 78,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.791Z",
+            "app_name": "menus",
+            "migration": "0001_initial"
+        }
+    },
+    {
+        "pk": 79,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.819Z",
+            "app_name": "reversion",
+            "migration": "0001_initial"
+        }
+    },
+    {
+        "pk": 80,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.839Z",
+            "app_name": "reversion",
+            "migration": "0002_auto__add_field_version_type"
+        }
+    },
+    {
+        "pk": 81,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.859Z",
+            "app_name": "reversion",
+            "migration": "0003_auto__add_field_version_object_id_int"
+        }
+    },
+    {
+        "pk": 82,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.879Z",
+            "app_name": "reversion",
+            "migration": "0004_populate_object_id_int"
+        }
+    },
+    {
+        "pk": 83,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:56.923Z",
+            "app_name": "reversion",
+            "migration": "0005_auto__add_field_revision_manager_slug"
+        }
+    },
+    {
+        "pk": 84,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:57.107Z",
+            "app_name": "googlemap",
+            "migration": "0007_latlng"
+        }
+    },
+    {
+        "pk": 85,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:57.127Z",
+            "app_name": "googlemap",
+            "migration": "0008_routeplaner"
+        }
+    },
+    {
+        "pk": 86,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:57.143Z",
+            "app_name": "googlemap",
+            "migration": "0009_routeplaner_title"
+        }
+    },
+    {
+        "pk": 87,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:57.203Z",
+            "app_name": "link",
+            "migration": "0008_mailto"
+        }
+    },
+    {
+        "pk": 88,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:57.267Z",
+            "app_name": "picture",
+            "migration": "0008_longdesc_added"
+        }
+    },
+    {
+        "pk": 89,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:57.327Z",
+            "app_name": "snippet",
+            "migration": "0005_template_added"
+        }
+    },
+    {
+        "pk": 90,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:57.451Z",
+            "app_name": "text",
+            "migration": "0006_2_1_4_upgrade"
+        }
+    },
+    {
+        "pk": 91,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:57.515Z",
+            "app_name": "video",
+            "migration": "0001_initial"
+        }
+    },
+    {
+        "pk": 92,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:57.535Z",
+            "app_name": "video",
+            "migration": "0002_color_mute_controller"
+        }
+    },
+    {
+        "pk": 93,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:57.555Z",
+            "app_name": "video",
+            "migration": "0003_newplayer_step1"
+        }
+    },
+    {
+        "pk": 94,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:57.571Z",
+            "app_name": "video",
+            "migration": "0004_newplayer_step2"
+        }
+    },
+    {
+        "pk": 95,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:57.591Z",
+            "app_name": "video",
+            "migration": "0005_newplayer_step3"
+        }
+    },
+    {
+        "pk": 96,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:57.619Z",
+            "app_name": "video",
+            "migration": "0006_newplayer_step4"
+        }
+    },
+    {
+        "pk": 97,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:57.635Z",
+            "app_name": "video",
+            "migration": "0007_newplayer_step5"
+        }
+    },
+    {
+        "pk": 98,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:57.675Z",
+            "app_name": "twitter",
+            "migration": "0001_initial"
+        }
+    },
+    {
+        "pk": 99,
+        "model": "south.migrationhistory",
+        "fields": {
+            "applied": "2012-07-26T16:32:57.691Z",
+            "app_name": "twitter",
+            "migration": "0002_auto__add_twittersearch"
         }
     },
     {
@@ -168,6 +1462,285 @@
         }
     },
     {
+        "pk": 59,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_cmsplugin",
+            "name": "Can add cms plugin",
+            "content_type": 19
+        }
+    },
+    {
+        "pk": 69,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_cmsplugin",
+            "name": "Can change cms plugin",
+            "content_type": 19
+        }
+    },
+    {
+        "pk": 79,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_cmsplugin",
+            "name": "Can delete cms plugin",
+            "content_type": 19
+        }
+    },
+    {
+        "pk": 53,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_globalpagepermission",
+            "name": "Can add Page global permission",
+            "content_type": 23
+        }
+    },
+    {
+        "pk": 63,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_globalpagepermission",
+            "name": "Can change Page global permission",
+            "content_type": 23
+        }
+    },
+    {
+        "pk": 73,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_globalpagepermission",
+            "name": "Can delete Page global permission",
+            "content_type": 23
+        }
+    },
+    {
+        "pk": 60,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_page",
+            "name": "Can add page",
+            "content_type": 20
+        }
+    },
+    {
+        "pk": 70,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_page",
+            "name": "Can change page",
+            "content_type": 20
+        }
+    },
+    {
+        "pk": 80,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_page",
+            "name": "Can delete page",
+            "content_type": 20
+        }
+    },
+    {
+        "pk": 83,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "view_page",
+            "name": "Can view page",
+            "content_type": 20
+        }
+    },
+    {
+        "pk": 56,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_pagemoderator",
+            "name": "Can add PageModerator",
+            "content_type": 21
+        }
+    },
+    {
+        "pk": 66,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_pagemoderator",
+            "name": "Can change PageModerator",
+            "content_type": 21
+        }
+    },
+    {
+        "pk": 76,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_pagemoderator",
+            "name": "Can delete PageModerator",
+            "content_type": 21
+        }
+    },
+    {
+        "pk": 54,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_pagemoderatorstate",
+            "name": "Can add Page moderator state",
+            "content_type": 22
+        }
+    },
+    {
+        "pk": 64,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_pagemoderatorstate",
+            "name": "Can change Page moderator state",
+            "content_type": 22
+        }
+    },
+    {
+        "pk": 74,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_pagemoderatorstate",
+            "name": "Can delete Page moderator state",
+            "content_type": 22
+        }
+    },
+    {
+        "pk": 55,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_pagepermission",
+            "name": "Can add Page permission",
+            "content_type": 24
+        }
+    },
+    {
+        "pk": 65,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_pagepermission",
+            "name": "Can change Page permission",
+            "content_type": 24
+        }
+    },
+    {
+        "pk": 75,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_pagepermission",
+            "name": "Can delete Page permission",
+            "content_type": 24
+        }
+    },
+    {
+        "pk": 57,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_pageuser",
+            "name": "Can add User (page)",
+            "content_type": 25
+        }
+    },
+    {
+        "pk": 67,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_pageuser",
+            "name": "Can change User (page)",
+            "content_type": 25
+        }
+    },
+    {
+        "pk": 77,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_pageuser",
+            "name": "Can delete User (page)",
+            "content_type": 25
+        }
+    },
+    {
+        "pk": 58,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_pageusergroup",
+            "name": "Can add User group (page)",
+            "content_type": 26
+        }
+    },
+    {
+        "pk": 68,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_pageusergroup",
+            "name": "Can change User group (page)",
+            "content_type": 26
+        }
+    },
+    {
+        "pk": 78,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_pageusergroup",
+            "name": "Can delete User group (page)",
+            "content_type": 26
+        }
+    },
+    {
+        "pk": 61,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_placeholder",
+            "name": "Can add placeholder",
+            "content_type": 18
+        }
+    },
+    {
+        "pk": 71,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_placeholder",
+            "name": "Can change placeholder",
+            "content_type": 18
+        }
+    },
+    {
+        "pk": 81,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_placeholder",
+            "name": "Can delete placeholder",
+            "content_type": 18
+        }
+    },
+    {
+        "pk": 62,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_title",
+            "name": "Can add title",
+            "content_type": 27
+        }
+    },
+    {
+        "pk": 72,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_title",
+            "name": "Can change title",
+            "content_type": 27
+        }
+    },
+    {
+        "pk": 82,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_title",
+            "name": "Can delete title",
+            "content_type": 27
+        }
+    },
+    {
         "pk": 10,
         "model": "auth.permission",
         "fields": {
@@ -195,6 +1768,222 @@
         }
     },
     {
+        "pk": 96,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_file",
+            "name": "Can add file",
+            "content_type": 32
+        }
+    },
+    {
+        "pk": 97,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_file",
+            "name": "Can change file",
+            "content_type": 32
+        }
+    },
+    {
+        "pk": 98,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_file",
+            "name": "Can delete file",
+            "content_type": 32
+        }
+    },
+    {
+        "pk": 99,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_flash",
+            "name": "Can add flash",
+            "content_type": 33
+        }
+    },
+    {
+        "pk": 100,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_flash",
+            "name": "Can change flash",
+            "content_type": 33
+        }
+    },
+    {
+        "pk": 101,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_flash",
+            "name": "Can delete flash",
+            "content_type": 33
+        }
+    },
+    {
+        "pk": 102,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_googlemap",
+            "name": "Can add google map",
+            "content_type": 34
+        }
+    },
+    {
+        "pk": 103,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_googlemap",
+            "name": "Can change google map",
+            "content_type": 34
+        }
+    },
+    {
+        "pk": 104,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_googlemap",
+            "name": "Can delete google map",
+            "content_type": 34
+        }
+    },
+    {
+        "pk": 105,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_link",
+            "name": "Can add link",
+            "content_type": 35
+        }
+    },
+    {
+        "pk": 106,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_link",
+            "name": "Can change link",
+            "content_type": 35
+        }
+    },
+    {
+        "pk": 107,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_link",
+            "name": "Can delete link",
+            "content_type": 35
+        }
+    },
+    {
+        "pk": 84,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_cachekey",
+            "name": "Can add cache key",
+            "content_type": 28
+        }
+    },
+    {
+        "pk": 85,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_cachekey",
+            "name": "Can change cache key",
+            "content_type": 28
+        }
+    },
+    {
+        "pk": 86,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_cachekey",
+            "name": "Can delete cache key",
+            "content_type": 28
+        }
+    },
+    {
+        "pk": 108,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_picture",
+            "name": "Can add picture",
+            "content_type": 36
+        }
+    },
+    {
+        "pk": 109,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_picture",
+            "name": "Can change picture",
+            "content_type": 36
+        }
+    },
+    {
+        "pk": 110,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_picture",
+            "name": "Can delete picture",
+            "content_type": 36
+        }
+    },
+    {
+        "pk": 90,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_revision",
+            "name": "Can add revision",
+            "content_type": 30
+        }
+    },
+    {
+        "pk": 92,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_revision",
+            "name": "Can change revision",
+            "content_type": 30
+        }
+    },
+    {
+        "pk": 94,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_revision",
+            "name": "Can delete revision",
+            "content_type": 30
+        }
+    },
+    {
+        "pk": 91,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_version",
+            "name": "Can add version",
+            "content_type": 31
+        }
+    },
+    {
+        "pk": 93,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_version",
+            "name": "Can change version",
+            "content_type": 31
+        }
+    },
+    {
+        "pk": 95,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_version",
+            "name": "Can delete version",
+            "content_type": 31
+        }
+    },
+    {
         "pk": 28,
         "model": "auth.permission",
         "fields": {
@@ -204,7 +1993,7 @@
         }
     },
     {
-        "pk": 35,
+        "pk": 36,
         "model": "auth.permission",
         "fields": {
             "codename": "change_disciplinerecord",
@@ -213,7 +2002,7 @@
         }
     },
     {
-        "pk": 42,
+        "pk": 44,
         "model": "auth.permission",
         "fields": {
             "codename": "delete_disciplinerecord",
@@ -222,7 +2011,7 @@
         }
     },
     {
-        "pk": 49,
+        "pk": 52,
         "model": "auth.permission",
         "fields": {
             "codename": "view_dr",
@@ -240,7 +2029,7 @@
         }
     },
     {
-        "pk": 36,
+        "pk": 37,
         "model": "auth.permission",
         "fields": {
             "codename": "change_listserv",
@@ -249,7 +2038,7 @@
         }
     },
     {
-        "pk": 43,
+        "pk": 45,
         "model": "auth.permission",
         "fields": {
             "codename": "delete_listserv",
@@ -267,7 +2056,7 @@
         }
     },
     {
-        "pk": 37,
+        "pk": 38,
         "model": "auth.permission",
         "fields": {
             "codename": "change_location",
@@ -276,7 +2065,7 @@
         }
     },
     {
-        "pk": 44,
+        "pk": 46,
         "model": "auth.permission",
         "fields": {
             "codename": "delete_location",
@@ -294,7 +2083,7 @@
         }
     },
     {
-        "pk": 38,
+        "pk": 39,
         "model": "auth.permission",
         "fields": {
             "codename": "change_plannerblock",
@@ -303,7 +2092,7 @@
         }
     },
     {
-        "pk": 45,
+        "pk": 47,
         "model": "auth.permission",
         "fields": {
             "codename": "delete_plannerblock",
@@ -321,7 +2110,7 @@
         }
     },
     {
-        "pk": 39,
+        "pk": 40,
         "model": "auth.permission",
         "fields": {
             "codename": "change_shift",
@@ -330,7 +2119,7 @@
         }
     },
     {
-        "pk": 46,
+        "pk": 48,
         "model": "auth.permission",
         "fields": {
             "codename": "delete_shift",
@@ -342,13 +2131,40 @@
         "pk": 33,
         "model": "auth.permission",
         "fields": {
+            "codename": "add_timeclockaction",
+            "name": "Can add timeclock action",
+            "content_type": 17
+        }
+    },
+    {
+        "pk": 41,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_timeclockaction",
+            "name": "Can change timeclock action",
+            "content_type": 17
+        }
+    },
+    {
+        "pk": 49,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_timeclockaction",
+            "name": "Can delete timeclock action",
+            "content_type": 17
+        }
+    },
+    {
+        "pk": 34,
+        "model": "auth.permission",
+        "fields": {
             "codename": "add_timeclockrecord",
             "name": "Can add timeclock record",
             "content_type": 16
         }
     },
     {
-        "pk": 40,
+        "pk": 42,
         "model": "auth.permission",
         "fields": {
             "codename": "change_timeclockrecord",
@@ -357,7 +2173,7 @@
         }
     },
     {
-        "pk": 47,
+        "pk": 50,
         "model": "auth.permission",
         "fields": {
             "codename": "delete_timeclockrecord",
@@ -366,7 +2182,7 @@
         }
     },
     {
-        "pk": 34,
+        "pk": 35,
         "model": "auth.permission",
         "fields": {
             "codename": "add_userprofile",
@@ -375,7 +2191,7 @@
         }
     },
     {
-        "pk": 41,
+        "pk": 43,
         "model": "auth.permission",
         "fields": {
             "codename": "change_userprofile",
@@ -384,7 +2200,7 @@
         }
     },
     {
-        "pk": 48,
+        "pk": 51,
         "model": "auth.permission",
         "fields": {
             "codename": "delete_userprofile",
@@ -447,6 +2263,87 @@
         }
     },
     {
+        "pk": 111,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_snippet",
+            "name": "Can add Snippet",
+            "content_type": 37
+        }
+    },
+    {
+        "pk": 113,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_snippet",
+            "name": "Can change Snippet",
+            "content_type": 37
+        }
+    },
+    {
+        "pk": 115,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_snippet",
+            "name": "Can delete Snippet",
+            "content_type": 37
+        }
+    },
+    {
+        "pk": 112,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_snippetptr",
+            "name": "Can add Snippet",
+            "content_type": 38
+        }
+    },
+    {
+        "pk": 114,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_snippetptr",
+            "name": "Can change Snippet",
+            "content_type": 38
+        }
+    },
+    {
+        "pk": 116,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_snippetptr",
+            "name": "Can delete Snippet",
+            "content_type": 38
+        }
+    },
+    {
+        "pk": 87,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_migrationhistory",
+            "name": "Can add migration history",
+            "content_type": 29
+        }
+    },
+    {
+        "pk": 88,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_migrationhistory",
+            "name": "Can change migration history",
+            "content_type": 29
+        }
+    },
+    {
+        "pk": 89,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_migrationhistory",
+            "name": "Can delete migration history",
+            "content_type": 29
+        }
+    },
+    {
         "pk": 22,
         "model": "auth.permission",
         "fields": {
@@ -501,16 +2398,152 @@
         }
     },
     {
+        "pk": 117,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_teaser",
+            "name": "Can add teaser",
+            "content_type": 39
+        }
+    },
+    {
+        "pk": 118,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_teaser",
+            "name": "Can change teaser",
+            "content_type": 39
+        }
+    },
+    {
+        "pk": 119,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_teaser",
+            "name": "Can delete teaser",
+            "content_type": 39
+        }
+    },
+    {
+        "pk": 120,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_text",
+            "name": "Can add text",
+            "content_type": 40
+        }
+    },
+    {
+        "pk": 121,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_text",
+            "name": "Can change text",
+            "content_type": 40
+        }
+    },
+    {
+        "pk": 122,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_text",
+            "name": "Can delete text",
+            "content_type": 40
+        }
+    },
+    {
+        "pk": 126,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_twitterrecententries",
+            "name": "Can add twitter recent entries",
+            "content_type": 42
+        }
+    },
+    {
+        "pk": 128,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_twitterrecententries",
+            "name": "Can change twitter recent entries",
+            "content_type": 42
+        }
+    },
+    {
+        "pk": 130,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_twitterrecententries",
+            "name": "Can delete twitter recent entries",
+            "content_type": 42
+        }
+    },
+    {
+        "pk": 127,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_twittersearch",
+            "name": "Can add twitter search",
+            "content_type": 43
+        }
+    },
+    {
+        "pk": 129,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_twittersearch",
+            "name": "Can change twitter search",
+            "content_type": 43
+        }
+    },
+    {
+        "pk": 131,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_twittersearch",
+            "name": "Can delete twitter search",
+            "content_type": 43
+        }
+    },
+    {
+        "pk": 123,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_video",
+            "name": "Can add video",
+            "content_type": 41
+        }
+    },
+    {
+        "pk": 124,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_video",
+            "name": "Can change video",
+            "content_type": 41
+        }
+    },
+    {
+        "pk": 125,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_video",
+            "name": "Can delete video",
+            "content_type": 41
+        }
+    },
+    {
         "pk": 1,
         "model": "auth.group",
         "fields": {
             "name": "Consultant",
             "permissions": [
                 31,
-                38,
-                45,
                 39,
-                33
+                47,
+                40,
+                33,
+                34
             ]
         }
     },
@@ -523,22 +2556,95 @@
                 3,
                 6,
                 9,
+                59,
+                69,
+                79,
+                53,
+                63,
+                73,
+                60,
+                70,
+                80,
+                83,
+                56,
+                66,
+                76,
+                54,
+                64,
+                74,
+                55,
+                65,
+                75,
+                57,
+                67,
+                77,
+                58,
+                68,
+                78,
+                61,
+                71,
+                81,
+                62,
+                72,
+                82,
+                96,
+                97,
+                98,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                106,
+                107,
+                108,
+                109,
+                110,
+                90,
+                92,
+                94,
+                91,
+                93,
+                95,
                 28,
-                35,
-                42,
-                49,
-                31,
-                38,
+                36,
+                44,
+                52,
+                29,
+                37,
                 45,
-                32,
+                31,
                 39,
-                46,
-                33,
-                40,
                 47,
-                34,
+                32,
+                40,
+                48,
+                33,
                 41,
-                48
+                49,
+                34,
+                42,
+                50,
+                35,
+                43,
+                51,
+                117,
+                118,
+                119,
+                120,
+                121,
+                122,
+                126,
+                128,
+                130,
+                127,
+                129,
+                131,
+                123,
+                124,
+                125
             ]
         }
     },
@@ -552,14 +2658,12 @@
             "is_active": true,
             "is_superuser": true,
             "is_staff": true,
-            "last_login": "2012-07-17T17:54:04Z",
-            "groups": [
-                2
-            ],
+            "last_login": "2012-07-26T16:35:22Z",
+            "groups": [],
             "user_permissions": [],
-            "password": "pbkdf2_sha256$10000$9Hbu2ARBCMJM$vfT1pqP+xAD49q25grjG5hM1rti9gSLIRL+Pnj9+gQU=",
+            "password": "pbkdf2_sha256$10000$oG9CyoEMx7fG$plB2JwgwdqLjX8GmeMt8OBDnEtIq6gjSVCKsqo4eKpg=",
             "email": "shawgerj@gmail.com",
-            "date_joined": "2012-07-17T17:53:43Z"
+            "date_joined": "2012-07-26T16:26:32Z"
         }
     },
     {
@@ -572,14 +2676,14 @@
             "is_active": true,
             "is_superuser": false,
             "is_staff": false,
-            "last_login": "2012-07-17T17:57:32Z",
+            "last_login": "2012-07-26T16:35:58Z",
             "groups": [
                 1
             ],
             "user_permissions": [],
-            "password": "pbkdf2_sha256$10000$lgQOTlrFmdvP$K8PErbVDUO2CcJDXZzWFvTOIrkS6/Z5cruY624yOlIw=",
+            "password": "pbkdf2_sha256$10000$UlazOLUdCZjf$OJL2VSDD7y/6ULuqlIEwdrbacseIa/DU13Oi9pCHoQo=",
             "email": "testcon@test.org",
-            "date_joined": "2012-07-17T17:57:32Z"
+            "date_joined": "2012-07-26T16:35:58Z"
         }
     },
     {
@@ -588,18 +2692,31 @@
         "fields": {
             "username": "testcl",
             "first_name": "Test",
-            "last_name": "Conleader",
+            "last_name": "Cl",
             "is_active": true,
             "is_superuser": false,
             "is_staff": false,
-            "last_login": "2012-07-17T17:58:19Z",
+            "last_login": "2012-07-26T16:42:06Z",
             "groups": [
                 2
             ],
             "user_permissions": [],
-            "password": "pbkdf2_sha256$10000$6BRoralSSq20$f8mMYXWWgzehSTYRXPFpUtjvAw+2AWVHPPM61lSnLOo=",
+            "password": "pbkdf2_sha256$10000$4Le7cun5Vux0$QMNmn1LM+os5HQ1FMkkcuINi4KcAW6C0aa0PNntDuLo=",
             "email": "testcl@test.org",
-            "date_joined": "2012-07-17T17:58:19Z"
+            "date_joined": "2012-07-26T16:42:06Z"
+        }
+    },
+    {
+        "pk": 14,
+        "model": "admin.logentry",
+        "fields": {
+            "action_flag": 1,
+            "action_time": "2012-07-26T17:54:16.078Z",
+            "object_repr": "testcon 2012-07-26 12:00:00 127.0.0.1",
+            "object_id": "1",
+            "change_message": "",
+            "user": 1,
+            "content_type": 16
         }
     },
     {
@@ -607,8 +2724,8 @@
         "model": "admin.logentry",
         "fields": {
             "action_flag": 1,
-            "action_time": "2012-07-17T18:00:23.963Z",
-            "object_repr": "testcl 2012-07-17 15:00:00 In Class",
+            "action_time": "2012-07-26T16:50:29.006Z",
+            "object_repr": "testcl 2012-07-26 13:00:00 Preferred",
             "object_id": "2",
             "change_message": "",
             "user": 1,
@@ -620,8 +2737,8 @@
         "model": "admin.logentry",
         "fields": {
             "action_flag": 1,
-            "action_time": "2012-07-17T18:00:04.876Z",
-            "object_repr": "testcon 2012-07-17 11:00:00 Preferred",
+            "action_time": "2012-07-26T16:48:37.083Z",
+            "object_repr": "testcon 2012-07-26 10:00:00 Unavailable",
             "object_id": "1",
             "change_message": "",
             "user": 1,
@@ -633,8 +2750,8 @@
         "model": "admin.logentry",
         "fields": {
             "action_flag": 1,
-            "action_time": "2012-07-17T17:59:40.196Z",
-            "object_repr": "Tech 2012-07-17 14:00:00 testcl",
+            "action_time": "2012-07-26T16:45:51.746Z",
+            "object_repr": "Tech 2012-07-26 14:00:00 testcl",
             "object_id": "2",
             "change_message": "",
             "user": 1,
@@ -646,8 +2763,8 @@
         "model": "admin.logentry",
         "fields": {
             "action_flag": 1,
-            "action_time": "2012-07-17T17:59:17.871Z",
-            "object_repr": "Tech 2012-07-17 10:00:00 testcon",
+            "action_time": "2012-07-26T16:45:19.812Z",
+            "object_repr": "Tech 2012-07-26 11:00:00 testcon",
             "object_id": "1",
             "change_message": "",
             "user": 1,
@@ -659,7 +2776,7 @@
         "model": "admin.logentry",
         "fields": {
             "action_flag": 2,
-            "action_time": "2012-07-17T17:58:45.618Z",
+            "action_time": "2012-07-26T16:42:38.474Z",
             "object_repr": "testcl",
             "object_id": "3",
             "change_message": "Changed password, first_name, last_name, email and groups. Added user profile \"testcl\".",
@@ -672,7 +2789,7 @@
         "model": "admin.logentry",
         "fields": {
             "action_flag": 1,
-            "action_time": "2012-07-17T17:58:19.662Z",
+            "action_time": "2012-07-26T16:42:06.672Z",
             "object_repr": "testcl",
             "object_id": "3",
             "change_message": "",
@@ -685,10 +2802,10 @@
         "model": "admin.logentry",
         "fields": {
             "action_flag": 2,
-            "action_time": "2012-07-17T17:58:07.109Z",
+            "action_time": "2012-07-26T16:41:44.275Z",
             "object_repr": "testcon",
             "object_id": "2",
-            "change_message": "Changed username, password, first_name, last_name, email and groups. Added user profile \"testcon\".",
+            "change_message": "Changed password and groups.",
             "user": 1,
             "content_type": 3
         }
@@ -697,9 +2814,61 @@
         "pk": 6,
         "model": "admin.logentry",
         "fields": {
+            "action_flag": 2,
+            "action_time": "2012-07-26T16:40:55.196Z",
+            "object_repr": "Conleader",
+            "object_id": "2",
+            "change_message": "Changed permissions.",
+            "user": 1,
+            "content_type": 2
+        }
+    },
+    {
+        "pk": 5,
+        "model": "admin.logentry",
+        "fields": {
             "action_flag": 1,
-            "action_time": "2012-07-17T17:57:32.505Z",
-            "object_repr": "testnml",
+            "action_time": "2012-07-26T16:38:58.986Z",
+            "object_repr": "Conleader",
+            "object_id": "2",
+            "change_message": "",
+            "user": 1,
+            "content_type": 2
+        }
+    },
+    {
+        "pk": 4,
+        "model": "admin.logentry",
+        "fields": {
+            "action_flag": 1,
+            "action_time": "2012-07-26T16:38:52.563Z",
+            "object_repr": "Consultant",
+            "object_id": "1",
+            "change_message": "",
+            "user": 1,
+            "content_type": 2
+        }
+    },
+    {
+        "pk": 3,
+        "model": "admin.logentry",
+        "fields": {
+            "action_flag": 2,
+            "action_time": "2012-07-26T16:36:19.377Z",
+            "object_repr": "testcon",
+            "object_id": "2",
+            "change_message": "Changed password, first_name, last_name and email. Added user profile \"testcon\".",
+            "user": 1,
+            "content_type": 3
+        }
+    },
+    {
+        "pk": 2,
+        "model": "admin.logentry",
+        "fields": {
+            "action_flag": 1,
+            "action_time": "2012-07-26T16:35:58.337Z",
+            "object_repr": "testcon",
             "object_id": "2",
             "change_message": "",
             "user": 1,
@@ -707,24 +2876,11 @@
         }
     },
     {
-        "pk": 5,
+        "pk": 1,
         "model": "admin.logentry",
         "fields": {
             "action_flag": 2,
-            "action_time": "2012-07-17T17:56:54.158Z",
-            "object_repr": "jms511",
-            "object_id": "1",
-            "change_message": "Changed password and groups.",
-            "user": 1,
-            "content_type": 3
-        }
-    },
-    {
-        "pk": 4,
-        "model": "admin.logentry",
-        "fields": {
-            "action_flag": 2,
-            "action_time": "2012-07-17T17:56:44.732Z",
+            "action_time": "2012-07-26T16:35:43.725Z",
             "object_repr": "jms511",
             "object_id": "1",
             "change_message": "Changed password, first_name and last_name. Added user profile \"jms511\".",
@@ -733,60 +2889,21 @@
         }
     },
     {
-        "pk": 3,
-        "model": "admin.logentry",
-        "fields": {
-            "action_flag": 1,
-            "action_time": "2012-07-17T17:56:21.836Z",
-            "object_repr": "Conleader",
-            "object_id": "2",
-            "change_message": "",
-            "user": 1,
-            "content_type": 2
-        }
-    },
-    {
-        "pk": 2,
-        "model": "admin.logentry",
-        "fields": {
-            "action_flag": 2,
-            "action_time": "2012-07-17T17:55:25.590Z",
-            "object_repr": "Consultant",
-            "object_id": "1",
-            "change_message": "Changed name.",
-            "user": 1,
-            "content_type": 2
-        }
-    },
-    {
-        "pk": 1,
-        "model": "admin.logentry",
-        "fields": {
-            "action_flag": 1,
-            "action_time": "2012-07-17T17:55:14.522Z",
-            "object_repr": "Conleader",
-            "object_id": "1",
-            "change_message": "",
-            "user": 1,
-            "content_type": 2
-        }
-    },
-    {
         "pk": 1,
         "model": "tastypie.apikey",
         "fields": {
             "user": 1,
-            "key": "a4328fe107a1e69aee74617277080cc2afcdd5e9",
-            "created": "2012-07-18T14:23:08.604Z"
+            "key": "d31c6fe47c35cba804c5e77810e7d4c4176baef7",
+            "created": "2012-07-26T16:26:32.563Z"
         }
     },
-{
+    {
         "pk": 2,
         "model": "tastypie.apikey",
         "fields": {
             "user": 2,
-            "key": "a4328fe107a1e69aee74617277080cc2afcdd5c9",
-            "created": "2012-07-18T14:24:08.604Z"
+            "key": "d7dff0c6e411bf097a5ee30decd9be64c0c630cb",
+            "created": "2012-07-26T16:35:58.337Z"
         }
     },
     {
@@ -794,8 +2911,8 @@
         "model": "tastypie.apikey",
         "fields": {
             "user": 3,
-            "key": "a4328fe107a1e69aee74617277080cc2afcdd5a9",
-            "created": "2012-07-18T14:25:08.604Z"
+            "key": "a719c95fd43fa104fb5cb7bb8d017035fe44e9e2",
+            "created": "2012-07-26T16:42:06.668Z"
         }
     },
     {
@@ -833,10 +2950,10 @@
         "model": "ricotta.shift",
         "fields": {
             "location_name": "Tech",
-            "start_time": "2012-07-17T15:00:00Z",
+            "start_time": "2012-07-26T16:00:00Z",
             "worker": 2,
             "for_trade": false,
-            "end_time": "2012-07-17T17:00:00Z",
+            "end_time": "2012-07-26T18:00:00Z",
             "been_traded": false
         }
     },
@@ -845,10 +2962,10 @@
         "model": "ricotta.shift",
         "fields": {
             "location_name": "Tech",
-            "start_time": "2012-07-17T19:00:00Z",
+            "start_time": "2012-07-26T19:00:00Z",
             "worker": 3,
             "for_trade": false,
-            "end_time": "2012-07-17T21:00:00Z",
+            "end_time": "2012-07-26T21:00:00Z",
             "been_traded": false
         }
     },
@@ -856,20 +2973,31 @@
         "pk": 1,
         "model": "ricotta.plannerblock",
         "fields": {
-            "block_type": "pf",
-            "start_time": "2012-07-17T16:00:00Z",
+            "block_type": "un",
+            "start_time": "2012-07-26T15:00:00Z",
             "worker": 2,
-            "end_time": "2012-07-17T18:00:00Z"
+            "end_time": "2012-07-26T17:00:00Z"
         }
     },
     {
         "pk": 2,
         "model": "ricotta.plannerblock",
         "fields": {
-            "block_type": "ic",
-            "start_time": "2012-07-17T20:00:00Z",
+            "block_type": "pf",
+            "start_time": "2012-07-26T18:00:00Z",
             "worker": 3,
-            "end_time": "2012-07-17T22:00:00Z"
+            "end_time": "2012-07-26T20:00:00Z"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "ricotta.timeclockrecord",
+        "fields": {
+            "employee": 2,
+            "start_time": "2012-07-26T17:00:00Z",
+            "outIP": "127.0.0.1",
+            "end_time": "2012-07-26T19:00:00Z",
+            "inIP": "127.0.0.1"
         }
     }
 ]

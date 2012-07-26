@@ -1,5 +1,5 @@
 from django.template import RequestContext, Context, loader
-from ricotta.models import Shift, Location, UserProfile, PlannerBlock, TimeclockRecord
+from ricotta.models import Shift, Location, UserProfile, PlannerBlock, TimeclockRecord, TimeclockAction
 from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404

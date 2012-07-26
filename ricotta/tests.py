@@ -2,7 +2,7 @@ import datetime
 from django.utils.timezone import utc
 from django.test import TestCase
 from tastypie.test import ResourceTestCase
-from ricotta.models import Listserv, Location, DisciplineRecord, Shift, PlannerBlock, TimeclockRecord
+from ricotta.models import Listserv, Location, DisciplineRecord, Shift, PlannerBlock, TimeclockRecord, TimeclockAction
 from django.contrib.auth.models import User
 
 
@@ -57,6 +57,17 @@ class TimeclockRecordTestCase(TestCase):
         self.assertEquals(self.tr1.end_time - self.tr1.start_time, datetime.timedelta(hours=1))
         self.assertEquals(self.tr1.inIP, self.tr1.outIP)
 
+class TimeclockActionTestCase(TestCase):
+    fixtures = ['ricotta_test_data.json']
+    def test_timeclockaction(self):
+        t = datetime.datetime.utcnow().replace(tzinfo=utc)
+        self.ta1 = TimeclockAction.objects.create(time=t, IP = '127.0.0.1', employee = User.objects.get(pk=3))
+
+        self.assertEquals(self.ta1.employee.username, 'testcl')
+        self.assertEquals(self.ta1.time, t)
+        self.assertEquals(self.ta1.IP, '127.0.0.1')
+
+
 class LocationModelTestCase(TestCase):
     def test_location(self):
         # note that we are testing against the data in initial.yaml
@@ -69,6 +80,7 @@ class LocationModelTestCase(TestCase):
         self.assertEquals(l1.address, '2145 Sheridan Road')
         self.assertNotEquals(l1.address, '1970 Campus Drive')
         self.assertEquals(l2.address, '1970 Campus Drive')
+
     
 ###
 # Tastypie API Test Cases
