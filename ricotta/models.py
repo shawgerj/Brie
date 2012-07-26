@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from datetime import datetime
 from django.utils import timezone
 from tastypie.models import create_api_key
+from string import *
 
 class Listserv(models.Model):
     email = models.CharField(max_length=50, primary_key=True)
@@ -46,7 +47,8 @@ class DisciplineRecord(models.Model):
     comment = models.TextField()
 
     def __unicode__(self):
-        return self.employee.username + ' ' + self.date_of_record.strftime("%y-%m-%d")
+        return ' '.join(self.employee.username,
+                        self.date_of_record.strftime("%y-%m-%d"))
 
     class Meta:
         permissions = (
@@ -62,7 +64,9 @@ class Shift(models.Model):
     been_traded = models.BooleanField()
 
     def __unicode__(self):
-        return self.location_name.location_name + ' ' + self.start_time.astimezone(timezone.get_default_timezone()).strftime("%Y-%m-%d %H:%M:%S") + ' ' + self.worker.username
+        return ' '.join(self.location_name.location_name,
+                        self.start_time.astimezone(timezone.get_default_timezone()).strftime("%Y-%m-%d %H:%M:%S"),
+                        self.worker.username)
             
 class PlannerBlock(models.Model):
     PLANNER_CHOICES = (
@@ -77,7 +81,9 @@ class PlannerBlock(models.Model):
     block_type = models.CharField(max_length=2, choices = PLANNER_CHOICES)
 
     def __unicode__(self):
-        return self.worker.username + ' ' + self.start_time.astimezone(timezone.get_default_timezone()).strftime("%Y-%m-%d %H:%M:%S") + ' ' + self.get_block_type_display()
+        return ' '.join((self.worker.username,
+                         self.start_time.astimezone(timezone.get_default_timezone()).strftime("%Y-%m-%d %H:%M:%S"),
+                         self.get_block_type_display()))
 
 
 class TimeclockRecord(models.Model):
@@ -88,7 +94,19 @@ class TimeclockRecord(models.Model):
     employee = models.ForeignKey(User)
     
     def __unicode__(self):
-        return self.employee.username + ' ' + self.start_time.astimezone(timezone.get_default_timezone()).strftime("%Y-%m-%d %H:%M:%S") + ' ' + self.inIP
+        return ' '.join((self.employee.username, 
+                         self.start_time.astimezone(timezone.get_default_timezone()).strftime("%Y-%m-%d %H:%M:%S"), 
+                         self.inIP))
+
+class TimeclockAction(models.Model):
+    time = models.DateTimeField()
+    IP = models.IPAddressField()
+    employee = models.ForeignKey(User)
+
+    def __unicode__(self):
+        return ' '.join((self.employee.username,
+                         self.time.astimezone(timezone.get_default_timezone()).strftime("%Y-%m-%d %H:%M:%S"), 
+                         self.IP))
 
 # this is to generate the tastypie API keys for each user
 models.signals.post_save.connect(create_api_key, sender=User)

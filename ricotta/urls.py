@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',
     url(r'^$', 'ricotta.views.home'),
+    url(r'^clockin/$', 'ricotta.views.clockin'),
     
     url(r'^calendar/$', 'ricotta.views.calendar_base', name='calendar-home'),
     url(r'^calendar/(?P<location_name>.*)/$', 'ricotta.views.calendar'),

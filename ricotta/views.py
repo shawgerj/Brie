@@ -10,6 +10,23 @@ def home(request):
     return render(request, 'ricotta/home.html', 
                   {"worker": request.user.username,
                    "lab": request.user.profile.lab})
+
+def clockin(request):
+    ta = TimeclockAction.objects.get(employee=request.user)
+    if (ta):
+        TimeclockRecord(start_time=ta.time,
+                        end_time=datetime.now(),
+                        employee=request.user,
+                        InIP=ta.IP,
+                        OutIP=request.META['HTTP_X_FORWARDED_FOR']).save()
+        ta.delete()
+#        return HttpResponseDirect('/clocked_out/')
+    else:
+        TimeclockAction(time=datetime.now(),
+                        employee=request.user,
+                        IP=request.META['HTTP_X_FORWARDED_FOR']).save()
+#        return HttpResponseDirect('/clocked_in/')
+    return HttpResponseDirect('/')
             
 def calendar_base(request):
     calendars = Location.objects.all()
