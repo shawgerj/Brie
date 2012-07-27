@@ -106,7 +106,7 @@ $(function(){
             this.model.set({'title': this.$("#prefBox option:selected").html()});
             this.model.set({'block_type': this.$("#prefBox").val()});
             this.model.set({'worker': this.$("#user").val()});
-            
+             
             if (this.model.isNew()) {
                 this.collection.create(this.model, {success: this.close});
             } else {

@@ -56,7 +56,7 @@ def planner(request, username):
     get_object_or_404(User, username=username)
 
     return render(request, 'ricotta/planner.html',
-                  {"worker": username, 
+                  {"worker": request.user, 
                    "preferences": PlannerBlock.PLANNER_CHOICES})
 
 def planner_lab(request, location_name):

@@ -110,6 +110,12 @@ class PlannerBlockResource(ModelResource):
         bundle.data['allDay'] = False
         bundle.data['title'] = bundle.obj.get_block_type_display()
         bundle.data['id'] = bundle.data['resource_uri']
+        if (bundle.data['title'] == 'Preferred'):
+            bundle.data['color'] = 'Blue'
+        elif (bundle.data['title'] == 'In Class'):
+            bundle.data['color'] = 'Orange'
+        else:
+            bundle.data['color'] = 'Green'
 
         bundle.data.__delitem__('start_time')
         bundle.data.__delitem__('end_time')

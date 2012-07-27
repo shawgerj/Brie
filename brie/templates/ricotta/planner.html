@@ -14,11 +14,16 @@
 {% addtoblock "js" %}<script src="{{ STATIC_URL }}js/fullcalendar.min.js"></script>{% endaddtoblock %}
 {% addtoblock "js" %}<script src="{{ STATIC_URL }}js/backbone-tastypie.js"></script>{% endaddtoblock %}
 
-{% block resource_apis %}
+{% addtoblock "js" %}
   <script>
     PLANNER_API = "{% url api_dispatch_list api_name="v1" resource_name="planner_block" %}?worker__username={{ worker }}";
-{% endblock %}
+
+    Backbone.Tastypie.apiKey = {
+        username: '{{ worker.username }}',
+        key: '{{ worker.api_key.key }}'
+    };
   </script>
+{% endaddtoblock %}
 {% addtoblock "js" %}<script src="{{ STATIC_URL }}js/planner_cal_app.js"></script>{% endaddtoblock %}
 
 {% block calendar %}
