@@ -12,7 +12,7 @@ def home(request):
                    "lab": request.user.profile.lab})
 
 def clockin(request):
-    ta = TimeclockAction.objects.get(employee=request.user)
+    ta = TimeclockAction.objects.filter(employee=request.user)
     if (ta):
         TimeclockRecord(start_time=ta.time,
                         end_time=datetime.now(),

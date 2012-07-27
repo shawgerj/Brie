@@ -1,6 +1,6 @@
 import datetime
 from django.utils.timezone import utc
-from django.test import TestCase
+from django.test import TestCase, Client
 from tastypie.test import ResourceTestCase
 from ricotta.models import Listserv, Location, DisciplineRecord, Shift, PlannerBlock, TimeclockRecord, TimeclockAction
 from django.contrib.auth.models import User
@@ -394,3 +394,19 @@ class PlannerViewsTestCase(TestCase):
         # and if we try a user that doesn't exist, return 404
         resp = self.client.get('/planner/notusr/')
         self.assertEqual(resp.status_code, 404)
+
+class ClockInTestCase(TestCase):
+    fixtures = ['ricotta_test_data.json']
+
+    def setUp(self):
+        self.client = Client()
+        self.client.login(username='testcon', password='testcon')
+    
+    # we start with no timeclockactions, so this is a simple clockin
+    def test_clockin(self):
+        resp = self.client.get('/ricotta/clockin/')
+        self.assertEqual(resp.status_code, 200)
+        ta = TimeclockAction.objects.all()
+        
+        self.assertEqual(ta.count(), 1)
+        
