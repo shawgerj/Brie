@@ -1,7 +1,7 @@
 from django.template import RequestContext, Context, loader
 from ricotta.models import Shift, Location, UserProfile, PlannerBlock, TimeclockRecord, TimeclockAction
 from django.contrib.auth.models import User
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
 from datetime import datetime, timedelta
@@ -13,20 +13,32 @@ def home(request):
 
 def clockin(request):
     ta = TimeclockAction.objects.filter(employee=request.user)
+    
+    try:
+        real_ip = request.META['HTTP_X_FORWARDED_FOR']
+    except KeyError:
+        real_ip = request.META['REMOTE_ADDR']
+
     if (ta):
-        TimeclockRecord(start_time=ta.time,
+        TimeclockRecord(start_time=ta[0].time,
                         end_time=datetime.now(),
                         employee=request.user,
-                        InIP=ta.IP,
-                        OutIP=request.META['HTTP_X_FORWARDED_FOR']).save()
+                        inIP=ta[0].IP,
+                        outIP=real_ip).save()
         ta.delete()
 #        return HttpResponseDirect('/clocked_out/')
     else:
         TimeclockAction(time=datetime.now(),
                         employee=request.user,
-                        IP=request.META['HTTP_X_FORWARDED_FOR']).save()
+                        IP=real_ip).save()
 #        return HttpResponseDirect('/clocked_in/')
-    return HttpResponseDirect('/')
+    return HttpResponseRedirect('/')
+
+def whos_clockin(request):
+    clocked_in = TimeclockAction.objects.all()
+    return render(request, 'ricotta/whos_clockin.html',
+                  {"clocked_in": clocked_in, 
+                   "title": "Who's Clocked In"})
             
 def calendar_base(request):
     calendars = Location.objects.all()

@@ -39,6 +39,8 @@
 </style>
   <h2>Ricotta</h2>
   <p>Here are the pages for scheduling, timeclock, and employee management.</p>
+  {% url clock-in as the_url %}
+  <p><a href="{{ the_url }}">Clock In</a></p>
   <div id="calendar-box">
     <h4 class="box-header"><b>Calendar</b></h4>
     <ul>
@@ -56,7 +58,8 @@
     <ul>
       {% url view-timeclock worker as the_url %}
       <li><a href="{{ the_url }}">View My Timeclock</a></li>
-      <li>Who's on Shift</li>
+      {% url whos-clockin as the_url %}
+      <li><a href="{{ the_url }}">Who's on Shift</a></li>
     </ul>
   </div>
   <div id="employees-box">

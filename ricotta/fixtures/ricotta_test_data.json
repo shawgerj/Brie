@@ -2993,7 +2993,7 @@
         "pk": 1,
         "model": "ricotta.timeclockrecord",
         "fields": {
-            "employee": 2,
+            "employee": 3,
             "start_time": "2012-07-26T17:00:00Z",
             "outIP": "127.0.0.1",
             "end_time": "2012-07-26T19:00:00Z",
