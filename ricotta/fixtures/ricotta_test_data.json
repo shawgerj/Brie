@@ -2999,5 +2999,16 @@
             "end_time": "2012-07-26T19:00:00Z",
             "inIP": "127.0.0.1"
         }
+    },
+    {
+        "pk": 2,
+        "model": "ricotta.timeclockrecord",
+        "fields": {
+            "employee": 2,
+            "start_time": "2012-07-26T19:00:00Z",
+            "outIP": "127.0.0.1",
+            "end_time": "2012-07-26T21:00:00Z",
+            "inIP": "127.0.0.1"
+        }
     }
 ]
