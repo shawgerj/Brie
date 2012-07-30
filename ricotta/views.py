@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
-from datetime import datetime, timedelta
+from datetime import timedelta
+from django.utils import timezone
 
 def home(request):
     return render(request, 'ricotta/home.html', 
@@ -21,14 +22,14 @@ def clockin(request):
 
     if (ta):
         TimeclockRecord(start_time=ta[0].time,
-                        end_time=datetime.now(),
+                        end_time=timezone.now(),
                         employee=request.user,
                         inIP=ta[0].IP,
                         outIP=real_ip).save()
         ta.delete()
 #        return HttpResponseDirect('/clocked_out/')
     else:
-        TimeclockAction(time=datetime.now(),
+        TimeclockAction(time=timezone.now(),
                         employee=request.user,
                         IP=real_ip).save()
 #        return HttpResponseDirect('/clocked_in/')

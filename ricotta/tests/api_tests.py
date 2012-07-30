@@ -1,5 +1,4 @@
 import datetime
-from django.utils.timezone import utc
 from tastypie.test import ResourceTestCase
 from ricotta.models import Listserv, Location, DisciplineRecord, Shift, PlannerBlock, TimeclockRecord, TimeclockAction
 from django.contrib.auth.models import User

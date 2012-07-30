@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 import datetime
-from django.utils.timezone import utc
+from django.utils import timezone
 from ricotta.models import Listserv, Location, DisciplineRecord, Shift, PlannerBlock, TimeclockRecord, TimeclockAction
 from django.contrib.auth.models import User
 
@@ -55,7 +55,7 @@ class ClockInTestCase(TestCase):
         ta[0].delete()
         
     def test_clockout(self):
-        t = datetime.datetime.utcnow().replace(tzinfo=utc)
+        t = timezone.now()
         user = User.objects.get(pk=2)
         # create a clock-in record so we can clock out two hours later
         ta_in = TimeclockAction(employee=user, 
