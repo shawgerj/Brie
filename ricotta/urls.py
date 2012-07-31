@@ -14,5 +14,5 @@ urlpatterns = patterns('',
     url(r'^whos_clockin/$', 'ricotta.views.whos_clockin', name='whos-clockin'),
 
     url(r'^employees/$', 'ricotta.views.employees', name='employees'),
-    url(r'^employees/(?P<location_name>\w+)/$', 'ricotta.views.employees_by_lab', name='employees-by-lab')
+    url(r'^employees/(?P<location_name>.*)/$', 'ricotta.views.employees_by_lab', name='employees-by-lab')
 )
