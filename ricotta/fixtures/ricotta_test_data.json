@@ -2695,7 +2695,7 @@
             "last_name": "Cl",
             "is_active": true,
             "is_superuser": false,
-            "is_staff": false,
+            "is_staff": true,
             "last_login": "2012-07-26T16:42:06Z",
             "groups": [
                 2

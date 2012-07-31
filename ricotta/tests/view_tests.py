@@ -79,27 +79,35 @@ class EmployeeViewsTestCase(TestCase):
     def test_employees_all_view(self):
         resp = self.client.get('/ricotta/employees/')
         self.assertEqual(resp.status_code, 200)
-        self.assertTrue('employees' in resp.context)
-        self.assertEqual(resp.context[-1]['employees'].count(), 3)
+        self.assertTrue('conleaders' in resp.context)
+        self.assertTrue('consultants' in resp.context)
+        self.assertEqual(resp.context[-1]['conleaders'].count(), 2)
+        self.assertEqual(resp.context[-1]['consultants'].count(), 1)
         self.assertEqual(resp.context[-1]['title'], "All Employees")
 
     def test_employees_lab(self):
         resp = self.client.get('/ricotta/employees/Tech/')
         self.assertEqual(resp.status_code, 200)
-        self.assertTrue('employees' in resp.context)
-        self.assertEqual(resp.context[-1]['employees'].count(), 2)
+        self.assertTrue('conleaders' in resp.context)
+        self.assertTrue('consultants' in resp.context)
+        self.assertEqual(resp.context[-1]['conleaders'].count(), 1)
+        self.assertEqual(resp.context[-1]['consultants'].count(), 1)
         self.assertEqual(resp.context[-1]['title'], "Employees in Tech")
 
         resp = self.client.get('/ricotta/employees/IC-Main/')
         self.assertEqual(resp.status_code, 200)
-        self.assertTrue('employees' in resp.context)
-        self.assertEqual(resp.context[-1]['employees'].count(), 1)
+        self.assertTrue('conleaders' in resp.context)
+        self.assertTrue('consultants' in resp.context)
+        self.assertEqual(resp.context[-1]['conleaders'].count(), 1)
+        self.assertEqual(resp.context[-1]['consultants'].count(), 0)
         self.assertEqual(resp.context[-1]['title'], "Employees in IC-Main")
 
         resp = self.client.get('/ricotta/employees/IC-Media/')
         self.assertEqual(resp.status_code, 200)
-        self.assertTrue('employees' in resp.context)
-        self.assertEqual(resp.context[-1]['employees'].count(), 0)
+        self.assertTrue('conleaders' in resp.context)
+        self.assertTrue('consultants' in resp.context)
+        self.assertEqual(resp.context[-1]['conleaders'].count(), 0)
+        self.assertEqual(resp.context[-1]['consultants'].count(), 0)
         self.assertEqual(resp.context[-1]['title'], "Employees in IC-Media")
 
 

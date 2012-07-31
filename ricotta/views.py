@@ -37,6 +37,7 @@ def clockin(request):
 
 def whos_clockin(request):
     clocked_in = TimeclockAction.objects.all()
+
     return render(request, 'ricotta/whos_clockin.html',
                   {"clocked_in": clocked_in,
                    "title": "Who's Clocked In"})
@@ -104,15 +105,19 @@ def shifts(request, username):
                    "shift_data": shift_data})
 
 def employees(request):
-    employees = User.objects.all()
+    conleaders = User.objects.all().filter(is_staff=True)
+    consultants = User.objects.all().exclude(is_staff=True)
 
     return render(request, 'ricotta/employees.html',
-                  {"employees": employees,
+                  {"consultants": consultants,
+                   "conleaders": conleaders,
                    "title": "All Employees"})
 
 def employees_by_lab(request, location_name):
-    employees = User.objects.filter(userprofile__lab=location_name)
+    conleaders = User.objects.filter(userprofile__lab=location_name).filter(is_staff=True)
+    consultants = User.objects.filter(userprofile__lab=location_name).exclude(is_staff=True)
 
     return render(request, 'ricotta/employees.html',
-                  {"employees": employees,
+                  {"consultants": consultants,
+                   "conleaders": conleaders,
                    "title": "Employees in " + location_name})

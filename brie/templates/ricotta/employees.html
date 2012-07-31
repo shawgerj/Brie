@@ -4,11 +4,21 @@
 {% block title %}{{ title }}{% endblock %}
 {% block base_content %}
   <h2>{{ title }}</h2>
+  <h3>Conleaders</h3>
   <table>
     <tr><th>NetID</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Lab</th></tr>
-    {% for e in employees %}
+    {% for e in conleaders %}
       <tr><td>{{e.username}}</td><td>{{e.first_name}}</td>
           <td>{{e.last_name}}</td><td>{{e.email}}</td><td>{{e.profile.lab}}</td></tr>
     {% endfor %}
   </table>
+  <h3>Consultants</h3>
+  <table>
+    <tr><th>NetID</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Lab</th></tr>
+    {% for e in consultants %}
+      <tr><td>{{e.username}}</td><td>{{e.first_name}}</td>
+          <td>{{e.last_name}}</td><td>{{e.email}}</td><td>{{e.profile.lab}}</td></tr>
+    {% endfor %}
+  </table>
+
 {% endblock %}
