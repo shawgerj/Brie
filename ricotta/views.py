@@ -1,6 +1,7 @@
 from django.template import RequestContext, Context, loader
 from ricotta.models import Shift, Location, UserProfile, PlannerBlock, TimeclockRecord, TimeclockAction
 from django.contrib.auth.models import User
+from django.views.generic.detail import DetailView
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
@@ -121,3 +122,11 @@ def employees_by_lab(request, location_name):
                   {"consultants": consultants,
                    "conleaders": conleaders,
                    "title": "Employees in " + location_name})
+
+class EmployeeDetailView(DetailView):
+
+    model = User
+
+    def get_context_data(self, **kwargs):
+        context = super(EmployeeDetailView, self).get_context_data(**kwargs)
+        return context

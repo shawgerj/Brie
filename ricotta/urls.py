@@ -1,4 +1,7 @@
 from django.conf.urls import patterns, include, url
+from django.views.generic import DetailView, ListView
+from django.contrib.auth.models import User
+from ricotta.views import EmployeeDetailView
 
 urlpatterns = patterns('',
     url(r'^$', 'ricotta.views.home'),
@@ -15,5 +18,11 @@ urlpatterns = patterns('',
     url(r'^whos_clockin/$', 'ricotta.views.whos_clockin', name='whos-clockin'),
 
     url(r'^employees/$', 'ricotta.views.employees', name='employees'),
-    url(r'^employees/(?P<location_name>.*)/$', 'ricotta.views.employees_by_lab', name='employees-by-lab')
+    url(r'^employees/(?P<pk>\d+)/$',
+        DetailView.as_view(
+            model=User,
+            template_name='ricotta/employee.html',
+            context_object_name = 'user_object'),
+        name='employee-detail'),
+    url(r'^employees/(?P<location_name>.*)/$', 'ricotta.views.employees_by_lab', name='employees-by-lab'),
 )
