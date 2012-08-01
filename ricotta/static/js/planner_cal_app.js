@@ -104,8 +104,21 @@ $(function(){
         },
         save: function() {
             this.model.set({'title': this.$("#prefBox option:selected").html()});
-            this.model.set({'block_type': this.$("#prefBox").val()});
-            this.model.set({'worker': this.$("#user").val()});
+            switch (this.$("#prefBox option:selected").html())
+            {
+            case "Preferred":
+                c = "Blue";
+                break;
+            case "In Class":
+                c = "Orange";
+                break;
+            default:
+                c = "Green";
+                break;
+            }
+            this.model.set({'block_type': this.$("#prefBox").val(),
+                            'worker': this.$("#user").val(),
+                            'color': c})
              
             if (this.model.isNew()) {
                 this.collection.create(this.model, {success: this.close});
