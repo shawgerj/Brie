@@ -2,9 +2,6 @@
 import warnings
 import os
 
-warnings.filterwarnings(
-    'error', r"DateTimeField received a naive datetime",
-    RuntimeWarning, r'django\.db\.models\.fields')
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 

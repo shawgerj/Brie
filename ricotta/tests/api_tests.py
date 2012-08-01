@@ -88,7 +88,7 @@ class ShiftResourceTest(ResourceTestCase):
             'start': '2012-07-10T10:00:00',
             'end': '2012-07-10T12:00:00',
             'title': 'testcl',
-            'location_name': 'Tech',
+            'loc': 'Tech',
             'allDay': False,
             'color': 'Blue',
         }
@@ -96,7 +96,7 @@ class ShiftResourceTest(ResourceTestCase):
             'start': '2012-07-10T12:00:00',
             'end': '2012-07-10T14:00:00',
             'title': 'testcon',
-            'location_name': 'Tech',
+            'loc': 'Tech',
             'allDay': False,
             'color': 'Blue',
         }
@@ -131,7 +131,7 @@ class ShiftResourceTest(ResourceTestCase):
 
         # TODO: I think this should be cleaned up. Do we really need id and resource_uri?
         self.assertKeys(self.deserialize(resp),
-                        ['start', 'end', 'allDay', 'title', 'id', 'location_name', 'color', 'resource_uri', 'for_trade', 'been_traded'])
+                        ['start', 'end', 'allDay', 'title', 'id', 'loc', 'color', 'resource_uri', 'for_trade', 'been_traded'])
 
     def test_post_list_unauthorized(self):
         self.assertHttpUnauthorized(self.api_client.post('/api/v1/shift/', format='json', data=self.post_data_nml))

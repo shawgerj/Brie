@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.template.defaultfilters import slugify
 from tastypie.authorization import Authorization, DjangoAuthorization
 from tastypie.authentication import BasicAuthentication, ApiKeyAuthentication
 from tastypie import fields
@@ -77,20 +78,22 @@ class ShiftResource(ModelResource):
         bundle.data['title'] = bundle.obj.worker
         ### and this next one is useful...
         bundle.data['id'] = bundle.data['resource_uri']
-        bundle.data['location_name'] = bundle.data['location_name']
+        bundle.data['loc'] = bundle.obj.location_name.location_name
+#        pdb.set_trace()
         bundle.data['color'] = 'blue' if bundle.data['for_trade'] == False else 'red'
 
         bundle.data.__delitem__('start_time')
         bundle.data.__delitem__('end_time')
         bundle.data.__delitem__('worker')
+        bundle.data.__delitem__('location_name')
         return bundle
 
     def hydrate(self, bundle):
-        #        loc = bundle.data['location_name']
         bundle.data['start_time'] = bundle.data['start']
         bundle.data['end_time'] = bundle.data['end']
-        bundle.data['location_name'] = "/api/v1/location/Tech/"
+        bundle.data['location_name'] = "/api/v1/location/" + bundle.data['loc'] + "/"
         bundle.data['worker'] = "/api/v1/user/" + bundle.data['title'] + "/"
+#        pdb.set_trace()
         return bundle
 
 class PlannerBlockResource(ModelResource):

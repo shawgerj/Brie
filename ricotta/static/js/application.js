@@ -124,7 +124,8 @@ $(function(){
             
         },
         save: function() {
-            this.model.set({'title': this.$("#conWorking").val()});
+            this.model.set({'title': this.$("#conWorking").val(),
+			    'loc': this.$("#loc").val()});
             
             if (this.model.isNew()) {
                 this.collection.create(this.model, {success: this.close});
