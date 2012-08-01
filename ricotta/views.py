@@ -55,6 +55,10 @@ def calendar(request, location_name):
                   {"location_name": location_name,
                    "worker": request.user})
 
+def trade_summary(request):
+    return render(request, 'ricotta/trade_summary.html',
+                  {"worker": request.user})
+
 def planner(request, username):
     get_object_or_404(User, username=username)
 
@@ -122,11 +126,3 @@ def employees_by_lab(request, location_name):
                   {"consultants": consultants,
                    "conleaders": conleaders,
                    "title": "Employees in " + location_name})
-
-class EmployeeDetailView(DetailView):
-
-    model = User
-
-    def get_context_data(self, **kwargs):
-        context = super(EmployeeDetailView, self).get_context_data(**kwargs)
-        return context

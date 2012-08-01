@@ -1,13 +1,13 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import DetailView, ListView
 from django.contrib.auth.models import User
-from ricotta.views import EmployeeDetailView
 
 urlpatterns = patterns('',
     url(r'^$', 'ricotta.views.home'),
     url(r'^clockin/$', 'ricotta.views.clockin', name='clock-in'),
 
     url(r'^calendar/$', 'ricotta.views.calendar_base', name='calendar-home'),
+    url(r'^calendar/trade_summary/$', 'ricotta.views.trade_summary', name='trade-summary'),
     url(r'^calendar/(?P<location_name>.*)/$', 'ricotta.views.calendar'),
     url(r'^shifts/(?P<username>\w+)/$', 'ricotta.views.shifts', name='my-shifts'),
     url(r'^planner/(?P<username>\w+)/$', 'ricotta.views.planner', name='edit-own-planner'),

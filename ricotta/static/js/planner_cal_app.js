@@ -28,8 +28,8 @@ $(function(){
         render: function() {
             this.el.fullCalendar({
                 header: {
-                    left: 'prev,next today',
-                    center: 'title',
+                   // left: 'prev,next today',
+               //     center: 'title',
                     right: '',
                     ignoreTimezone: false
                 },
@@ -43,7 +43,10 @@ $(function(){
                 events: 'events',
                 defaultView: 'agendaWeek',
                 firstHour: 8,
-                allDaySlot: false
+                allDaySlot: false,
+                year: 2012,
+                month: 8,
+                date: 23
             });
         },
         addAll: function(){

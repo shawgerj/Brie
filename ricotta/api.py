@@ -7,6 +7,7 @@ from tastypie import fields
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 from ricotta.models import Location, Shift, UserProfile, PlannerBlock
 import urllib
+import pdb
 
 class UserResource(ModelResource):
     class Meta:
@@ -25,9 +26,9 @@ class UserResource(ModelResource):
 
     def get_resource_uri(self, bundle = None):
         kwargs = {
-            'resource_name': self._meta.resource_name, 
+            'resource_name': self._meta.resource_name,
             'api_name': self._meta.api_name,
-        } 
+        }
         if (bundle != None):
             kwargs['pk'] = bundle.obj.username
             return reverse('api_dispatch_detail', kwargs = kwargs)
@@ -58,15 +59,16 @@ class ShiftResource(ModelResource):
         resource_name = 'shift'
         authorization = DjangoAuthorization()
         authentication = ApiKeyAuthentication()
-        fields = ['start_time', 'end_time', 'location_name', 'worker', 
+        fields = ['start_time', 'end_time', 'location_name', 'worker',
                   'resource_uri', 'for_trade', 'been_traded']
         allowed_methods = ['get', 'post', 'patch', 'delete', 'put']
         filtering = {
             'location_name': ALL_WITH_RELATIONS,
+            'for_trade': ALL_WITH_RELATIONS,
         }
 
     def dehydrate(self, bundle):
-        # see if there's a better way to rename fields than creating and 
+        # see if there's a better way to rename fields than creating and
         # deleting
         ### these four are required for fullCalendar.js
         bundle.data['start'] = bundle.data['start_time']
@@ -75,7 +77,7 @@ class ShiftResource(ModelResource):
         bundle.data['title'] = bundle.obj.worker
         ### and this next one is useful...
         bundle.data['id'] = bundle.data['resource_uri']
-        bundle.data['location_name'] = bundle.obj.location_name
+        bundle.data['location_name'] = bundle.data['location_name']
         bundle.data['color'] = 'blue' if bundle.data['for_trade'] == False else 'red'
 
         bundle.data.__delitem__('start_time')
@@ -84,6 +86,7 @@ class ShiftResource(ModelResource):
         return bundle
 
     def hydrate(self, bundle):
+        #        loc = bundle.data['location_name']
         bundle.data['start_time'] = bundle.data['start']
         bundle.data['end_time'] = bundle.data['end']
         bundle.data['location_name'] = "/api/v1/location/Tech/"
@@ -97,7 +100,7 @@ class PlannerBlockResource(ModelResource):
         resource_name = 'planner_block'
         authorization = DjangoAuthorization()
         authentication = ApiKeyAuthentication()
-        fields = ['start_time', 'end_time', 'block_type', 'worker', 
+        fields = ['start_time', 'end_time', 'block_type', 'worker',
                   'resource_uri']
         allowed_methods = ['get', 'post', 'patch', 'delete', 'put']
         filtering = {
