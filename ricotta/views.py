@@ -8,6 +8,7 @@ from django.db.models import Count
 from datetime import timedelta
 from django.utils import timezone
 import pdb
+import array
 
 def home(request):
     return render(request, 'ricotta/home.html',
@@ -74,32 +75,60 @@ def planner_lab(request, location_name):
                    "location_name": location_name})
 
 def timeclock(request, username, pastperiod=0):
+    user = User.objects.get(username=username)
+    #    pdb.set_trace()
     pastperiod = int(pastperiod)
     # the 5 hours correction is for UTC time
     next_sat = timezone.now().replace(hour=0, minute=0, second=0, microsecond = 0) + timedelta(5 - timezone.now().weekday())
     start_bound = next_sat - timedelta(weeks=pastperiod * 2) - timedelta(weeks=2, days=1, hours=5)
     end_bound = next_sat - timedelta(weeks=pastperiod * 2)
-    tr_data = TimeclockRecord.objects.filter(employee=request.user).filter(start_time__range=(start_bound, end_bound))
-    sh_data = Shift.objects.filter(worker=request.user).filter(start_time__range=(start_bound, end_bound))
+    tr_data = TimeclockRecord.objects.filter(employee=user).filter(start_time__range=(start_bound, end_bound))
+    sh_data = Shift.objects.filter(worker=user).filter(start_time__range=(start_bound, end_bound))
 
-    # I bet there's a more clever way of doing this. One-liner perhaps?
-    total_clocked = timedelta(0)
-    for tr in tr_data:
-        total_clocked += (tr.end_time - tr.start_time)
-
-    # and here too
-    total_scheduled = timedelta(0)
-    for sh in sh_data:
-        total_scheduled += (sh.end_time - sh.start_time)
+    total_clocked = reduce(lambda h, e: h + (e.end_time - e.start_time),
+                           tr_data, timedelta(0))
+    total_scheduled = reduce(lambda h, e: h + (e.end_time - e.start_time),
+                             sh_data, timedelta(0))
 
 
     return render(request, 'ricotta/timeclock.html',
-                  {"worker": request.user.username,
+                  {"worker": user.username,
                    "tr_data": tr_data,
                    "total_scheduled": round(total_scheduled.total_seconds() / 3600, 2),
                    "total_clocked": round(total_clocked.total_seconds() / 3600, 2),
-                   "title": "Timeclock for " + request.user.username,
+                   "title": "Timeclock for " + user.username,
                    "pastperiod": pastperiod})
+
+######
+# I hate everything about this view. Major refactoring needed.
+######
+def timeclocks_all(request, pastperiod=0):
+    pastperiod = int(pastperiod)
+    # the 5 hours correction is for UTC time
+    next_sat = timezone.now().replace(hour=0, minute=0, second=0, microsecond = 0) + timedelta(5 - timezone.now().weekday())
+    start_bound = next_sat - timedelta(weeks=pastperiod * 2) - timedelta(weeks=2, days=1, hours=5)
+    end_bound = next_sat - timedelta(weeks=pastperiod * 2)
+
+    users = User.objects.all()
+    clockin_data = []
+    for u in users:
+        tr_data = TimeclockRecord.objects.filter(employee=u).filter(start_time__range=(start_bound, end_bound))
+        sh_data = Shift.objects.filter(worker=u).filter(start_time__range=(start_bound, end_bound))
+
+        total_clocked = reduce(lambda h, e: h + (e.end_time - e.start_time),
+                               tr_data, timedelta(0))
+        total_scheduled = reduce(lambda h, e: h + (e.end_time - e.start_time),
+                                 sh_data, timedelta(0))
+
+        data = {}
+        data['user'] = u
+        data['total_clocked'] = round(total_clocked.total_seconds() / 3600, 2)
+        data['total_scheduled'] = round(total_scheduled.total_seconds() / 3600, 2)
+        clockin_data.append(data)
+
+    return render(request, 'ricotta/timeclocks_all.html',
+                  {"timeclock_data": clockin_data})
+
 
 def shifts(request, username):
     shift_data = Shift.objects.filter(worker=request.user).filter(start_time__range=(timezone.now(), timezone.now() + timedelta(weeks=1)))

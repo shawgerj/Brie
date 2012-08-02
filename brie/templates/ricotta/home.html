@@ -61,6 +61,8 @@
       <li><a href="{{ the_url }}">View My Timeclock</a></li>
       {% url whos-clockin as the_url %}
       <li><a href="{{ the_url }}">Who's on Shift</a></li>
+      {% url timeclocks-all as the_url %}
+      <li><a href="{{ the_url }}">Timeclock Cumulative View</a></li>
     </ul>
   </div>
   <div id="employees-box">

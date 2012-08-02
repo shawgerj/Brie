@@ -15,6 +15,7 @@ urlpatterns = patterns('',
 
     url(r'^timeclock/(?P<username>\w+)/$', 'ricotta.views.timeclock', name='view-timeclock'),
     url(r'^timeclock/(?P<username>\w+)/(?P<pastperiod>\d+)/$', 'ricotta.views.timeclock', name='view-timeclock'),
+    url(r'^timeclocks_all/$', 'ricotta.views.timeclocks_all', name='timeclocks-all'),
     url(r'^whos_clockin/$', 'ricotta.views.whos_clockin', name='whos-clockin'),
 
     url(r'^employees/$', 'ricotta.views.employees', name='employees'),

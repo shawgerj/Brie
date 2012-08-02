@@ -3,6 +3,7 @@
 
 {% block title %}{{ title }}{% endblock %}
 {% block base_content %}
+  <h2>My Timeclock</h2>
   <table>
     <tr><th>Start Time</th><th>End Time</th><th>In IP</th><th>Out IP</th>
         <th>Kronos Time</th></tr>
@@ -13,8 +14,10 @@
   </table>
   <p>Total scheduled time: {{ total_scheduled }}<br />
   Total clocked time: {{ total_clocked }}</p>
+  <p>
   {% url view-timeclock worker pastperiod|add:"1" as the_url %}
   <a href="{{ the_url }}">Back</a>
   {% url view-timeclock worker pastperiod|add:"-1" as the_url %}
   <a href="{{ the_url }}">Forward</a>
+  </p>
 {% endblock %}
