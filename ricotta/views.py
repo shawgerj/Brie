@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
 from datetime import timedelta
 from django.utils import timezone
+import pdb
 
 def home(request):
     return render(request, 'ricotta/home.html',
@@ -28,12 +29,10 @@ def clockin(request):
                         inIP=ta[0].IP,
                         outIP=real_ip).save()
         ta.delete()
-#        return HttpResponseDirect('/clocked_out/')
     else:
         TimeclockAction(time=timezone.now(),
                         employee=request.user,
                         IP=real_ip).save()
-#        return HttpResponseDirect('/clocked_in/')
     return HttpResponseRedirect('/')
 
 def whos_clockin(request):
@@ -76,10 +75,10 @@ def planner_lab(request, location_name):
 
 def timeclock(request, username, pastperiod=0):
     pastperiod = int(pastperiod)
-    # this all needs to be queried on 2 week intervals eventually rather
-    # than pulling the entire result set
-    start_bound = timezone.now() - timedelta(weeks=pastperiod * 2) - timedelta(weeks=2)
-    end_bound = timezone.now() - timedelta(weeks=pastperiod * 2)
+    # the 5 hours correction is for UTC time
+    next_sat = timezone.now().replace(hour=0, minute=0, second=0, microsecond = 0) + timedelta(5 - timezone.now().weekday())
+    start_bound = next_sat - timedelta(weeks=pastperiod * 2) - timedelta(weeks=2, days=1, hours=5)
+    end_bound = next_sat - timedelta(weeks=pastperiod * 2)
     tr_data = TimeclockRecord.objects.filter(employee=request.user).filter(start_time__range=(start_bound, end_bound))
     sh_data = Shift.objects.filter(worker=request.user).filter(start_time__range=(start_bound, end_bound))
 

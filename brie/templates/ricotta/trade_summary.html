@@ -23,6 +23,13 @@
 <script src="{{ STATIC_URL }}js/trade_summary_app.js"></script>
 {% endaddtoblock %}
 {% endblock %}
+
+{% block description %}
+<h2>Trade Shift Summary</h2>
+<p>These are all the shifts which are currently up for trade in all of the labs, represented in one calendar. You may click on any shift to take it.</p>
+<p><b>PC-MAC</b>: green, <b>IC-Main</b>: red, <b>IC-Media</b>: orange, <b>SCV Tech</b>: blue, <b>SCV Library</b>: purple, <b>Tech</b>: yellow</p>
+
+{% endblock %}
   
 {% block dialog %}
 <div id='eventDialog' class='dialog ui-helper-hidden'>
