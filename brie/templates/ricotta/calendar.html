@@ -1,49 +1,37 @@
-{% extends "base.html" %}
+{% extends "ricotta/calendar_base.html" %}
 {% load sekizai_tags cms_tags %}
 
 {% block title %}{{ location_name }} Calendar{% endblock %}
-{% block base_content %}
-{% addtoblock "css" %}<link rel='stylesheet' type='text/css' href="{{ STATIC_URL }}css/fullcalendar.css"/>{% endaddtoblock %}
-{% addtoblock "css" %}<link rel='stylesheet' type='text/css' href="{{ STATIC_URL }}css/jquery-ui-1.8.21.custom.css"/>{% endaddtoblock %}
-{% addtoblock "css" %}<link rel='stylesheet' type='text/css' href="{{ STATIC_URL }}css/application.css"/>{% endaddtoblock %}
 
-{% addtoblock "js" %}<script src="{{ STATIC_URL }}js/jquery-1.7.2.min.js"></script>{% endaddtoblock %}
-{% addtoblock "js" %}<script src="{{ STATIC_URL }}js/jquery-ui-1.8.21.custom.min.js"></script>{% endaddtoblock %}
-{% addtoblock "js" %}<script src="{{ STATIC_URL }}js/underscore-min.js"></script>{% endaddtoblock %}
-{% addtoblock "js" %}<script src="{{ STATIC_URL }}js/backbone-min.js"></script>{% endaddtoblock %}
-{% addtoblock "js" %}<script src="{{ STATIC_URL }}js/fullcalendar.min.js"></script>{% endaddtoblock %}
-{% addtoblock "js" %}<script src="{{ STATIC_URL }}js/backbone-tastypie.js"></script>{% endaddtoblock %}
-
+{% block custom_api_info %}
 {% addtoblock "js" %}
-  <script>
-    SHIFTS_API = "{% url api_dispatch_list api_name="v1" resource_name="shift" %}?location_name__location_name={{ location_name }}";
-    USERS_API = "{% url api_dispatch_list api_name="v1" resource_name="user" %}";
-    
-    Backbone.Tastypie.apiKey = {
-        username: '{{ worker.username }}',
-        key: '{{ worker.api_key.key }}'
-    };
-    
-  </script>
+<script>
+  SHIFTS_API = "{% url api_dispatch_list api_name="v1" resource_name="shift" %}?location_name__location_name={{ location_name }}";
+  USERS_API = "{% url api_dispatch_list api_name="v1" resource_name="user" %}";
+  
+  Backbone.Tastypie.apiKey = {
+      username: '{{ worker.username }}',
+      key: '{{ worker.api_key.key }}'
+  };
+  
+</script>
 {% endaddtoblock %}
+{% endblock %}
 
-{% addtoblock "js" %}<script src="{{ STATIC_URL }}js/application.js"></script>{% endaddtoblock %}
+{% block calendar_app %}
+{% addtoblock "js" %}
+<script src="{{ STATIC_URL }}js/application.js"></script>
+{% endaddtoblock %}
+{% endblock %}
   
-
-  {% block calendar %}
-    <div id='calendar'></div>
-  {% endblock %}
-  
-  {% block dialog %}
-    <div id='eventDialog' class='dialog ui-helper-hidden'>
-      <form>
-        <div> 
-          <label>Consultant:</label>
-          <select id='conWorking' class="field"></select>
-	  <input id='loc' type='hidden' value='{{ location_name }}'></input>
-      </div>
-      </form>
+{% block dialog %}
+<div id='eventDialog' class='dialog ui-helper-hidden'>
+  <form>
+    <div> 
+      <label>Consultant:</label>
+      <select id='conWorking' class="field"></select>
+      <input id='loc' type='hidden' value='{{ location_name }}'></input>
     </div>
-
-  {% endblock %}
+  </form>
+</div>
 {% endblock %}
