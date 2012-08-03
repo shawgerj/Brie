@@ -1,7 +1,7 @@
 from django.template import RequestContext, Context, loader
 from ricotta.models import Shift, Location, UserProfile, PlannerBlock, TimeclockRecord, TimeclockAction
 from django.contrib.auth.models import User
-from django.views.generic.detail import DetailView
+from django.views.generic import DetailView, ListView
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
@@ -137,20 +137,30 @@ def shifts(request, username):
                   {"worker": request.user.username,
                    "shift_data": shift_data})
 
-def employees(request):
-    conleaders = User.objects.all().filter(is_staff=True)
-    consultants = User.objects.all().exclude(is_staff=True)
+class EmployeesView(ListView):
+    template_name = 'ricotta/employees.html'
+    context_object_name='user_queryset'
 
-    return render(request, 'ricotta/employees.html',
-                  {"consultants": consultants,
-                   "conleaders": conleaders,
-                   "title": "All Employees"})
+    def separate_groups(self, q):
+        return {"conleaders": q.filter(is_staff=True),
+                "consultants": q.exclude(is_staff=True)}
+    
+    def get_queryset(self):
+        try:
+            self.kwargs['location_name']
+        except:
+            return self.separate_groups(User.objects.all())
+        else:
+            return self.separate_groups(User.objects.filter(userprofile__lab=self.kwargs['location_name']))
 
-def employees_by_lab(request, location_name):
-    conleaders = User.objects.filter(userprofile__lab=location_name).filter(is_staff=True)
-    consultants = User.objects.filter(userprofile__lab=location_name).exclude(is_staff=True)
+    def get_context_data(self, **kwargs):
+        context = super(EmployeesView, self).get_context_data(**kwargs)
+        try:
+            self.kwargs['location_name']
+        except:
+            context['title'] = "All Employees"
+        else:
+            context['title'] = "Employees in " + self.kwargs['location_name']
+        return context
 
-    return render(request, 'ricotta/employees.html',
-                  {"consultants": consultants,
-                   "conleaders": conleaders,
-                   "title": "Employees in " + location_name})
+
