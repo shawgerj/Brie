@@ -144,7 +144,7 @@ class EmployeesView(ListView):
     def separate_groups(self, q):
         return {"conleaders": q.filter(is_staff=True),
                 "consultants": q.exclude(is_staff=True)}
-    
+
     def get_queryset(self):
         try:
             self.kwargs['location_name']
