@@ -1,0 +1,5 @@
+.. _discipline:
+
+*******************
+Employee Discipline
+*******************
