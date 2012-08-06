@@ -74,57 +74,48 @@ def planner_lab(request, location_name):
                   {"workers": workers,
                    "location_name": location_name})
 
-def timeclock(request, username, pastperiod=0):
-    user = User.objects.get(username=username)
-    #    pdb.set_trace()
-    pastperiod = int(pastperiod)
+def calc_timeperiod(pastperiod):
     # the 5 hours correction is for UTC time
     next_sat = timezone.now().replace(hour=0, minute=0, second=0, microsecond = 0) + timedelta(5 - timezone.now().weekday())
-    start_bound = next_sat - timedelta(weeks=pastperiod * 2) - timedelta(weeks=2, days=1, hours=5)
-    end_bound = next_sat - timedelta(weeks=pastperiod * 2)
-    tr_data = TimeclockRecord.objects.filter(employee=user).filter(start_time__range=(start_bound, end_bound))
-    sh_data = Shift.objects.filter(worker=user).filter(start_time__range=(start_bound, end_bound))
+    return {"start": next_sat - timedelta(weeks=pastperiod * 2) - timedelta(weeks=2, days=1, hours=5),
+            "end": next_sat - timedelta(weeks=pastperiod * 2)}
 
-    total_clocked = reduce(lambda h, e: h + (e.end_time - e.start_time),
-                           tr_data, timedelta(0))
-    total_scheduled = reduce(lambda h, e: h + (e.end_time - e.start_time),
-                             sh_data, timedelta(0))
+def sum_timeclocks(data):
+    return reduce(lambda h, e: h + (e.end_time - e.start_time),
+                  data, timedelta(0))
 
+def kronos_round(t):
+    return round(t.total_seconds() / 3600, 2)
+
+def timeclock(request, username, pastperiod=0):
+    user = User.objects.get(username=username)
+    period = calc_timeperiod(int(pastperiod))
+    tr_data = user.timeclockrecord_set.filter(start_time__range=(period['start'], period['end']))
+    sh_data = user.shift_set.filter(start_time__range=(period['start'], period['end']))
+
+    total_clocked = sum_timeclocks(tr_data)
+    total_scheduled = sum_timeclocks(sh_data)
 
     return render(request, 'ricotta/timeclock.html',
                   {"worker": user.username,
                    "tr_data": tr_data,
-                   "total_scheduled": round(total_scheduled.total_seconds() / 3600, 2),
-                   "total_clocked": round(total_clocked.total_seconds() / 3600, 2),
+                   "total_scheduled": kronos_round(total_scheduled),
+                   "total_clocked": kronos_round(total_clocked),
                    "title": "Timeclock for " + user.username,
                    "pastperiod": pastperiod})
 
-######
-# I hate everything about this view. Major refactoring needed.
-######
 def timeclocks_all(request, pastperiod=0):
-    pastperiod = int(pastperiod)
-    # the 5 hours correction is for UTC time
-    next_sat = timezone.now().replace(hour=0, minute=0, second=0, microsecond = 0) + timedelta(5 - timezone.now().weekday())
-    start_bound = next_sat - timedelta(weeks=pastperiod * 2) - timedelta(weeks=2, days=1, hours=5)
-    end_bound = next_sat - timedelta(weeks=pastperiod * 2)
+    period = calc_timeperiod(int(pastperiod))
 
     users = User.objects.all()
     clockin_data = []
     for u in users:
-        tr_data = TimeclockRecord.objects.filter(employee=u).filter(start_time__range=(start_bound, end_bound))
-        sh_data = Shift.objects.filter(worker=u).filter(start_time__range=(start_bound, end_bound))
+        total_clocked = sum_timeclocks(u.timeclockrecord_set.filter(start_time__range=(period['start'], period['end'])))
+        total_scheduled = sum_timeclocks(u.shift_set.filter(start_time__range=(period['start'], period['end'])))
 
-        total_clocked = reduce(lambda h, e: h + (e.end_time - e.start_time),
-                               tr_data, timedelta(0))
-        total_scheduled = reduce(lambda h, e: h + (e.end_time - e.start_time),
-                                 sh_data, timedelta(0))
-
-        data = {}
-        data['user'] = u
-        data['total_clocked'] = round(total_clocked.total_seconds() / 3600, 2)
-        data['total_scheduled'] = round(total_scheduled.total_seconds() / 3600, 2)
-        clockin_data.append(data)
+        clockin_data.append({"user": u,
+                             "total_clocked": kronos_round(total_clocked),
+                             "total_scheduled": kronos_round(total_scheduled)})
 
     return render(request, 'ricotta/timeclocks_all.html',
                   {"timeclock_data": clockin_data})
@@ -162,5 +153,3 @@ class EmployeesView(ListView):
         else:
             context['title'] = "Employees in " + self.kwargs['location_name']
         return context
-
-
