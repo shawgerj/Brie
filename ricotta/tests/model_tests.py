@@ -1,65 +1,73 @@
 from django.test import TestCase, Client
 import datetime
 from django.utils import timezone
-from ricotta.models import Listserv, Location, DisciplineRecord, Shift, PlannerBlock, TimeclockRecord, TimeclockAction
 from django.contrib.auth.models import User
+from ricotta.models import Location
+from ricotta.tests.factories import * 
+
 
 class ListservModelTestCase(TestCase):
     def test_listserv(self):
-        self.l1 = Listserv.objects.create(email='tech@listserv.it.northwestern.edu')
+        l1 = ListservFactory(email='tech@listserv.it.northwestern.edu')
         
-        self.assertEquals(self.l1.email, 'tech@listserv.it.northwestern.edu')
+        self.assertEquals(l1.email, 'tech@listserv.it.northwestern.edu')
 
 class DisciplineRecordTestCase(TestCase):
-    fixtures = ['ricotta_test_data.json']
     def test_disciplinerecord(self):
-        self.d1 = DisciplineRecord.objects.create(date_of_record=timezone.now(), employee = User.objects.get(pk=2), changed_by = User.objects.get(pk=3), status_name = 'nd', comment = 'this is a comment')
+        consultant = ConsultantFactory()
+        conleader = ConleaderFactory()
+        d1 = DisciplineRecordFactory(
+            employee = consultant.user, changed_by = conleader.user)
         
-        self.assertEquals(self.d1.employee.username, 'testcon')
-        self.assertEquals(self.d1.changed_by.username, 'testcl')
+        self.assertEquals(d1.employee.username, 'testcon')
+        self.assertEquals(d1.changed_by.username, 'testcl')
 
 class ShiftTestCase(TestCase):
-    fixtures = ['ricotta_test_data.json']
     def test_shift(self):
         time = timezone.now()
-        self.s1 = Shift.objects.create(start_time=time, end_time=time + datetime.timedelta(hours=1), location_name = Location.objects.get(pk='Tech'), worker = User.objects.get(pk=3), for_trade = False, been_traded = False)
-        self.s2 = Shift.objects.create(start_time=time, end_time=time + datetime.timedelta(hours=1), location_name = Location.objects.get(pk='Tech'), worker = User.objects.get(pk=2), for_trade = True, been_traded = True)
+        
+        consultant = ConsultantFactory()
+        conleader = ConleaderFactory()
+        s1 = ShiftFactory(start_time=time, end_time= time + datetime.timedelta(hours=1), worker = conleader.user)
+        s2 = ShiftFactory(start_time=time, end_time= time + datetime.timedelta(hours=1), worker = consultant.user, for_trade = True, been_traded = True)
 
-        self.assertEquals(self.s1.for_trade, False)
-        self.assertEquals(self.s2.for_trade, True)
-        self.assertEquals(self.s1.worker.username, 'testcl')
-        self.assertEquals(self.s2.worker.username, 'testcon')
+        self.assertEquals(s1.for_trade, False)
+        self.assertEquals(s2.for_trade, True)
+        self.assertEquals(s1.worker.username, 'testcl')
+        self.assertEquals(s2.worker.username, 'testcon')
 
 class PlannerBlockTestCase(TestCase):
-    fixtures = ['ricotta_test_data.json']
     def test_plannerblock(self):
         time = timezone.now()
-        self.pb1 = PlannerBlock.objects.create(start_time=time, end_time=time + datetime.timedelta(hours=1), worker = User.objects.get(pk=3), block_type = 'pf')
         
-        self.assertEquals(self.pb1.worker.username, 'testcl')
-        self.assertEquals(self.pb1.end_time - self.pb1.start_time, datetime.timedelta(hours=1))
-        self.assertEquals(self.pb1.get_block_type_display(), "Preferred")
+        conleader = ConleaderFactory()
+        pb1 = PlannerBlockFactory(start_time=time, end_time= time + datetime.timedelta(hours=1), worker = conleader.user, block_type = 'pf')
+        
+        self.assertEquals(pb1.worker.username, 'testcl')
+        self.assertEquals(pb1.end_time - pb1.start_time, datetime.timedelta(hours=1))
+        self.assertEquals(pb1.get_block_type_display(), "Preferred")
 
 class TimeclockRecordTestCase(TestCase):
-    fixtures = ['ricotta_test_data.json']
     def test_timeclockrecord(self):
         time = timezone.now()
         loc = Location.objects.get(pk='Tech')
-        self.tr1 = TimeclockRecord.objects.create(start_time=time, end_time=time + datetime.timedelta(hours=1), inIP = loc.ip_address, outIP = loc.ip_address, employee = User.objects.get(pk=3))
+        conleader = ConleaderFactory()
 
-        self.assertEquals(self.tr1.employee.username, 'testcl')
-        self.assertEquals(self.tr1.end_time - self.tr1.start_time, datetime.timedelta(hours=1))
-        self.assertEquals(self.tr1.inIP, self.tr1.outIP)
+        tr1 = TimeclockRecordFactory(start_time=time, end_time=time + datetime.timedelta(hours=1), employee = conleader.user)
+
+        self.assertEquals(tr1.employee.username, 'testcl')
+        self.assertEquals(tr1.end_time - tr1.start_time, datetime.timedelta(hours=1))
+        self.assertEquals(tr1.inIP, tr1.outIP)
 
 class TimeclockActionTestCase(TestCase):
-    fixtures = ['ricotta_test_data.json']
     def test_timeclockaction(self):
         t = timezone.now()
-        self.ta1 = TimeclockAction.objects.create(time=t, IP = '127.0.0.1', employee = User.objects.get(pk=3))
+        conleader = ConleaderFactory()
+        ta1 = TimeclockActionFactory(time=t, employee = conleader.user)
 
-        self.assertEquals(self.ta1.employee.username, 'testcl')
-        self.assertEquals(self.ta1.time, t)
-        self.assertEquals(self.ta1.IP, '127.0.0.1')
+        self.assertEquals(ta1.employee.username, 'testcl')
+        self.assertEquals(ta1.time, t)
+        self.assertEquals(ta1.IP, '127.0.0.1')
 
 
 class LocationModelTestCase(TestCase):

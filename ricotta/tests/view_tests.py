@@ -2,13 +2,15 @@ from django.test import TestCase, Client
 import datetime
 from django.utils import timezone
 from ricotta.models import Listserv, Location, DisciplineRecord, Shift, PlannerBlock, TimeclockRecord, TimeclockAction
+from ricotta.tests.factories import *
 from django.contrib.auth.models import User
 import pdb
 
 class HomeViewTestCase(TestCase):
-    fixtures = ['ricotta_test_data.json']
+
     def setUp(self):
-        self.client.login(username='testcon', password='testcon')
+        self.con = ConsultantFactory.create().user
+        self.client.login(username=self.con.username, password='testcon')
 
     def test_homepage(self):
         resp = self.client.get('/ricotta/')
@@ -36,9 +38,9 @@ class CalendarViewsTestCase(TestCase):
         self.assertEqual(resp.context[-1]['calendars'].count(), 6)
 
 class PlannerViewsTestCase(TestCase):
-    fixtures = ['ricotta_test_data.json']
-
     def test_planner_detail(self):
+        consultant = ConsultantFactory.create().user
+        conleader = ConleaderFactory.create().user
         # check to make sure both of these planners exist
         resp = self.client.get('/ricotta/planner/testcl/')
         self.assertEqual(resp.status_code, 200)
@@ -59,10 +61,11 @@ class TimeclockViewsTestCase(TestCase):
     # a conleader or admin should have access to /ricotta/timeclock/<user>/edit
     # to view/modify anybody's timeclock. These URLs should not be accessible
     # for ordinary users
-    fixtures = ['ricotta_test_data.json']
 
     def setUp(self):
-        self.client.login(username='testcon', password='testcon')
+        self.con = ConsultantFactory.create().user
+        TimeclockRecordFactory.create(employee=self.con)
+        self.client.login(username=self.con.username, password='testcon')
 
     def test_timeclock_view(self):
         resp = self.client.get('/ricotta/timeclock/testcon/')
@@ -71,16 +74,17 @@ class TimeclockViewsTestCase(TestCase):
         self.assertEqual(resp.context[-1]['tr_data'].count(), 1)
 
 class EmployeeViewsTestCase(TestCase):
-    fixtures = ['ricotta_test_data.json']
 
     def setUp(self):
-        self.client.login(username='testcon', password='testcon')
+        self.con = ConsultantFactory.create().user
+        self.cl = ConleaderFactory.create().user
+        self.client.login(username=self.con.username, password='testcon')
 
     def test_employees_all_view(self):
         resp = self.client.get('/ricotta/employees/')
         self.assertEqual(resp.status_code, 200)
         self.assertTrue('user_queryset' in resp.context)
-        self.assertEqual(resp.context[-1]['user_queryset']['conleaders'].count(), 2)
+        self.assertEqual(resp.context[-1]['user_queryset']['conleaders'].count(), 1)
         self.assertEqual(resp.context[-1]['user_queryset']['consultants'].count(), 1)
         self.assertEqual(resp.context[-1]['title'], "All Employees")
 
@@ -95,24 +99,17 @@ class EmployeeViewsTestCase(TestCase):
         resp = self.client.get('/ricotta/employees/IC-Main/')
         self.assertEqual(resp.status_code, 200)
         self.assertTrue('user_queryset' in resp.context)
-        self.assertEqual(resp.context[-1]['user_queryset']['conleaders'].count(), 1)
+        self.assertEqual(resp.context[-1]['user_queryset']['conleaders'].count(), 0)
         self.assertEqual(resp.context[-1]['user_queryset']['consultants'].count(), 0)
         self.assertEqual(resp.context[-1]['title'], "Employees in IC-Main")
 
-        resp = self.client.get('/ricotta/employees/IC-Media/')
-        self.assertEqual(resp.status_code, 200)
-        self.assertTrue('user_queryset' in resp.context)
-        self.assertEqual(resp.context[-1]['user_queryset']['conleaders'].count(), 0)
-        self.assertEqual(resp.context[-1]['user_queryset']['consultants'].count(), 0)
-        self.assertEqual(resp.context[-1]['title'], "Employees in IC-Media")
-
-
 class ClockInTestCase(TestCase):
-    fixtures = ['ricotta_test_data.json']
 
     def setUp(self):
+        self.con = ConsultantFactory.create().user
+        self.cl = ConleaderFactory.create().user
         self.client = Client(HTTP_X_FORWARDED_FOR = '127.0.0.1')
-        self.client.login(username='testcon', password='testcon')
+        self.client.login(username=self.con.username, password='testcon')
 
     # we start with no timeclockactions, so this is a simple clockin
     def test_clockin(self):
@@ -130,11 +127,9 @@ class ClockInTestCase(TestCase):
 
     def test_clockout(self):
         t = timezone.now()
-        user = User.objects.get(pk=2)
         # create a clock-in record so we can clock out two hours later
-        ta_in = TimeclockAction(employee=user,
-                                IP='127.0.0.1',
-                                time=(t - datetime.timedelta(hours=2))).save()
+        ta_in = TimeclockActionFactory.create(
+            employee=self.con, time=(t - datetime.timedelta(hours=2)))
 
         resp = self.client.get('/ricotta/clockin/')
         self.assertEqual(resp.status_code, 302)
@@ -144,26 +139,22 @@ class ClockInTestCase(TestCase):
         self.assertEqual(ta.count(), 0)
 
         tr = TimeclockRecord.objects.all()
-        # and we should have two timeclock records
-        # (one from the fixture and one just created)
-        self.assertEqual(tr.count(), 3)
-        tr_2 = TimeclockRecord.objects.get(pk=2)
-        self.assertEqual(tr_2.employee.username, 'testcon')
+        # and we should have one timeclock records
+        self.assertEqual(tr.count(), 1)
+        tr_1 = tr[0]
+        self.assertEqual(tr_1.employee.username, 'testcon')
         # just test for 7200 seconds (2 hours). There are some microseconds
         # we don't need to worry about
-        self.assertEqual((tr_2.end_time - tr_2.start_time).seconds, 7200)
+        self.assertEqual((tr_1.end_time - tr_1.start_time).seconds, 7200)
 
     def test_whos_clockin(self):
         # clock in two users
         t = timezone.now()
-        testcon = User.objects.get(pk=2)
-        testcl = User.objects.get(pk=3)
-        ta_in = TimeclockAction(employee=testcon,
-                                IP='127.0.0.1',
-                                time=(t - datetime.timedelta(hours=2))).save()
-        ta_in = TimeclockAction(employee=testcl,
-                                IP='127.0.0.1',
-                                time=(t - datetime.timedelta(hours=2))).save()
+        
+        ta_in = TimeclockActionFactory.create(
+            employee=self.con, time=(t - datetime.timedelta(hours=2)))
+        ta_in = TimeclockActionFactory.create(
+            employee=self.cl, time=(t - datetime.timedelta(hours=2)))
 
         # now test the page
         resp = self.client.get('/ricotta/whos_clockin/')

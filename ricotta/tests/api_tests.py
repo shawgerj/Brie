@@ -2,14 +2,14 @@ import datetime
 from tastypie.test import ResourceTestCase
 from ricotta.models import Listserv, Location, DisciplineRecord, Shift, PlannerBlock, TimeclockRecord, TimeclockAction
 from django.contrib.auth.models import User
+from ricotta.tests.factories import *
 
 class LocationResourceTest(ResourceTestCase):
-    fixtures = ['ricotta_test_data.json']
     def setUp(self):
         super(LocationResourceTest, self).setUp()
 
-        self.testcl = User.objects.get(pk=1)
-        self.testcon = User.objects.get(pk=2)
+        self.testcl = ConleaderFactory.create().user
+        self.testcon = ConsultantFactory.create().user
         
         self.post_data_loc = {
             'location_name': 'NewLoc',
@@ -64,8 +64,6 @@ class LocationResourceTest(ResourceTestCase):
         
         
 class ShiftResourceTest(ResourceTestCase):
-    fixtures = ['ricotta_test_data.json']
-
     # note: eventually to make all the permissions right....
     # unauthenticated users should not be able to see any shifts.
     # testcon and testcl should each be able to see each other's shifts
@@ -75,11 +73,14 @@ class ShiftResourceTest(ResourceTestCase):
     def setUp(self):
         super(ShiftResourceTest, self).setUp()
 
-        self.testcl = User.objects.get(pk=3)
-        self.testcon = User.objects.get(pk=2)
+        self.testcl = ConleaderFactory.create().user
+        self.testcon = ConsultantFactory.create().user
+        self.loc = Location.objects.get(location_name="Tech")
 
-        self.shift_1 = Shift.objects.get(pk=1)
-        self.shift_2 = Shift.objects.get(pk=2)
+        self.shift_1 = ShiftFactory.create(worker=self.testcon, 
+                                           location_name=self.loc)
+        self.shift_2 = ShiftFactory.create(worker=self.testcl, 
+                                           location_name=self.loc)
         self.detail_url_1 = '/api/v1/shift/{0}/' .format(self.shift_1.pk) 
         self.detail_url_2 = '/api/v1/shift/{0}/' .format(self.shift_2.pk) 
 
@@ -215,16 +216,15 @@ class ShiftResourceTest(ResourceTestCase):
         self.assertEqual(Shift.objects.get(pk=2).worker, User.objects.get(username='testcon'))
 
 class PlannerBlockResourceTest(ResourceTestCase):
-    fixtures = ['ricotta_test_data.json']
 
     def setUp(self):
         super(PlannerBlockResourceTest, self).setUp()
 
-        self.testcl = User.objects.get(pk=3)
-        self.testcon = User.objects.get(pk=2)
+        self.testcl = ConleaderFactory.create().user
+        self.testcon = ConsultantFactory.create().user
 
-        self.pb_1 = PlannerBlock.objects.get(pk=1)
-        self.pb_2 = PlannerBlock.objects.get(pk=2)
+        self.pb_1 = PlannerBlockFactory.create()
+        self.pb_2 = PlannerBlockFactory.create()
         self.detail_url_1 = '/api/v1/planner_block/{0}/' .format(self.pb_1.pk)
         self.detail_url_2 = '/api/v1/planner_block/{0}/' .format(self.pb_2.pk)
         
