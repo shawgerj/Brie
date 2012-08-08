@@ -1,5 +1,6 @@
 import factory
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group, Permission
+from django.contrib.contenttypes.models import ContentType
 from ricotta.models import UserProfile, Location, Shift, DisciplineRecord, Listserv, PlannerBlock, TimeclockRecord, TimeclockAction
 import datetime
 from django.utils import timezone
@@ -8,20 +9,36 @@ from django.utils import timezone
 factory.Factory.default_strategy = factory.BUILD_STRATEGY
 
 ################
-# Users
+# Group and Users
 ###########################
+
+class GroupFactory(factory.Factory):
+    FACTORY_FOR = Group
+
+class ConleaderGroupFactory(GroupFactory):
+    name = 'Conleader'
+
+class ConsultantGroupFactory(GroupFactory):
+    name = 'Consultant'
+
+class TestGroupFactory(GroupFactory):
+    name = 'Test'
+
 class UserFactory(factory.Factory):
     FACTORY_FOR = User
 
     @classmethod
     def _prepare(cls, create, **kwargs):
         password = kwargs.pop('password', None)
+#        group = GroupFactory.create(name='Con')
         user = super(UserFactory, cls)._prepare(create, **kwargs)
-        if password:
-            user.set_password(password)
-            if create:
-                user.save()
+        user.set_password(password)
+#        user.groups.add(group)
+        if create:
+            user.save()
         return user
+
+# post create the group upon save. I'm getting lunch....
     
 class ProfileFactory(factory.Factory):
     FACTORY_FOR = UserProfile
@@ -44,15 +61,8 @@ class ConleaderFactory(ProfileFactory):
     user__is_staff = True
     user__is_active = True
     lab = Location.objects.get(location_name="Tech")
-
-    # @classmethod
-    # def _prepare(cls, create, **kwargs):
-    #     lab = kwargs.pop('lab', None)
-    #     profile = super(ConleaderFactory, cls)._prepare(create, **kwargs)
-    #     profile.lab = Location.objects.get(location_name=lab)
-    #     if create:
-    #         profile.save()
-    #     return profile
+    
+#    user__groups = factory.SubFactory(ConleaderGroupFactory)
 
 
 class ConsultantFactory(ProfileFactory):
@@ -61,6 +71,7 @@ class ConsultantFactory(ProfileFactory):
     user__is_staff = False
     user__is_active = True
     lab = Location.objects.get(location_name="Tech")
+
 
 ################
 # Shift
@@ -81,6 +92,10 @@ class ShiftFactory(factory.Factory):
 
 class PlannerBlockFactory(factory.Factory):
     FACTORY_FOR = PlannerBlock
+
+    start_time = timezone.now()
+    end_time = timezone.now() + datetime.timedelta(hours=1)
+
 
 ################
 # TimeclockRecord

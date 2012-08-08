@@ -41,7 +41,7 @@ class PlannerBlockTestCase(TestCase):
         time = timezone.now()
         
         conleader = ConleaderFactory()
-        pb1 = PlannerBlockFactory(start_time=time, end_time= time + datetime.timedelta(hours=1), worker = conleader.user, block_type = 'pf')
+        pb1 = PlannerBlockFactory(worker = conleader.user, block_type = 'pf')
         
         self.assertEquals(pb1.worker.username, 'testcl')
         self.assertEquals(pb1.end_time - pb1.start_time, datetime.timedelta(hours=1))

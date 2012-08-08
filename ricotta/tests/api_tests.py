@@ -223,8 +223,10 @@ class PlannerBlockResourceTest(ResourceTestCase):
         self.testcl = ConleaderFactory.create().user
         self.testcon = ConsultantFactory.create().user
 
-        self.pb_1 = PlannerBlockFactory.create()
-        self.pb_2 = PlannerBlockFactory.create()
+        self.pb_1 = PlannerBlockFactory.create(worker = self.testcon, 
+                                               block_type = 'un')
+        self.pb_2 = PlannerBlockFactory.create(worker = self.testcl, 
+                                               block_type = 'pf')
         self.detail_url_1 = '/api/v1/planner_block/{0}/' .format(self.pb_1.pk)
         self.detail_url_2 = '/api/v1/planner_block/{0}/' .format(self.pb_2.pk)
         
