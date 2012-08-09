@@ -28,8 +28,8 @@ class ShiftTestCase(TestCase):
         
         consultant = ConsultantFactory()
         conleader = ConleaderFactory()
-        s1 = ShiftFactory(start_time=time, end_time= time + datetime.timedelta(hours=1), worker = conleader.user)
-        s2 = ShiftFactory(start_time=time, end_time= time + datetime.timedelta(hours=1), worker = consultant.user, for_trade = True, been_traded = True)
+        s1 = ShiftFactory(worker = conleader.user)
+        s2 = ShiftFactory(worker = consultant.user, for_trade = True, been_traded = True)
 
         self.assertEquals(s1.for_trade, False)
         self.assertEquals(s2.for_trade, True)
@@ -53,7 +53,7 @@ class TimeclockRecordTestCase(TestCase):
         loc = Location.objects.get(pk='Tech')
         conleader = ConleaderFactory()
 
-        tr1 = TimeclockRecordFactory(start_time=time, end_time=time + datetime.timedelta(hours=1), employee = conleader.user)
+        tr1 = TimeclockRecordFactory(employee = conleader.user)
 
         self.assertEquals(tr1.employee.username, 'testcl')
         self.assertEquals(tr1.end_time - tr1.start_time, datetime.timedelta(hours=1))
