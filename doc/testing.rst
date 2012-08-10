@@ -117,9 +117,11 @@ These tests, found in ``tests/api_tests.py``, test the django-tastypie API we ha
         
             # might as well test if user permissions work, although we don't 
             # actually need them
-            resp = self.api_client.get('/api/v1/location/', format='json', authentication=self.get_normal_credentials())
+            resp = self.api_client.get('/api/v1/location/', format='json', 
+                                       authentication=self.get_normal_credentials())
             self.assertValidJSONResponse(resp)
-            resp = self.api_client.get('/api/v1/location/', format='json', authentication=self.get_admin_credentials())
+            resp = self.api_client.get('/api/v1/location/', format='json', 
+                                       authentication=self.get_admin_credentials())
             self.assertValidJSONResponse(resp)
 
 These tests require more setup than the other ones we have looked at so far. They make use of the ``setUp`` function, which sets the state before the actual tests are run. The API authentication procedure is different than one we used on views. ``get_normal_credentials()`` and ``get_admin_credentials()`` are helper functions to get users' ``api_key``. This is explained in more detail in the django-tastypie documentation, and the motivation for it is explained in the calendar section of this document.
